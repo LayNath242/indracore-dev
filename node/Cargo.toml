@@ -51,6 +51,7 @@ sp-inherents = '2.0.0'
 sp-runtime = '2.0.0'
 sp-transaction-pool = '2.0.0'
 substrate-frame-rpc-system = '2.0.0'
+primitives = { package = "core-primitives", path = "../core-primitives"}
 
 [features]
 default = []
