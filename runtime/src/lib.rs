@@ -14,6 +14,7 @@ use sp_core::{
 };
 use sp_runtime::{
 	ApplyExtrinsicResult, generic, create_runtime_str, impl_opaque_keys,
+	Percent, ModuleId,
 	transaction_validity::{TransactionValidity, TransactionSource},
 };
 use sp_runtime::traits::{
@@ -251,7 +252,6 @@ parameter_types! {
 	pub const CouncilMaxMembers: u32 = 100;
 }
 
-/// for document https://docs.rs/pallet-collective/2.0.0/pallet_collective/
 type CouncilCollective = pallet_collective::Instance1;
 impl pallet_collective::Trait<CouncilCollective> for Runtime {
 	type Origin = Origin;
@@ -270,7 +270,6 @@ parameter_types! {
 	pub const TechnicalMaxMembers: u32 = 100;
 }
 
-/// for document https://docs.rs/pallet-collective/2.0.0/pallet_collective/
 type TechnicalCollective = pallet_collective::Instance2;
 impl pallet_collective::Trait<TechnicalCollective> for Runtime {
 	type Origin = Origin;
@@ -283,7 +282,6 @@ impl pallet_collective::Trait<TechnicalCollective> for Runtime {
 	type WeightInfo = weights::pallet_collective::WeightInfo;
 }
 
-/// for doc https://docs.rs/pallet-membership/2.0.0/pallet_membership
 impl pallet_membership::Trait<pallet_membership::Instance1> for Runtime {
 	type Event = Event;
 	type AddOrigin = EnsureRootOrHalfCouncil;
@@ -307,7 +305,6 @@ parameter_types! {
 // Make sure that there are no more than `MaxMembers` members elected via elections-phragmen.
 const_assert!(DesiredMembers::get() <= CouncilMaxMembers::get());
 
-/// for doc https://docs.rs/pallet-elections-phragmen/2.0.0/pallet_elections_phragmen/
 impl pallet_elections_phragmen::Trait for Runtime {
 	type Event = Event;
 	type ModuleId = ElectionsPhragmenModuleId;
@@ -372,6 +369,56 @@ impl pallet_democracy::Trait for Runtime {
 	type WeightInfo = weights::pallet_democracy::WeightInfo;
 }
 
+parameter_types! {
+	pub const ProposalBond: Permill = Permill::from_percent(5);
+	pub const ProposalBondMinimum: Balance = 100 * DOLLARS;
+	pub const SpendPeriod: BlockNumber = 24 * DAYS;
+	pub const Burn: Permill = Permill::from_percent(1);
+	pub const TipCountdown: BlockNumber = 1 * DAYS;
+	pub const TipFindersFee: Percent = Percent::from_percent(20);
+	pub const TipReportDepositBase: Balance = 1 * DOLLARS;
+	pub const DataDepositPerByte: Balance = 1 * CENTS;
+	pub const BountyDepositBase: Balance = 1 * DOLLARS;
+	pub const BountyDepositPayoutDelay: BlockNumber = 8 * DAYS;
+	pub const TreasuryModuleId: ModuleId = ModuleId(*b"py/trsry");
+	pub const BountyUpdatePeriod: BlockNumber = 90 * DAYS;
+	pub const MaximumReasonLength: u32 = 16384;
+	pub const BountyCuratorDeposit: Permill = Permill::from_percent(50);
+	pub const BountyValueMinimum: Balance = 10 * DOLLARS;
+}
+
+type ApproveOrigin = EnsureOneOf<
+	AccountId,
+	EnsureRoot<AccountId>,
+	pallet_collective::EnsureProportionAtLeast<_3, _5, AccountId, CouncilCollective>
+>;
+
+impl pallet_treasury::Trait for Runtime {
+	type ModuleId = TreasuryModuleId;
+	type Currency = Balances;
+	type ApproveOrigin = ApproveOrigin;
+	type RejectOrigin = EnsureRootOrHalfCouncil;
+	type Tippers = Elections;
+	type TipCountdown = TipCountdown;
+	type TipFindersFee = TipFindersFee;
+	type TipReportDepositBase = TipReportDepositBase;
+	type DataDepositPerByte = DataDepositPerByte;
+	type Event = Event;
+	type OnSlash = ();  // Treasury
+	type ProposalBond = ProposalBond;
+	type ProposalBondMinimum = ProposalBondMinimum;
+	type SpendPeriod = SpendPeriod;
+	type Burn = Burn;
+	type BountyDepositBase = BountyDepositBase;
+	type BountyDepositPayoutDelay = BountyDepositPayoutDelay;
+	type BountyUpdatePeriod = BountyUpdatePeriod;
+	type BountyCuratorDeposit = BountyCuratorDeposit;
+	type BountyValueMinimum = BountyValueMinimum;
+	type MaximumReasonLength = MaximumReasonLength;
+	type BurnDestination = ();
+	type WeightInfo = weights::pallet_treasury::WeightInfo;
+}
+
 
 //------------------------------------------------------------------
 
@@ -396,6 +443,7 @@ construct_runtime!(
 		TechnicalMembership: pallet_membership::<Instance1>::{Module, Call, Storage, Event<T>, Config<T>},
 		Elections: pallet_elections_phragmen::{Module, Call, Storage, Event<T>, Config<T>},
 		Democracy: pallet_democracy::{Module, Call, Storage, Config, Event<T>},
+		Treasury: pallet_treasury::{Module, Call, Storage, Event<T>},
 	}
 );
 
@@ -596,6 +644,7 @@ impl_runtime_apis! {
 			add_benchmark!(params, batches, pallet_collective, Council);
 			add_benchmark!(params, batches, pallet_elections_phragmen, Elections);
 			add_benchmark!(params, batches, pallet_democracy, Democracy);
+			add_benchmark!(params, batches, pallet_treasury, Treasury);
 
 			if batches.is_empty() { return Err("Benchmark not found for this pallet.".into()) }
 			Ok(batches)
