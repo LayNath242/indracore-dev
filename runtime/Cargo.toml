@@ -47,6 +47,7 @@ pallet-scheduler = { default-features = false, version = '2.0.0' }
 pallet-collective = { default-features = false, version = '2.0.0' }
 pallet-membership = { default-features = false, version = '2.0.0' }
 pallet-elections-phragmen = { default-features = false, version = '2.0.0' }
+pallet-democracy = { default-features = false, version = '2.0.0' }
 
 primitives = { package = "core-primitives", path = "../core-primitives", default-features = false }
 
@@ -64,6 +65,7 @@ runtime-benchmarks = [
     'pallet-scheduler/runtime-benchmarks',
     'pallet-collective/runtime-benchmarks',
     'pallet-elections-phragmen/runtime-benchmarks',
+    'pallet-democracy/runtime-benchmarks',
 ]
 std = [
     'codec/std',
@@ -95,4 +97,5 @@ std = [
     'pallet-collective/std',
     'pallet-membership/std',
     'pallet-elections-phragmen/std',
+    'pallet-democracy/std',
 ]

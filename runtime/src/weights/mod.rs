@@ -21,3 +21,4 @@ pub mod pallet_balances;
 pub mod pallet_timestamp;
 pub mod pallet_collective;
 pub mod pallet_elections_phragmen;
+pub mod pallet_democracy;
