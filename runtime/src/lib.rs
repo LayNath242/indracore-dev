@@ -238,6 +238,7 @@ parameter_types! {
 	pub const CouncilMaxMembers: u32 = 100;
 }
 
+/// for document https://docs.rs/pallet-collective/2.0.0/pallet_collective/
 type CouncilCollective = pallet_collective::Instance1;
 impl pallet_collective::Trait<CouncilCollective> for Runtime {
 	type Origin = Origin;
@@ -256,6 +257,7 @@ parameter_types! {
 	pub const TechnicalMaxMembers: u32 = 100;
 }
 
+/// for document https://docs.rs/pallet-collective/2.0.0/pallet_collective/
 type TechnicalCollective = pallet_collective::Instance2;
 impl pallet_collective::Trait<TechnicalCollective> for Runtime {
 	type Origin = Origin;
