@@ -165,5 +165,6 @@ fn testnet_genesis(
 				.collect(),
 			phantom: Default::default(),
 		}),
+		pallet_membership_Instance1:  Some(Default::default()),
 	}
 }

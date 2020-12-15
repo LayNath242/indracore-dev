@@ -44,6 +44,7 @@ sp-version = { default-features = false, version = '2.0.0' }
 
 pallet-scheduler = { default-features = false, version = '2.0.0' }
 pallet-collective = { default-features = false, version = '2.0.0' }
+pallet-membership = { default-features = false, version = '2.0.0' }
 
 primitives = { package = "core-primitives", path = "../core-primitives", default-features = false }
 
@@ -59,7 +60,7 @@ runtime-benchmarks = [
     'pallet-timestamp/runtime-benchmarks',
     'sp-runtime/runtime-benchmarks',
     'pallet-scheduler/runtime-benchmarks',
-    'pallet-collective/runtime-benchmarks'
+    'pallet-collective/runtime-benchmarks',
 ]
 std = [
     'codec/std',
@@ -89,4 +90,5 @@ std = [
     'sp-version/std',
     'pallet-scheduler/std',
     'pallet-collective/std',
+    'pallet-membership/std',
 ]

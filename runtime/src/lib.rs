@@ -7,7 +7,10 @@
 include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 
 use sp_std::prelude::*;
-use sp_core::{crypto::KeyTypeId, OpaqueMetadata};
+use sp_core::{
+	crypto::KeyTypeId, OpaqueMetadata,
+	u32_trait::{_1, _2},
+};
 use sp_runtime::{
 	ApplyExtrinsicResult, generic, create_runtime_str, impl_opaque_keys,
 	transaction_validity::{TransactionValidity, TransactionSource},
@@ -37,7 +40,7 @@ pub use frame_support::{
 		constants::{BlockExecutionWeight, ExtrinsicBaseWeight, RocksDbWeight, WEIGHT_PER_SECOND},
 	},
 };
-use frame_system::{EnsureRoot};
+use frame_system::{EnsureOneOf, EnsureRoot};
 
 pub use primitives::{AccountId, Signature};
 use primitives::{Balance, BlockNumber, Hash, Index, Moment};
@@ -230,7 +233,13 @@ impl pallet_sudo::Trait for Runtime {
 	type Call = Call;
 }
 
-//---Governance related pallets-------------------------------------
+//---Governance related pallets---------------------------------------------
+
+type EnsureRootOrHalfCouncil = EnsureOneOf<
+	AccountId,
+	EnsureRoot<AccountId>,
+	pallet_collective::EnsureProportionMoreThan<_1, _2, AccountId, CouncilCollective>,
+>;
 
 parameter_types! {
 	pub const CouncilMotionDuration: BlockNumber = 7 * DAYS;
@@ -270,6 +279,18 @@ impl pallet_collective::Trait<TechnicalCollective> for Runtime {
 	type WeightInfo = weights::pallet_collective::WeightInfo;
 }
 
+/// for doc https://docs.rs/pallet-membership/2.0.0/pallet_membership
+impl pallet_membership::Trait<pallet_membership::Instance1> for Runtime {
+	type Event = Event;
+	type AddOrigin = EnsureRootOrHalfCouncil;
+	type RemoveOrigin = EnsureRootOrHalfCouncil;
+	type SwapOrigin = EnsureRootOrHalfCouncil;
+	type ResetOrigin = EnsureRootOrHalfCouncil;
+	type PrimeOrigin = EnsureRootOrHalfCouncil;
+	type MembershipInitialized = TechnicalCommittee;
+	type MembershipChanged = TechnicalCommittee;
+}
+
 //------------------------------------------------------------------
 
 // Create the runtime by composing the FRAME pallets that were previously configured.
@@ -290,6 +311,7 @@ construct_runtime!(
 		Scheduler: pallet_scheduler::{Module, Call, Storage, Event<T>},
 		Council: pallet_collective::<Instance1>::{Module, Call, Storage, Origin<T>, Event<T>, Config<T>},
 		TechnicalCommittee: pallet_collective::<Instance2>::{Module, Call, Storage, Origin<T>, Event<T>, Config<T>},
+		TechnicalMembership: pallet_membership::<Instance1>::{Module, Call, Storage, Event<T>, Config<T>},
 	}
 );
 

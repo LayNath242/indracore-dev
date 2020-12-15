@@ -3257,6 +3257,7 @@ dependencies = [
  "pallet-balances",
  "pallet-collective",
  "pallet-grandpa",
+ "pallet-membership",
  "pallet-randomness-collective-flip",
  "pallet-scheduler",
  "pallet-sudo",
@@ -3567,6 +3568,21 @@ dependencies = [
  "sp-runtime",
  "sp-session",
  "sp-staking",
+ "sp-std",
+]
+
+[[package]]
+name = "pallet-membership"
+version = "2.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "31c6e1aed47ccc244c6d197a117efdbfe76cd5c1c3815b6aafa822542b625bef"
+dependencies = [
+ "frame-support",
+ "frame-system",
+ "parity-scale-codec",
+ "serde",
+ "sp-io",
+ "sp-runtime",
  "sp-std",
 ]
 
