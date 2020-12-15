@@ -20,6 +20,7 @@ serde = { features = ['derive'], optional = true, version = '1.0.101' }
 frame-benchmarking = { default-features = false, optional = true, version = '2.0.0' }
 frame-system-benchmarking = { default-features = false, optional = true, version = '2.0.0' }
 pallet-session-benchmarking = { version = '2.0.0', default-features = false, optional = true }
+pallet-offences-benchmarking = { version = " 2.0.0", default-features = false, optional = true }
 
 frame-executive = { default-features = false, version = '2.0.0' }
 frame-support = { default-features = false, version = '2.0.0' }
@@ -59,6 +60,8 @@ pallet-staking-reward-curve = { version = '2.0.0' }
 sp-staking = { default-features = false, version = '2.0.0' }
 pallet-authorship = { version = '2.0.0', default-features = false }
 pallet-im-online = { version = '2.0.0', default-features = false }
+pallet-utility = { version = " 2.0.0", default-features = false }
+pallet-offences = { version = " 2.0.0", default-features = false }
 
 primitives = { package = "core-primitives", path = "../core-primitives", default-features = false }
 
@@ -102,6 +105,8 @@ std = [
     'sp-staking/std',
     "pallet-authorship/std",
     "pallet-im-online/std",
+    "pallet-offences/std",
+    "pallet-utility/std",
 ]
 
 runtime-benchmarks = [
@@ -121,4 +126,7 @@ runtime-benchmarks = [
     'pallet-session-benchmarking',
     "pallet-staking/runtime-benchmarks",
     "pallet-im-online/runtime-benchmarks",
+    "pallet-offences-benchmarking",
+    "pallet-utility/runtime-benchmarks",
+    
 ]

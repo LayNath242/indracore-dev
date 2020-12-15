@@ -535,6 +535,24 @@ impl pallet_im_online::Trait for Runtime {
 	type WeightInfo = weights::pallet_im_online::WeightInfo;
 }
 
+parameter_types! {
+	pub OffencesWeightSoftLimit: Weight = Perbill::from_percent(60) * MaximumBlockWeight::get();
+}
+
+impl pallet_offences::Trait for Runtime {
+	type Event = Event;
+	type IdentificationTuple = pallet_session::historical::IdentificationTuple<Self>;
+	type OnOffenceHandler = Staking;
+	type WeightSoftLimit = OffencesWeightSoftLimit;
+}
+
+impl pallet_utility::Trait for Runtime {
+	type Event = Event;
+	type Call = Call;
+	type WeightInfo = weights::pallet_utility::WeightInfo;
+}
+
+
 //-------------------------------------------------------------------
 
 // Create the runtime by composing the FRAME pallets that were previously configured.
@@ -564,6 +582,8 @@ construct_runtime!(
 		Historical: pallet_session_historical::{Module},
 		Authorship: pallet_authorship::{Module, Call, Storage, Inherent},
 		ImOnline: pallet_im_online::{Module, Call, Storage, Event<T>, ValidateUnsigned, Config<T>},
+		Offences: pallet_offences::{Module, Call, Storage, Event},
+		Utility: pallet_utility::{Module, Call, Event},
 	}
 );
 
@@ -768,6 +788,7 @@ impl_runtime_apis! {
 			add_benchmark!(params, batches, pallet_session, SessionBench::<Runtime>);
 			add_benchmark!(params, batches, pallet_staking, Staking);
 			add_benchmark!(params, batches, pallet_im_online, ImOnline);
+			add_benchmark!(params, batches, pallet_utility, Utility);
 
 			if batches.is_empty() { return Err("Benchmark not found for this pallet.".into()) }
 			Ok(batches)
