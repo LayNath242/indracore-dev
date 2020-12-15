@@ -314,9 +314,9 @@ impl pallet_elections_phragmen::Trait for Runtime {
 	type CurrencyToVote = CurrencyToVoteHandler;
 	type CandidacyBond = CandidacyBond;
 	type VotingBond = VotingBond;
-	type LoserCandidate = (); //Treasury
-	type BadReport = ();  //Treasury
-	type KickedMember = (); //Treasury
+	type LoserCandidate = Treasury; 
+	type BadReport = Treasury;
+	type KickedMember = Treasury;
 	type DesiredMembers = DesiredMembers;
 	type DesiredRunnersUp = DesiredRunnersUp;
 	type TermDuration = TermDuration;
@@ -362,7 +362,7 @@ impl pallet_democracy::Trait for Runtime {
 	type CooloffPeriod = CooloffPeriod;
 	type PreimageByteDeposit = PreimageByteDeposit;
 	type OperationalPreimageOrigin = pallet_collective::EnsureMember<AccountId, CouncilCollective>;
-	type Slash =  ();//Treasury;
+	type Slash = Treasury;
 	type Scheduler = Scheduler;
 	type PalletsOrigin = OriginCaller;
 	type MaxVotes = MaxVotes;
@@ -404,7 +404,7 @@ impl pallet_treasury::Trait for Runtime {
 	type TipReportDepositBase = TipReportDepositBase;
 	type DataDepositPerByte = DataDepositPerByte;
 	type Event = Event;
-	type OnSlash = ();  // Treasury
+	type OnSlash = Treasury;
 	type ProposalBond = ProposalBond;
 	type ProposalBondMinimum = ProposalBondMinimum;
 	type SpendPeriod = SpendPeriod;
