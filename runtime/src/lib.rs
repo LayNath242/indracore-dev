@@ -10,15 +10,16 @@ use static_assertions::const_assert;
 use sp_std::prelude::*;
 use sp_core::{
 	crypto::KeyTypeId, OpaqueMetadata,
-	u32_trait::{_1, _2, _3, _5},
+	u32_trait::{_1, _2, _3, _4, _5},
 };
 use sp_runtime::{
 	ApplyExtrinsicResult, generic, create_runtime_str, impl_opaque_keys,
-	Percent, ModuleId,
-	transaction_validity::{TransactionValidity, TransactionSource},
+	Percent, ModuleId, Permill, Perbill,
+	transaction_validity::{TransactionValidity, TransactionSource, TransactionPriority},
 };
 use sp_runtime::traits::{
 	BlakeTwo256, Block as BlockT, IdentityLookup, NumberFor, Saturating,
+	OpaqueKeys,
 };
 use sp_api::impl_runtime_apis;
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
@@ -28,12 +29,14 @@ use sp_version::RuntimeVersion;
 #[cfg(feature = "std")]
 use sp_version::NativeVersion;
 
+#[cfg(feature = "std")]
+pub use pallet_staking::StakerStatus;
+
 // A few exports that help ease life for downstream crates.
 #[cfg(any(feature = "std", test))]
 pub use sp_runtime::BuildStorage;
 pub use pallet_timestamp::Call as TimestampCall;
 pub use pallet_balances::Call as BalancesCall;
-pub use sp_runtime::{Permill, Perbill};
 pub use frame_support::{
 	construct_runtime, parameter_types, StorageValue,
 	traits::{KeyOwnerProofSystem, Randomness, LockIdentifier},
@@ -43,9 +46,11 @@ pub use frame_support::{
 	},
 };
 use frame_system::{EnsureOneOf, EnsureRoot};
+use pallet_session::historical as pallet_session_historical;
 
 pub use primitives::{AccountId, Signature};
 use primitives::{Balance, BlockNumber, Hash, Index, Moment};
+use sp_runtime::curve::PiecewiseLinear;
 
 mod weights;
 pub mod constants;
@@ -418,9 +423,104 @@ impl pallet_treasury::Trait for Runtime {
 	type BurnDestination = ();
 	type WeightInfo = weights::pallet_treasury::WeightInfo;
 }
-
-
 //------------------------------------------------------------------
+parameter_types! {
+	pub const DisabledValidatorsThreshold: Perbill = Perbill::from_percent(17);
+}
+
+impl pallet_session::Trait for Runtime {
+	type Event = Event;
+	type ValidatorId = <Self as frame_system::Trait>::AccountId; 
+	type ValidatorIdOf = pallet_staking::StashOf<Self>;
+	type ShouldEndSession = (); //Babe;
+	type NextSessionRotation = ();  //Babe;
+	type SessionManager = pallet_session::historical::NoteHistoricalRoot<Self, Staking>;
+	type SessionHandler = <SessionKeys as OpaqueKeys>::KeyTypeIdProviders;
+	type Keys = SessionKeys;
+	type DisabledValidatorsThreshold = DisabledValidatorsThreshold;
+	type WeightInfo = weights::pallet_session::WeightInfo;
+}
+
+impl pallet_session::historical::Trait for Runtime {
+	type FullIdentification = pallet_staking::Exposure<AccountId, Balance>;
+	type FullIdentificationOf = pallet_staking::ExposureOf<Runtime>;
+}
+
+pallet_staking_reward_curve::build! {
+	const REWARD_CURVE: PiecewiseLinear<'static> = curve!(
+		min_inflation: 0_025_000,
+		max_inflation: 0_100_000,
+		// 3:2:1 staked : parachains : float.
+		// while there's no parachains, then this is 75% staked : 25% float.
+		ideal_stake: 0_750_000,
+		falloff: 0_050_000,
+		max_piece_count: 40,
+		test_precision: 0_005_000,
+	);
+}
+
+parameter_types! {
+	pub StakingUnsignedPriority: TransactionPriority =
+		Perbill::from_percent(90) * TransactionPriority::max_value();
+}
+
+parameter_types! {
+	pub const SessionsPerEra: sp_staking::SessionIndex = 6;
+	pub const BondingDuration: pallet_staking::EraIndex = 28;
+	pub const SlashDeferDuration: pallet_staking::EraIndex = 27;
+	pub const RewardCurve: &'static PiecewiseLinear<'static> = &REWARD_CURVE;
+	pub const MaxNominatorRewardedPerValidator: u32 = 128;
+	// last 15 minutes of the last session will be for election.
+	pub const ElectionLookahead: BlockNumber = EPOCH_DURATION_IN_BLOCKS / 16;
+	pub const MaxIterations: u32 = 10;
+	// 0.05%. The higher the value, the more strict solution acceptance becomes.
+	pub MinSolutionScoreBump: Perbill = Perbill::from_rational_approximation(5u32, 10_000);
+}
+
+type SlashCancelOrigin = EnsureOneOf<
+		AccountId,
+		EnsureRoot<AccountId>,
+		pallet_collective::EnsureProportionAtLeast<_3, _4, AccountId, CouncilCollective>,
+>;
+
+impl pallet_staking::Trait for Runtime {
+	type Currency = Balances;
+	type UnixTime = Timestamp;
+	type CurrencyToVote = CurrencyToVoteHandler;
+	type RewardRemainder = Treasury;
+	type Event = Event;
+	type Slash = Treasury; // send the slashed funds to the treasury.
+	type Reward = (); // rewards are minted from the void
+	type SessionsPerEra = SessionsPerEra;
+	type BondingDuration = BondingDuration;
+	type SlashDeferDuration = SlashDeferDuration;
+	/// A super-majority of the council can cancel the slash.
+	type SlashCancelOrigin = SlashCancelOrigin;
+	type SessionInterface = Self;
+	type RewardCurve = RewardCurve;
+	type NextNewSession = Session;
+	type ElectionLookahead = ElectionLookahead;
+	type Call = Call;
+	type MaxIterations = MaxIterations;
+	type MinSolutionScoreBump = MinSolutionScoreBump;
+	type MaxNominatorRewardedPerValidator = MaxNominatorRewardedPerValidator;
+	type UnsignedPriority = StakingUnsignedPriority;
+	type WeightInfo = weights::pallet_staking::WeightInfo;
+}
+
+
+parameter_types! {
+	pub const UncleGenerations: u32 = 0;
+}
+
+impl pallet_authorship::Config for Runtime {
+	type FindAuthor = pallet_session::FindAccountFromAuthorIndex<Self, Babe>;
+	type UncleGenerations = UncleGenerations;
+	type FilterUncle = ();
+	type EventHandler = (Staking, ImOnline);
+}
+
+//-------------------------------------------------------------------
 
 // Create the runtime by composing the FRAME pallets that were previously configured.
 construct_runtime!(
@@ -444,6 +544,10 @@ construct_runtime!(
 		Elections: pallet_elections_phragmen::{Module, Call, Storage, Event<T>, Config<T>},
 		Democracy: pallet_democracy::{Module, Call, Storage, Config, Event<T>},
 		Treasury: pallet_treasury::{Module, Call, Storage, Event<T>},
+		Session: pallet_session::{Module, Call, Storage, Event, Config<T>},
+		Staking: pallet_staking::{Module, Call, Config<T>, Storage, Event<T>, ValidateUnsigned},
+		Historical: pallet_session_historical::{Module},
+		Authorship: pallet_authorship::{Module, Call, Storage, Inherent},
 	}
 );
 
@@ -645,6 +749,8 @@ impl_runtime_apis! {
 			add_benchmark!(params, batches, pallet_elections_phragmen, Elections);
 			add_benchmark!(params, batches, pallet_democracy, Democracy);
 			add_benchmark!(params, batches, pallet_treasury, Treasury);
+			add_benchmark!(params, batches, pallet_session, SessionBench::<Runtime>);
+			add_benchmark!(params, batches, pallet_staking, Staking);
 
 			if batches.is_empty() { return Err("Benchmark not found for this pallet.".into()) }
 			Ok(batches)

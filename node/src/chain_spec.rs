@@ -1,13 +1,17 @@
 use sp_core::{Pair, Public, sr25519};
 use node_indracore_runtime::{
-	WASM_BINARY, Signature, SudoConfig, SystemConfig, 
-	AccountId, AuraConfig, BalancesConfig, GenesisConfig, GrandpaConfig,
+	WASM_BINARY, Signature, AccountId,
+	SudoConfig, SystemConfig, 
+	AuraConfig, BalancesConfig, GenesisConfig, GrandpaConfig,
 	CouncilConfig, TechnicalCommitteeConfig,
+	StakingConfig, SessionConfig,
 };
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_finality_grandpa::AuthorityId as GrandpaId;
 use sp_runtime::traits::{Verify, IdentifyAccount};
 use sc_service::ChainType;
+use node_indracore_runtime::constants::currency::*;
+use primitives::Balance;
 
 // The URL for the telemetry server.
 // const STAGING_TELEMETRY_URL: &str = "wss://telemetry.polkadot.io/submit/";
@@ -136,6 +140,7 @@ fn testnet_genesis(
 ) -> GenesisConfig {
 
 	let num_endowed_accounts = endowed_accounts.len();
+	const STASH: Balance = 100 * SELS;
 	
 	GenesisConfig {
 		frame_system: Some(SystemConfig {
@@ -168,5 +173,40 @@ fn testnet_genesis(
 		pallet_membership_Instance1:  Some(Default::default()),
 		pallet_elections_phragmen: Some(Default::default()),
 		pallet_democracy: Some(Default::default()),
+
+		pallet_session: Some(SessionConfig {
+			keys: initial_authorities
+				.iter()
+				.map(|x| {
+					(
+						x.0.clone(),
+						x.0.clone(),
+						session_keys(
+							x.2.clone(), 
+							x.3.clone(), 
+							x.4.clone(), 
+							x.5.clone()
+						),
+					)
+				})
+				.collect::<Vec<_>>(),
+		}),
+		pallet_staking: Some(StakingConfig {
+			validator_count: 10,
+			minimum_validator_count: 2,
+			stakers: initial_authorities
+				.iter()
+				.map(|x| 
+					(
+						x.0.clone(), 
+						x.1.clone(), 
+						STASH, 
+						StakerStatus::Validator
+					))
+				.collect(),
+			invulnerables: initial_authorities.iter().map(|x| x.0.clone()).collect(),
+			slash_reward_fraction: Perbill::from_percent(10),
+			..Default::default()
+		}),
 	}
 }

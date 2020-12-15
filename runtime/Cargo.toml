@@ -18,10 +18,13 @@ serde = { features = ['derive'], optional = true, version = '1.0.101' }
 
 # Substrate dependencies
 frame-benchmarking = { default-features = false, optional = true, version = '2.0.0' }
+frame-system-benchmarking = { default-features = false, optional = true, version = '2.0.0' }
+pallet-session-benchmarking = { version = '2.0.0', default-features = false, optional = true }
+
 frame-executive = { default-features = false, version = '2.0.0' }
 frame-support = { default-features = false, version = '2.0.0' }
 frame-system = { default-features = false, version = '2.0.0' }
-frame-system-benchmarking = { default-features = false, optional = true, version = '2.0.0' }
+
 frame-system-rpc-runtime-api = { default-features = false, version = '2.0.0' }
 pallet-aura = { default-features = false, version = '2.0.0' }
 pallet-balances = { default-features = false, version = '2.0.0' }
@@ -50,7 +53,14 @@ pallet-elections-phragmen = { default-features = false, version = '2.0.0' }
 pallet-democracy = { default-features = false, version = '2.0.0' }
 pallet-treasury = { default-features = false, version = '2.0.0' }
 
+pallet-session = { version = '2.0.0', default-features = false, features = ["historical"] }
+pallet-staking = { default-features = false, version = '2.0.0' }
+pallet-staking-reward-curve = { version = '2.0.0' }
+sp-staking = { default-features = false, version = '2.0.0' }
+pallet-authorship = { version = '2.0.0', default-features = false }
+
 primitives = { package = "core-primitives", path = "../core-primitives", default-features = false }
+
 
 [features]
 default = ['std']
@@ -68,6 +78,8 @@ runtime-benchmarks = [
     'pallet-elections-phragmen/runtime-benchmarks',
     'pallet-democracy/runtime-benchmarks',
     'pallet-treasury/runtime-benchmarks',
+    'pallet-session-benchmarking',
+    "pallet-staking/runtime-benchmarks",
 ]
 std = [
     'codec/std',
@@ -100,5 +112,9 @@ std = [
     'pallet-membership/std',
     'pallet-elections-phragmen/std',
     'pallet-democracy/std',
-    'pallet-treasury/std'
+    'pallet-treasury/std',
+    'pallet-session/std',
+    'pallet-staking/std',
+    'sp-staking/std',
+    "pallet-authorship/std",
 ]
