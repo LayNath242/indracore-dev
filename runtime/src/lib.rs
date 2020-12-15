@@ -51,6 +51,7 @@ use pallet_session::historical as pallet_session_historical;
 pub use primitives::{AccountId, Signature};
 use primitives::{Balance, BlockNumber, Hash, Index, Moment};
 use sp_runtime::curve::PiecewiseLinear;
+use pallet_im_online::sr25519::AuthorityId as ImOnlineId;
 
 mod weights;
 pub mod constants;
@@ -432,8 +433,8 @@ impl pallet_session::Trait for Runtime {
 	type Event = Event;
 	type ValidatorId = <Self as frame_system::Trait>::AccountId; 
 	type ValidatorIdOf = pallet_staking::StashOf<Self>;
-	type ShouldEndSession = (); //Babe;
-	type NextSessionRotation = ();  //Babe;
+	type ShouldEndSession = Babe;
+	type NextSessionRotation = Babe;
 	type SessionManager = pallet_session::historical::NoteHistoricalRoot<Self, Staking>;
 	type SessionHandler = <SessionKeys as OpaqueKeys>::KeyTypeIdProviders;
 	type Keys = SessionKeys;
@@ -462,6 +463,7 @@ pallet_staking_reward_curve::build! {
 parameter_types! {
 	pub StakingUnsignedPriority: TransactionPriority =
 		Perbill::from_percent(90) * TransactionPriority::max_value();
+	pub const ImOnlineUnsignedPriority: TransactionPriority = TransactionPriority::max_value();
 }
 
 parameter_types! {
@@ -513,11 +515,24 @@ parameter_types! {
 	pub const UncleGenerations: u32 = 0;
 }
 
-impl pallet_authorship::Config for Runtime {
+impl pallet_authorship::Trait for Runtime {
 	type FindAuthor = pallet_session::FindAccountFromAuthorIndex<Self, Babe>;
 	type UncleGenerations = UncleGenerations;
 	type FilterUncle = ();
 	type EventHandler = (Staking, ImOnline);
+}
+
+parameter_types! {
+	pub const SessionDuration: BlockNumber = EPOCH_DURATION_IN_BLOCKS as _;
+}
+
+impl pallet_im_online::Trait for Runtime {
+	type AuthorityId = ImOnlineId;
+	type Event = Event;
+	type SessionDuration = SessionDuration;
+	type ReportUnresponsiveness = Offences;
+	type UnsignedPriority = ImOnlineUnsignedPriority;
+	type WeightInfo = weights::pallet_im_online::WeightInfo;
 }
 
 //-------------------------------------------------------------------
@@ -548,6 +563,7 @@ construct_runtime!(
 		Staking: pallet_staking::{Module, Call, Config<T>, Storage, Event<T>, ValidateUnsigned},
 		Historical: pallet_session_historical::{Module},
 		Authorship: pallet_authorship::{Module, Call, Storage, Inherent},
+		ImOnline: pallet_im_online::{Module, Call, Storage, Event<T>, ValidateUnsigned, Config<T>},
 	}
 );
 
@@ -751,6 +767,7 @@ impl_runtime_apis! {
 			add_benchmark!(params, batches, pallet_treasury, Treasury);
 			add_benchmark!(params, batches, pallet_session, SessionBench::<Runtime>);
 			add_benchmark!(params, batches, pallet_staking, Staking);
+			add_benchmark!(params, batches, pallet_im_online, ImOnline);
 
 			if batches.is_empty() { return Err("Benchmark not found for this pallet.".into()) }
 			Ok(batches)

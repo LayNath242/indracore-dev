@@ -25,3 +25,4 @@ pub mod pallet_democracy;
 pub mod pallet_treasury;
 pub mod pallet_session;
 pub mod pallet_staking;
+pub mod pallet_im_online;

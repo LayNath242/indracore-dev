@@ -208,5 +208,6 @@ fn testnet_genesis(
 			slash_reward_fraction: Perbill::from_percent(10),
 			..Default::default()
 		}),
+		pallet_im_online: Some(Default::default()),
 	}
 }

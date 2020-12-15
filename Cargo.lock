@@ -3260,6 +3260,7 @@ dependencies = [
  "pallet-democracy",
  "pallet-elections-phragmen",
  "pallet-grandpa",
+ "pallet-im-online",
  "pallet-membership",
  "pallet-randomness-collective-flip",
  "pallet-scheduler",
@@ -3609,6 +3610,27 @@ dependencies = [
  "sp-finality-grandpa",
  "sp-runtime",
  "sp-session",
+ "sp-staking",
+ "sp-std",
+]
+
+[[package]]
+name = "pallet-im-online"
+version = "2.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8a29b883f805fa2330742b5d99263eab68583e009be1a2420efab1c3237a08e5"
+dependencies = [
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "pallet-authorship",
+ "pallet-session",
+ "parity-scale-codec",
+ "serde",
+ "sp-application-crypto",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
  "sp-staking",
  "sp-std",
 ]

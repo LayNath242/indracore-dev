@@ -58,29 +58,13 @@ pallet-staking = { default-features = false, version = '2.0.0' }
 pallet-staking-reward-curve = { version = '2.0.0' }
 sp-staking = { default-features = false, version = '2.0.0' }
 pallet-authorship = { version = '2.0.0', default-features = false }
+pallet-im-online = { version = '2.0.0', default-features = false }
 
 primitives = { package = "core-primitives", path = "../core-primitives", default-features = false }
 
 
 [features]
 default = ['std']
-runtime-benchmarks = [
-    'hex-literal',
-    'frame-benchmarking',
-    'frame-support/runtime-benchmarks',
-    'frame-system-benchmarking',
-    'frame-system/runtime-benchmarks',
-    'pallet-balances/runtime-benchmarks',
-    'pallet-timestamp/runtime-benchmarks',
-    'sp-runtime/runtime-benchmarks',
-    'pallet-scheduler/runtime-benchmarks',
-    'pallet-collective/runtime-benchmarks',
-    'pallet-elections-phragmen/runtime-benchmarks',
-    'pallet-democracy/runtime-benchmarks',
-    'pallet-treasury/runtime-benchmarks',
-    'pallet-session-benchmarking',
-    "pallet-staking/runtime-benchmarks",
-]
 std = [
     'codec/std',
     'serde',
@@ -117,4 +101,24 @@ std = [
     'pallet-staking/std',
     'sp-staking/std',
     "pallet-authorship/std",
+    "pallet-im-online/std",
+]
+
+runtime-benchmarks = [
+    'hex-literal',
+    'frame-benchmarking',
+    'frame-support/runtime-benchmarks',
+    'frame-system-benchmarking',
+    'frame-system/runtime-benchmarks',
+    'pallet-balances/runtime-benchmarks',
+    'pallet-timestamp/runtime-benchmarks',
+    'sp-runtime/runtime-benchmarks',
+    'pallet-scheduler/runtime-benchmarks',
+    'pallet-collective/runtime-benchmarks',
+    'pallet-elections-phragmen/runtime-benchmarks',
+    'pallet-democracy/runtime-benchmarks',
+    'pallet-treasury/runtime-benchmarks',
+    'pallet-session-benchmarking',
+    "pallet-staking/runtime-benchmarks",
+    "pallet-im-online/runtime-benchmarks",
 ]
