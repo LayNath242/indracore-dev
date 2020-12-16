@@ -27,7 +27,6 @@ frame-support = { default-features = false, version = '2.0.0' }
 frame-system = { default-features = false, version = '2.0.0' }
 
 frame-system-rpc-runtime-api = { default-features = false, version = '2.0.0' }
-pallet-aura = { default-features = false, version = '2.0.0' }
 pallet-balances = { default-features = false, version = '2.0.0' }
 pallet-grandpa = { default-features = false, version = '2.0.0' }
 pallet-randomness-collective-flip = { default-features = false, version = '2.0.0' }
@@ -37,7 +36,6 @@ pallet-transaction-payment = { default-features = false, version = '2.0.0' }
 pallet-transaction-payment-rpc-runtime-api = { default-features = false, version = '2.0.0' }
 sp-api = { default-features = false, version = '2.0.0' }
 sp-block-builder = { default-features = false, version = '2.0.0' }
-sp-consensus-aura = { default-features = false, version = '0.8.0' }
 sp-core = { default-features = false, version = '2.0.0' }
 sp-inherents = { default-features = false, version = '2.0.0' }
 sp-offchain = { default-features = false, version = '2.0.0' }
@@ -62,6 +60,11 @@ pallet-authorship = { version = '2.0.0', default-features = false }
 pallet-im-online = { version = '2.0.0', default-features = false }
 pallet-utility = { version = " 2.0.0", default-features = false }
 pallet-offences = { version = " 2.0.0", default-features = false }
+pallet-authority-discovery = { version = " 2.0.0", default-features = false }
+sp-authority-discovery = { version = " 2.0.0", default-features = false }
+
+sp-consensus-babe = { version = "0.8.0",  default-features = false }
+pallet-babe = {  version = " 2.0.0", default-features = false }
 
 primitives = { package = "core-primitives", path = "../core-primitives", default-features = false }
 
@@ -75,7 +78,6 @@ std = [
     'frame-support/std',
     'frame-system/std',
     'frame-system-rpc-runtime-api/std',
-    'pallet-aura/std',
     'pallet-balances/std',
     'pallet-grandpa/std',
     'pallet-randomness-collective-flip/std',
@@ -85,7 +87,6 @@ std = [
     'pallet-transaction-payment-rpc-runtime-api/std',
     'sp-api/std',
     'sp-block-builder/std',
-    'sp-consensus-aura/std',
     'sp-core/std',
     'sp-inherents/std',
     'sp-offchain/std',
@@ -107,6 +108,11 @@ std = [
     "pallet-im-online/std",
     "pallet-offences/std",
     "pallet-utility/std",
+    "pallet-babe/std",
+    'pallet-authority-discovery/std',
+    'sp-consensus-babe/std',
+    'sp-authority-discovery/std',
+    
 ]
 
 runtime-benchmarks = [
@@ -127,6 +133,7 @@ runtime-benchmarks = [
     "pallet-staking/runtime-benchmarks",
     "pallet-im-online/runtime-benchmarks",
     "pallet-offences-benchmarking",
-    "pallet-utility/runtime-benchmarks",
-    
+    "pallet-utility/runtime-benchmarks",  
+    "pallet-babe/runtime-benchmarks",
+    "pallet-grandpa/runtime-benchmarks",
 ]
