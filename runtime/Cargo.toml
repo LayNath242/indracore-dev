@@ -62,6 +62,7 @@ pallet-utility = { version = " 2.0.0", default-features = false }
 pallet-offences = { version = " 2.0.0", default-features = false }
 pallet-authority-discovery = { version = " 2.0.0", default-features = false }
 sp-authority-discovery = { version = " 2.0.0", default-features = false }
+pallet-indices = { version = " 2.0.0", default-features = false }
 
 sp-consensus-babe = { version = "0.8.0",  default-features = false }
 pallet-babe = {  version = " 2.0.0", default-features = false }
@@ -112,6 +113,7 @@ std = [
     'pallet-authority-discovery/std',
     'sp-consensus-babe/std',
     'sp-authority-discovery/std',
+    'pallet-indices/std',
     
 ]
 
@@ -136,4 +138,5 @@ runtime-benchmarks = [
     "pallet-utility/runtime-benchmarks",  
     "pallet-babe/runtime-benchmarks",
     "pallet-grandpa/runtime-benchmarks",
+    'pallet-indices/runtime-benchmarks',
 ]

@@ -5,6 +5,7 @@ use node_indracore_runtime::{
 	SudoConfig, SystemConfig, BalancesConfig, SessionKeys,
 	CouncilConfig, TechnicalCommitteeConfig, GenesisConfig,
 	StakingConfig, SessionConfig, AuthorityDiscoveryConfig,
+	IndicesConfig
 };
 use sp_finality_grandpa::AuthorityId as GrandpaId;
 use sp_runtime::{
@@ -232,6 +233,7 @@ fn testnet_genesis(
 		}),
 		pallet_im_online: Some(Default::default()),
 		pallet_authority_discovery: Some(AuthorityDiscoveryConfig { keys: vec![] }),
+		pallet_indices: Some(IndicesConfig { indices: vec![] }),
 	}
  }
 

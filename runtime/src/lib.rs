@@ -48,7 +48,7 @@ use frame_system::{EnsureOneOf, EnsureRoot};
 use pallet_session::historical as pallet_session_historical;
 
 pub use primitives::{AccountId, Signature};
-use primitives::{Balance, BlockNumber, Hash, Index, Moment};
+use primitives::{AccountIndex, Balance, BlockNumber, Hash, Index, Moment};
 use sp_runtime::curve::PiecewiseLinear;
 use pallet_im_online::sr25519::AuthorityId as ImOnlineId;
 use sp_authority_discovery::AuthorityId as AuthorityDiscoveryId;
@@ -59,15 +59,6 @@ mod impls;
 
 use impls::CurrencyToVoteHandler;
 use constants::{currency::*, time::*};
-
-impl_opaque_keys! {
-	pub struct SessionKeys {
-		pub babe: Babe,
-		pub grandpa: Grandpa,
-		pub im_online: ImOnline,
-		pub authority_discovery: AuthorityDiscovery,
-	}
-}
 
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("node"),
@@ -98,6 +89,14 @@ pub fn wasm_binary_unwrap() -> &'static [u8] {
 	)
 }
 
+impl_opaque_keys! {
+	pub struct SessionKeys {
+		pub babe: Babe,
+		pub grandpa: Grandpa,
+		pub im_online: ImOnline,
+		pub authority_discovery: AuthorityDiscovery,
+	}
+}
 
 parameter_types! {
 	pub const BlockHashCount: BlockNumber = 2400;
@@ -187,6 +186,7 @@ impl pallet_scheduler::Trait for Runtime {
 	type MaxScheduledPerBlock = MaxScheduledPerBlock;
 	type WeightInfo = weights::pallet_scheduler::WeightInfo;
 }
+
 parameter_types! {
 	pub const EpochDuration: u64 = EPOCH_DURATION_IN_BLOCKS as u64;
 	pub const ExpectedBlockTime: Moment = MILLISECS_PER_BLOCK;
@@ -213,6 +213,18 @@ impl pallet_babe::Trait for Runtime {
 		pallet_babe::EquivocationHandler<Self::KeyOwnerIdentification, Offences>;
 
 	type WeightInfo = ();
+}
+
+parameter_types! {
+	pub const IndexDeposit: Balance = 10 * DOLLARS;
+}
+
+impl pallet_indices::Trait for Runtime {
+	type AccountIndex = AccountIndex;
+	type Currency = Balances;
+	type Deposit = IndexDeposit;
+	type Event = Event;
+	type WeightInfo = weights::pallet_indices::WeightInfo;
 }
 
 impl pallet_grandpa::Trait for Runtime {
@@ -629,6 +641,7 @@ construct_runtime!(
 		Offences: pallet_offences::{Module, Call, Storage, Event},
 		Utility: pallet_utility::{Module, Call, Event},
 		AuthorityDiscovery: pallet_authority_discovery::{Module, Call, Config},
+		Indices: pallet_indices::{Module, Call, Storage, Config<T>, Event<T>},
 	}
 );
 
@@ -888,6 +901,7 @@ impl_runtime_apis! {
 			add_benchmark!(params, batches, pallet_utility, Utility);
 			add_benchmark!(params, batches, pallet_babe, Babe);
 			add_benchmark!(params, batches, pallet_grandpa, Grandpa);
+			add_benchmark!(params, batches, pallet_indices, Indices);
 
 			if batches.is_empty() { return Err("Benchmark not found for this pallet.".into()) }
 			Ok(batches)
