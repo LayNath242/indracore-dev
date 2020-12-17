@@ -14,7 +14,7 @@ use sp_core::{
 };
 use sp_runtime::{
 	ApplyExtrinsicResult, generic, create_runtime_str, impl_opaque_keys,
-	Percent, ModuleId, Permill, Perbill,
+	Percent, ModuleId, Permill, Perbill, Perquintill, FixedPointNumber,
 	transaction_validity::{TransactionValidity, TransactionSource, TransactionPriority},
 };
 use sp_runtime::traits::{
@@ -46,6 +46,7 @@ pub use frame_support::{
 };
 use frame_system::{EnsureOneOf, EnsureRoot};
 use pallet_session::historical as pallet_session_historical;
+use pallet_transaction_payment::{Multiplier, TargetedFeeAdjustment};
 
 pub use primitives::{AccountId, Signature};
 use primitives::{AccountIndex, Balance, BlockNumber, Hash, Index, Moment};
@@ -243,14 +244,30 @@ impl pallet_balances::Trait for Runtime {
 
 parameter_types! {
 	pub const TransactionByteFee: Balance = 10 * MILLICENTS;
+	pub const TargetBlockFullness: Perquintill = Perquintill::from_percent(25);
+	/// The adjustment variable of the runtime. Higher values will cause `TargetBlockFullness` to
+	/// change the fees more rapidly.
+	pub AdjustmentVariable: Multiplier = Multiplier::saturating_from_rational(3, 100_000);
+	/// Minimum amount of the multiplier. This value cannot be too low. A test case should ensure
+	/// that combined with `AdjustmentVariable`, we can recover from the minimum.
+	/// See `multiplier_can_grow_from_zero`.
+	pub MinimumMultiplier: Multiplier = Multiplier::saturating_from_rational(1, 1_000_000_000u128);
 }
+
+/// https://research.web3.foundation/en/latest/polkadot/economics/1-token-economics.html#-2.-slow-adjusting-mechanism
+pub type SlowAdjustingFeeUpdate<R> = TargetedFeeAdjustment<
+	R,
+	TargetBlockFullness,
+	AdjustmentVariable,
+	MinimumMultiplier
+>;
 
 impl pallet_transaction_payment::Trait for Runtime {
 	type Currency = Balances;
 	type OnTransactionPayment = DealWithFees;
 	type TransactionByteFee = TransactionByteFee;
 	type WeightToFee = WeightToFee;
-	type FeeMultiplierUpdate = ();
+	type FeeMultiplierUpdate = SlowAdjustingFeeUpdate<Self>;
 }
 
 impl pallet_grandpa::Trait for Runtime {
@@ -469,7 +486,7 @@ impl pallet_treasury::Trait for Runtime {
 	type BurnDestination = ();
 	type WeightInfo = weights::pallet_treasury::WeightInfo;
 }
-//------------------------------------------------------------------
+
 parameter_types! {
 	pub const DisabledValidatorsThreshold: Perbill = Perbill::from_percent(17);
 }
@@ -596,7 +613,30 @@ impl pallet_utility::Trait for Runtime {
 	type Call = Call;
 	type WeightInfo = weights::pallet_utility::WeightInfo;
 }
-//-------------------------------------------------------------------
+
+parameter_types! {
+	pub const BasicDeposit: Balance = deposit(1, 258);
+	pub const FieldDeposit: Balance = deposit(0, 66);      // 66 bytes on-chain
+	pub const SubAccountDeposit: Balance = deposit(1, 53);   // 53 bytes on-chain
+	pub const MaxSubAccounts: u32 = 100;
+	pub const MaxAdditionalFields: u32 = 100;
+	pub const MaxRegistrars: u32 = 20;
+}
+
+impl pallet_identity::Trait for Runtime {
+	type Event = Event;
+	type Currency = Balances;
+	type BasicDeposit = BasicDeposit;
+	type FieldDeposit = FieldDeposit;
+	type SubAccountDeposit = SubAccountDeposit;
+	type MaxSubAccounts = MaxSubAccounts;
+	type MaxAdditionalFields = MaxAdditionalFields;
+	type MaxRegistrars = MaxRegistrars;
+	type Slashed = Treasury;
+	type ForceOrigin = EnsureRootOrHalfCouncil;
+	type RegistrarOrigin = EnsureRootOrHalfCouncil;
+	type WeightInfo = weights::pallet_identity::WeightInfo;
+}
 
 impl pallet_authority_discovery::Trait for Runtime {}
 
@@ -639,6 +679,7 @@ construct_runtime!(
 		Utility: pallet_utility::{Module, Call, Event},
 		AuthorityDiscovery: pallet_authority_discovery::{Module, Call, Config},
 		Indices: pallet_indices::{Module, Call, Storage, Config<T>, Event<T>},
+		Identity: pallet_identity::{Module, Call, Storage, Event<T>},
 	}
 );
 
@@ -899,6 +940,7 @@ impl_runtime_apis! {
 			add_benchmark!(params, batches, pallet_babe, Babe);
 			add_benchmark!(params, batches, pallet_grandpa, Grandpa);
 			add_benchmark!(params, batches, pallet_indices, Indices);
+			add_benchmark!(params, batches, pallet_identity, Identity);
 
 			if batches.is_empty() { return Err("Benchmark not found for this pallet.".into()) }
 			Ok(batches)
