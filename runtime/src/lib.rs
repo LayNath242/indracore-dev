@@ -54,10 +54,11 @@ use pallet_im_online::sr25519::AuthorityId as ImOnlineId;
 use sp_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 
 mod weights;
+mod common;
 pub mod constants;
-mod impls;
 
-use impls::{ CurrencyToVoteHandler, DealWithFees};
+
+use common::impls::{ CurrencyToVoteHandler, DealWithFees};
 use constants::{currency::*, time::*};
 
 pub const VERSION: RuntimeVersion = RuntimeVersion {
