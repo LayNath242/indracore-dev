@@ -200,14 +200,10 @@ impl pallet_babe::Trait for Runtime {
 	type KeyOwnerProofSystem = Historical;
 
 	type KeyOwnerProof = <Self::KeyOwnerProofSystem as KeyOwnerProofSystem<(
-		KeyTypeId,
-		pallet_babe::AuthorityId,
-	)>>::Proof;
+		KeyTypeId, pallet_babe::AuthorityId)>>::Proof;
 
 	type KeyOwnerIdentification = <Self::KeyOwnerProofSystem as KeyOwnerProofSystem<(
-		KeyTypeId,
-		pallet_babe::AuthorityId,
-	)>>::IdentificationTuple;
+		KeyTypeId, pallet_babe::AuthorityId)>>::IdentificationTuple;
 
 	type HandleEquivocation =
 		pallet_babe::EquivocationHandler<Self::KeyOwnerIdentification, Offences>;
@@ -225,6 +221,23 @@ impl pallet_indices::Trait for Runtime {
 	type Deposit = IndexDeposit;
 	type Event = Event;
 	type WeightInfo = weights::pallet_indices::WeightInfo;
+}
+
+parameter_types! {
+	pub const ExistentialDeposit: Balance = 100 * CENTS;
+	pub const MaxLocks: u32 = 50;
+}
+
+impl pallet_balances::Trait for Runtime {
+	type MaxLocks = MaxLocks;
+	/// The type for recording an account's balance.
+	type Balance = Balance;
+	/// The ubiquitous event type.
+	type Event = Event;
+	type DustRemoval = ();
+	type ExistentialDeposit = ExistentialDeposit;
+	type AccountStore = System;
+	type WeightInfo = weights::pallet_balances::WeightInfo;
 }
 
 impl pallet_grandpa::Trait for Runtime {
@@ -256,23 +269,6 @@ impl pallet_timestamp::Trait for Runtime {
 	type OnTimestampSet = Babe;
 	type MinimumPeriod = MinimumPeriod;
 	type WeightInfo = weights::pallet_timestamp::WeightInfo;
-}
-
-parameter_types! {
-	pub const ExistentialDeposit: Balance = 200 * CENTS;
-	pub const MaxLocks: u32 = 50;
-}
-
-impl pallet_balances::Trait for Runtime {
-	type MaxLocks = MaxLocks;
-	/// The type for recording an account's balance.
-	type Balance = Balance;
-	/// The ubiquitous event type.
-	type Event = Event;
-	type DustRemoval = ();
-	type ExistentialDeposit = ExistentialDeposit;
-	type AccountStore = System;
-	type WeightInfo = weights::pallet_balances::WeightInfo;
 }
 
 parameter_types! {
