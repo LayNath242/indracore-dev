@@ -58,6 +58,7 @@ sc-network = { version = "0.8.0" }
 sc-authority-discovery = { version = "0.8.0" }
 sp-authority-discovery = { version = "2.0.0" }
 pallet-im-online = { version = '2.0.0' }
+telemetry = { package = "sc-telemetry", version = '2.0.0' }
 
 primitives = { package = "core-primitives", path = "../core-primitives"}
 

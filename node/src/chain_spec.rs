@@ -11,6 +11,7 @@ use sp_runtime::{
 	traits::{Verify, IdentifyAccount},
 	Perbill,
 };
+use telemetry::TelemetryEndpoints;
 use sc_service::ChainType;
 use sc_chain_spec::ChainSpecExtension;
 use serde::{Deserialize, Serialize};
@@ -19,10 +20,6 @@ use sp_consensus_babe::AuthorityId as BabeId;
 use pallet_im_online::sr25519::AuthorityId as ImOnlineId;
 use sp_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 use primitives::Balance;
-
-type AccountPublic = <Signature as Verify>::Signer;
-
-// const STAGING_TELEMETRY_URL: &str = "wss://telemetry.polkadot.io/submit/";
 
 #[derive(Default, Clone, Serialize, Deserialize, ChainSpecExtension)]
 #[serde(rename_all = "camelCase")]
@@ -33,23 +30,13 @@ pub struct Extensions {
 	pub bad_blocks: sc_client_api::BadBlocks<Block>,
 }
 
-/// Specialized `ChainSpec`. This is a specialization of the general Substrate ChainSpec type.
-pub type ChainSpec = sc_service::GenericChainSpec<GenesisConfig>;
 
+const STAGING_TELEMETRY_URL: &str = "wss://telemetry.polkadot.io/submit/";
+const DEFAULT_PROTOCOL_ID: &str = "sel";
 
-fn session_keys(
-	grandpa: GrandpaId,
-	babe: BabeId,
-	im_online: ImOnlineId,
-	authority_discovery: AuthorityDiscoveryId,
-) -> SessionKeys {
-	SessionKeys {
-		grandpa,
-		babe,
-		im_online,
-		authority_discovery,
-	}
-}
+/// Specialized `ChainSpec`.
+pub type ChainSpec = sc_service::GenericChainSpec<GenesisConfig, Extensions>;
+type AccountPublic = <Signature as Verify>::Signer;
 
 /// Generate a crypto pair from seed.
 pub fn get_from_seed<TPublic: Public>(seed: &str) -> <TPublic::Pair as Pair>::Public {
@@ -95,17 +82,36 @@ fn development_config_genesis() -> GenesisConfig {
 }
 
 pub fn development_config() -> ChainSpec {
+	let boot_nodes = vec![];
+
 	ChainSpec::from_genesis(
 		"Development",
 		"dev",
 		ChainType::Development,
 		development_config_genesis,
-		vec![],
-		None,
-		None,
+		boot_nodes,
+		Some(
+			TelemetryEndpoints::new(vec![(STAGING_TELEMETRY_URL.to_string(), 0)])
+				.expect("Indracore Staging telemetry url is valid; qed"),
+		),
+		Some(DEFAULT_PROTOCOL_ID),
 		None,
 		Default::default(),
 	)
+}
+
+fn session_keys(
+	grandpa: GrandpaId,
+	babe: BabeId,
+	im_online: ImOnlineId,
+	authority_discovery: AuthorityDiscoveryId,
+) -> SessionKeys {
+	SessionKeys {
+		grandpa,
+		babe,
+		im_online,
+		authority_discovery,
+	}
 }
 
 fn local_testnet_genesis() -> GenesisConfig {
@@ -121,14 +127,19 @@ fn local_testnet_genesis() -> GenesisConfig {
 }
 
 pub fn local_testnet_config() -> ChainSpec {
+	let boot_nodes = vec![];
+
 	ChainSpec::from_genesis(
 		"Local Testnet",
 		"local_testnet",
 		ChainType::Live,
 		local_testnet_genesis,
-		vec![],
-		None,
-		None,
+		boot_nodes,
+		Some(
+			TelemetryEndpoints::new(vec![(STAGING_TELEMETRY_URL.to_string(), 0)])
+				.expect("Indranet Staging telemetry url is valid; qed"),
+		),
+		Some(DEFAULT_PROTOCOL_ID),
 		None,
 		Default::default(),
 	)
