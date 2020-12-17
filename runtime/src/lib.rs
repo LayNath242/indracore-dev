@@ -57,7 +57,7 @@ mod weights;
 pub mod constants;
 mod impls;
 
-use impls::CurrencyToVoteHandler;
+use impls::{ CurrencyToVoteHandler, DealWithFees};
 use constants::{currency::*, time::*};
 
 pub const VERSION: RuntimeVersion = RuntimeVersion {
@@ -240,6 +240,18 @@ impl pallet_balances::Trait for Runtime {
 	type WeightInfo = weights::pallet_balances::WeightInfo;
 }
 
+parameter_types! {
+	pub const TransactionByteFee: Balance = 10 * MILLICENTS;
+}
+
+impl pallet_transaction_payment::Trait for Runtime {
+	type Currency = Balances;
+	type OnTransactionPayment = DealWithFees;
+	type TransactionByteFee = TransactionByteFee;
+	type WeightToFee = IdentityFee<Balance>;
+	type FeeMultiplierUpdate = ();
+}
+
 impl pallet_grandpa::Trait for Runtime {
 	type Event = Event;
 	type Call = Call;
@@ -269,18 +281,6 @@ impl pallet_timestamp::Trait for Runtime {
 	type OnTimestampSet = Babe;
 	type MinimumPeriod = MinimumPeriod;
 	type WeightInfo = weights::pallet_timestamp::WeightInfo;
-}
-
-parameter_types! {
-	pub const TransactionByteFee: Balance = 10 * MILLICENTS;
-}
-
-impl pallet_transaction_payment::Trait for Runtime {
-	type Currency = Balances;
-	type OnTransactionPayment = (); //dealwithfee;
-	type TransactionByteFee = TransactionByteFee;
-	type WeightToFee = IdentityFee<Balance>;
-	type FeeMultiplierUpdate = ();
 }
 
 impl pallet_sudo::Trait for Runtime {
