@@ -59,7 +59,7 @@ pub mod constants;
 
 
 use common::impls::{ CurrencyToVoteHandler, DealWithFees};
-use constants::{currency::*, time::*};
+use constants::{currency::*, time::*, fee::*};
 
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("node"),
@@ -249,7 +249,7 @@ impl pallet_transaction_payment::Trait for Runtime {
 	type Currency = Balances;
 	type OnTransactionPayment = DealWithFees;
 	type TransactionByteFee = TransactionByteFee;
-	type WeightToFee = IdentityFee<Balance>;
+	type WeightToFee = WeightToFee;
 	type FeeMultiplierUpdate = ();
 }
 
