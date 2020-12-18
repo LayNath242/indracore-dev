@@ -31,3 +31,4 @@ pub mod pallet_indices;
 pub mod pallet_identity;
 pub mod pallet_vesting;
 pub mod pallet_multisig;
+pub mod pallet_proxy;

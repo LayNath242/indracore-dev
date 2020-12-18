@@ -67,6 +67,7 @@ pallet-indices = { version = " 2.0.0", default-features = false }
 pallet-identity = { version = " 2.0.0", default-features = false }
 pallet-vesting = { version = " 2.0.0", default-features = false }
 pallet-multisig = { version = " 2.0.0", default-features = false }
+pallet-proxy = { version = " 2.0.1", default-features = false }
 
 sp-consensus-babe = { version = "0.8.0",  default-features = false }
 pallet-babe = {  version = " 2.0.0", default-features = false }
@@ -121,6 +122,7 @@ std = [
     'pallet-identity/std',
     'pallet-vesting/std',
     'pallet-multisig/std',
+    'pallet-proxy/std',
     
 ]
 
@@ -149,4 +151,5 @@ runtime-benchmarks = [
     'pallet-identity/runtime-benchmarks',
     'pallet-vesting/runtime-benchmarks',
     'pallet-multisig/std',
+    'pallet-proxy/std',
 ]

@@ -2,7 +2,7 @@
 // `construct_runtime!` does a lot of recursion and requires us to increase the limit to 256.
 #![recursion_limit="256"]
 
-use codec::Encode;
+use codec::{Decode, Encode};
 use static_assertions::const_assert;
 use sp_std::prelude::*;
 use sp_core::{
@@ -33,14 +33,15 @@ pub use pallet_staking::StakerStatus;
 pub use sp_runtime::BuildStorage;
 pub use pallet_timestamp::Call as TimestampCall;
 pub use pallet_balances::Call as BalancesCall;
-pub use frame_support::{
-	construct_runtime, parameter_types, StorageValue, debug,
-	traits::{KeyOwnerProofSystem, Randomness, LockIdentifier},
+use frame_support::{
+	construct_runtime, parameter_types, RuntimeDebug, debug,
+	traits::{KeyOwnerProofSystem, Randomness, LockIdentifier, InstanceFilter, Filter},
 	weights::{
-		Weight, IdentityFee,
+		Weight,
 		constants::{BlockExecutionWeight, ExtrinsicBaseWeight, RocksDbWeight, WEIGHT_PER_SECOND},
 	},
 };
+
 use frame_system::{EnsureOneOf, EnsureRoot};
 use pallet_session::historical as pallet_session_historical;
 
@@ -100,6 +101,27 @@ type EnsureRootOrHalfCouncil = EnsureOneOf<
 	pallet_collective::EnsureProportionMoreThan<_1, _2, AccountId, CouncilCollective>,
 >;
 
+pub struct BaseFilter;
+impl Filter<Call> for BaseFilter {
+	fn filter(call: &Call) -> bool {
+		match call {
+			// These modules are all allowed to be called by transactions:
+			Call::Democracy(_) | Call::Council(_) | Call::TechnicalCommittee(_) |
+			Call::TechnicalMembership(_) | Call::Treasury(_) | Call::Elections(_) |
+			Call::System(_) | Call::Scheduler(_) | Call::Indices(_) |
+			Call::Babe(_) | Call::Timestamp(_) | Call::Balances(_) |
+			Call::Authorship(_) | Call::Staking(_) | Call::Offences(_) |
+			Call::Session(_) | Call::Grandpa(_) | Call::ImOnline(_) |
+			Call::AuthorityDiscovery(_) |
+			Call::Utility(_) | Call::Vesting(_) |
+			Call::Identity(_) | Call::Proxy(_) | Call::Multisig(_) |
+			Call::Sudo(_)
+			=> true,
+		}
+	}
+}
+
+
 parameter_types! {
 	pub const BlockHashCount: BlockNumber = 250;
 	/// We allow for 2 seconds of compute with a 6 second average block time.
@@ -116,7 +138,7 @@ parameter_types! {
 
 impl frame_system::Trait for Runtime {
 	/// The basic call filter to use in dispatchable.
-	type BaseCallFilter = ();
+	type BaseCallFilter = BaseFilter;
 	/// The identifier used to distinguish between accounts.
 	type AccountId = AccountId;
 	/// The aggregated dispatch type that is available for extrinsics.
@@ -701,6 +723,109 @@ impl pallet_multisig::Trait for Runtime {
 	type WeightInfo = weights::pallet_multisig::WeightInfo;
 }
 
+parameter_types! {
+	// One storage item; key size 32, value size 8; .
+	pub const ProxyDepositBase: Balance = deposit(1, 8);
+	// Additional storage item size of 33 bytes.
+	pub const ProxyDepositFactor: Balance = deposit(0, 33);
+	pub const MaxProxies: u16 = 32;
+	pub const AnnouncementDepositBase: Balance = deposit(1, 8);
+	pub const AnnouncementDepositFactor: Balance = deposit(0, 66);
+	pub const MaxPending: u16 = 32;
+}
+
+
+/// The type used to represent the kinds of proxying allowed.
+#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Encode, Decode, RuntimeDebug)]
+pub enum ProxyType {
+	Any,
+	NonTransfer,
+	Governance,
+	Staking,
+}
+
+impl Default for ProxyType {
+	fn default() -> Self {
+		Self::Any
+	}
+}
+
+impl InstanceFilter<Call> for ProxyType {
+	fn filter(&self, c: &Call) -> bool {
+		match self {
+			ProxyType::Any => true,
+			ProxyType::NonTransfer => matches!(c,
+				Call::System(..) |
+				Call::Scheduler(..) |
+				Call::Babe(..) |
+				Call::Timestamp(..) |
+				Call::Indices(pallet_indices::Call::claim(..)) |
+				Call::Indices(pallet_indices::Call::free(..)) |
+				Call::Indices(pallet_indices::Call::freeze(..)) |
+				// Specifically omitting Indices `transfer`, `force_transfer`
+				// Specifically omitting the entire Balances pallet
+				Call::Authorship(..) |
+				Call::Staking(..) |
+				Call::Offences(..) |
+				Call::Session(..) |
+				Call::Grandpa(..) |
+				Call::ImOnline(..) |
+				Call::AuthorityDiscovery(..) |
+				Call::Democracy(..) |
+				Call::Council(..) |
+				Call::TechnicalCommittee(..) |
+				Call::Elections(..) |
+				Call::TechnicalMembership(..) |
+				Call::Treasury(..) |
+				Call::Vesting(pallet_vesting::Call::vest(..)) |
+				Call::Vesting(pallet_vesting::Call::vest_other(..)) |
+				// Specifically omitting Vesting `vested_transfer`, and `force_vested_transfer`
+				Call::Utility(..) |
+				Call::Identity(..) |
+				Call::Proxy(..) |
+				Call::Multisig(..)
+			),
+			ProxyType::Governance => matches!(c,
+				Call::Democracy(..) |
+				Call::Council(..) |
+				Call::TechnicalCommittee(..) |
+				Call::Elections(..) |
+				Call::Treasury(..) |
+				Call::Utility(..)
+			),
+			ProxyType::Staking => matches!(c,
+				Call::Staking(..) |
+				Call::Session(..) |
+				Call::Utility(..)
+			),
+		}
+	}
+	fn is_superset(&self, o: &Self) -> bool {
+		match (self, o) {
+			(x, y) if x == y => true,
+			(ProxyType::Any, _) => true,
+			(_, ProxyType::Any) => false,
+			(ProxyType::NonTransfer, _) => true,
+			_ => false,
+		}
+	}
+}
+
+impl pallet_proxy::Trait for Runtime {
+	type Event = Event;
+	type Call = Call;
+	type Currency = Balances;
+	type ProxyType = ProxyType;
+	type ProxyDepositBase = ProxyDepositBase;
+	type ProxyDepositFactor = ProxyDepositFactor;
+	type MaxProxies = MaxProxies;
+	type WeightInfo = weights::pallet_proxy::WeightInfo;
+	type MaxPending = MaxPending;
+	type CallHasher = BlakeTwo256;
+	type AnnouncementDepositBase = AnnouncementDepositBase;
+	type AnnouncementDepositFactor = AnnouncementDepositFactor;
+}
+
 
 impl pallet_sudo::Trait for Runtime {
 	type Event = Event;
@@ -716,7 +841,7 @@ construct_runtime!(
 		UncheckedExtrinsic = UncheckedExtrinsic
 	{
 		System: frame_system::{Module, Call, Config, Storage, Event<T>},
-		RandomnessCollectiveFlip: pallet_randomness_collective_flip::{Module, Call, Storage},
+		RandomnessCollectiveFlip: pallet_randomness_collective_flip::{Module, Storage},
 		Timestamp: pallet_timestamp::{Module, Call, Storage, Inherent},
 		Babe: pallet_babe::{Module, Call, Storage, Config, Inherent, ValidateUnsigned},
 		Grandpa: pallet_grandpa::{Module, Call, Storage, Config, Event, ValidateUnsigned},
@@ -742,6 +867,7 @@ construct_runtime!(
 		Identity: pallet_identity::{Module, Call, Storage, Event<T>},
 		Vesting: pallet_vesting::{Module, Call, Storage, Event<T>, Config<T>},
 		Multisig: pallet_multisig::{Module, Call, Storage, Event<T>},
+		Proxy: pallet_proxy::{Module, Call, Storage, Event<T>},
 	}
 );
 
@@ -1006,6 +1132,7 @@ impl_runtime_apis! {
 			add_benchmark!(params, batches, pallet_identity, Identity);
 			add_benchmark!(params, batches, pallet_vesting, Vesting);
 			add_benchmark!(params, batches, pallet_multisig, Multisig);
+			add_benchmark!(params, batches, pallet_proxy, Proxy);
 
 			if batches.is_empty() { return Err("Benchmark not found for this pallet.".into()) }
 			Ok(batches)
