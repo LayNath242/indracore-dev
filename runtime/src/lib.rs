@@ -15,7 +15,7 @@ use sp_runtime::{
 	transaction_validity::{TransactionValidity, TransactionSource, TransactionPriority},
 };
 use sp_runtime::traits::{
-	self, BlakeTwo256, Block as BlockT, IdentityLookup, 
+	self, BlakeTwo256, Block as BlockT, IdentityLookup, ConvertInto,
 	OpaqueKeys, SaturatedConversion, NumberFor, Saturating,
 };
 use sp_api::impl_runtime_apis;
