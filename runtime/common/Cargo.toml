@@ -5,16 +5,37 @@ authors = ["Selendra <nath@selendra.org>"]
 edition = "2018"
 
 [dependencies]
+static_assertions = "1.1.0"
+
+frame-system = { default-features = false, path = "../../substrate/frame/system" }
 sp-runtime = { default-features = false, path = "../../substrate/primitives/runtime" }
 frame-support = { default-features = false, path = "../../substrate/frame/support" }
 pallet-transaction-payment = { default-features = false, path = "../../substrate/frame/transaction-payment" }
 sp-io = { path = "../../substrate/primitives/io", default-features = false }
+pallet-staking = { default-features = false, path = "../../substrate/frame/staking" }
+pallet-timestamp = { default-features = false, path = "../../substrate/frame/timestamp" }
+pallet-balances = { default-features = false, path = "../../substrate/frame/balances" }
+pallet-treasury = { default-features = false, path = "../../substrate/frame/treasury" }
+sp-std = { default-features = false, path = "../../substrate/primitives/std" }
+pallet-authorship = { path = "../../substrate/frame/authorship", default-features = false }
+pallet-session = { path = "../../substrate/frame/session", default-features = false }
+
+primitives = { package = 'indracore-primitives', path = "../../primitives", default-features = false }
 
 [features]
 default = ['std']
 std = [
+    "sp-std/std",
     "sp-runtime/std",
     "frame-support/std",
     "pallet-transaction-payment/std",
     "sp-io/std",
+    "pallet-staking/std",
+    "frame-system/std",
+    "pallet-timestamp/std",
+    "pallet-balances/std",
+    "pallet-treasury/std",
+    "pallet-authorship/std",
+    "pallet-session/std",
+    "primitives/std",
 ]

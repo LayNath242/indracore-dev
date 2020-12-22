@@ -1,21 +1,21 @@
-// // Copyright 2017-2020 Parity Technologies (UK) Ltd.
-// // This file is part of Polkadot.
+// Copyright 2017-2020 Parity Technologies (UK) Ltd.
+// This file is part of Polkadot.
 
-// // Polkadot is free software: you can redistribute it and/or modify
-// // it under the terms of the GNU General Public License as published by
-// // the Free Software Foundation, either version 3 of the License, or
-// // (at your option) any later version.
+// Polkadot is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 
-// // Polkadot is distributed in the hope that it will be useful,
-// // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// // GNU General Public License for more details.
+// Polkadot is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
 
-// // You should have received a copy of the GNU General Public License
-// // along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// You should have received a copy of the GNU General Public License
+// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
 
-// //! Primitives which are necessary for parachain execution from a relay-chain
-// //! perspective.
+//! Primitives which are necessary for parachain execution from a relay-chain
+//! perspective.
 // use sp_std::prelude::*;
 // #[cfg(feature = "std")]
 // use sp_std::convert::TryInto;
@@ -31,10 +31,10 @@
 // use sp_keystore::{CryptoStore, SyncCryptoStorePtr, Error as KeystoreError};
 // use sp_core::RuntimeDebug;
 // use sp_runtime::traits::{AppVerify, Block as BlockT};
-// use sp_inherents::InherentIdentifier;
+use sp_inherents::InherentIdentifier;
 // #[cfg(feature = "std")]
 // use application_crypto::AppKey;
-// use application_crypto::KeyTypeId;
+use application_crypto::KeyTypeId;
 
 // pub use sp_runtime::traits::{BlakeTwo256, Hash as HashT, Verify, IdentifyAccount};
 // pub use core_primitives::*;
@@ -47,55 +47,55 @@
 // };
 
 
-// /// The key type ID for a collator key.
-// pub const COLLATOR_KEY_TYPE_ID: KeyTypeId = KeyTypeId(*b"coll");
+/// The key type ID for a collator key.
+pub const COLLATOR_KEY_TYPE_ID: KeyTypeId = KeyTypeId(*b"coll");
 
-// /// An identifier for inherent data that provides new minimally-attested
-// /// parachain heads.
-// pub const NEW_HEADS_IDENTIFIER: InherentIdentifier = *b"newheads";
+/// An identifier for inherent data that provides new minimally-attested
+/// parachain heads.
+pub const NEW_HEADS_IDENTIFIER: InherentIdentifier = *b"newheads";
 
-// mod collator_app {
-// 	use application_crypto::{app_crypto, sr25519};
-// 	app_crypto!(sr25519, super::COLLATOR_KEY_TYPE_ID);
-// }
+mod collator_app {
+	use application_crypto::{app_crypto, sr25519};
+	app_crypto!(sr25519, super::COLLATOR_KEY_TYPE_ID);
+}
 
-// /// Identity that collators use.
-// pub type CollatorId = collator_app::Public;
+/// Identity that collators use.
+pub type CollatorId = collator_app::Public;
 
-// /// A Parachain collator keypair.
-// #[cfg(feature = "std")]
-// pub type CollatorPair = collator_app::Pair;
+/// A Parachain collator keypair.
+#[cfg(feature = "std")]
+pub type CollatorPair = collator_app::Pair;
 
-// /// Signature on candidate's block data by a collator.
-// pub type CollatorSignature = collator_app::Signature;
+/// Signature on candidate's block data by a collator.
+pub type CollatorSignature = collator_app::Signature;
 
-// /// The key type ID for a parachain validator key.
-// pub const PARACHAIN_KEY_TYPE_ID: KeyTypeId = KeyTypeId(*b"para");
+/// The key type ID for a parachain validator key.
+pub const PARACHAIN_KEY_TYPE_ID: KeyTypeId = KeyTypeId(*b"para");
 
-// mod validator_app {
-// 	use application_crypto::{app_crypto, sr25519};
-// 	app_crypto!(sr25519, super::PARACHAIN_KEY_TYPE_ID);
-// }
+mod validator_app {
+	use application_crypto::{app_crypto, sr25519};
+	app_crypto!(sr25519, super::PARACHAIN_KEY_TYPE_ID);
+}
 
-// /// Identity that parachain validators use when signing validation messages.
-// ///
-// /// For now we assert that parachain validator set is exactly equivalent to the authority set, and
-// /// so we define it to be the same type as `SessionKey`. In the future it may have different crypto.
-// pub type ValidatorId = validator_app::Public;
+/// Identity that parachain validators use when signing validation messages.
+///
+/// For now we assert that parachain validator set is exactly equivalent to the authority set, and
+/// so we define it to be the same type as `SessionKey`. In the future it may have different crypto.
+pub type ValidatorId = validator_app::Public;
 
-// /// Index of the validator is used as a lightweight replacement of the `ValidatorId` when appropriate.
-// pub type ValidatorIndex = u32;
+/// Index of the validator is used as a lightweight replacement of the `ValidatorId` when appropriate.
+pub type ValidatorIndex = u32;
 
-// application_crypto::with_pair! {
-// 	/// A Parachain validator keypair.
-// 	pub type ValidatorPair = validator_app::Pair;
-// }
+application_crypto::with_pair! {
+	/// A Parachain validator keypair.
+	pub type ValidatorPair = validator_app::Pair;
+}
 
-// /// Signature with which parachain validators sign blocks.
-// ///
-// /// For now we assert that parachain validator set is exactly equivalent to the authority set, and
-// /// so we define it to be the same type as `SessionKey`. In the future it may have different crypto.
-// pub type ValidatorSignature = validator_app::Signature;
+/// Signature with which parachain validators sign blocks.
+///
+/// For now we assert that parachain validator set is exactly equivalent to the authority set, and
+/// so we define it to be the same type as `SessionKey`. In the future it may have different crypto.
+pub type ValidatorSignature = validator_app::Signature;
 
 // /// Retriability for a given active para.
 // #[derive(Clone, Eq, PartialEq, Encode, Decode)]

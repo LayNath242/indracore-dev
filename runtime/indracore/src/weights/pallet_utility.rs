@@ -37,20 +37,23 @@
 #![allow(unused_parens)]
 #![allow(unused_imports)]
 
+use frame_support::{traits::Get, weights::Weight};
+use sp_std::marker::PhantomData;
 
-#![allow(unused_parens)]
-#![allow(unused_imports)]
-
-use frame_support::weights::{Weight, constants::RocksDbWeight as DbWeight};
-
-pub struct WeightInfo;
-impl pallet_utility::WeightInfo for WeightInfo {
+/// Weight functions for pallet_utility.
+pub struct WeightInfo<T>(PhantomData<T>);
+impl<T: frame_system::Config> pallet_utility::WeightInfo for WeightInfo<T> {
 	fn batch(c: u32, ) -> Weight {
-		(16461000 as Weight)
-			.saturating_add((1982000 as Weight).saturating_mul(c as Weight))
+		(19_701_000 as Weight)
+			// Standard Error: 0
+			.saturating_add((2_118_000 as Weight).saturating_mul(c as Weight))
 	}
-	// WARNING! Some components were not used: ["u"]
 	fn as_derivative() -> Weight {
-		(4086000 as Weight)
+		(5_534_000 as Weight)
+	}
+	fn batch_all(c: u32, ) -> Weight {
+		(20_354_000 as Weight)
+			// Standard Error: 0
+			.saturating_add((2_124_000 as Weight).saturating_mul(c as Weight))
 	}
 }

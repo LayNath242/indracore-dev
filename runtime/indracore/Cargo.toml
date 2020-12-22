@@ -41,6 +41,8 @@ pallet-membership = { default-features = false, path = "../../substrate/frame/me
 pallet-elections-phragmen = { default-features = false, path = "../../substrate/frame/elections-phragmen" }
 pallet-democracy = { default-features = false, path = "../../substrate/frame/democracy" }
 pallet-treasury = { default-features = false, path = "../../substrate/frame/treasury" }
+pallet-bounties = { default-features = false, path = "../../substrate/frame/bounties" }
+pallet-tips = { default-features = false, path = "../../substrate/frame/tips" }
 pallet-session = { path = "../../substrate/frame/session", default-features = false, features = ["historical"] }
 pallet-staking = { default-features = false, path = "../../substrate/frame/staking" }
 pallet-staking-reward-curve = { path = "../../substrate/frame/staking/reward-curve" }
@@ -121,6 +123,8 @@ std = [
     'pallet-vesting/std',
     'pallet-multisig/std',
     'pallet-proxy/std',
+    "pallet-bounties/std",
+    "pallet-tips/std",
     
 ]
 

@@ -37,15 +37,19 @@
 #![allow(unused_parens)]
 #![allow(unused_imports)]
 
-use frame_support::weights::{Weight, constants::RocksDbWeight as DbWeight};
+use frame_support::{traits::Get, weights::Weight};
+use sp_std::marker::PhantomData;
 
-pub struct WeightInfo;
-impl pallet_im_online::WeightInfo for WeightInfo {
+/// Weight functions for pallet_im_online.
+pub struct WeightInfo<T>(PhantomData<T>);
+impl<T: frame_system::Config> pallet_im_online::WeightInfo for WeightInfo<T> {
 	fn validate_unsigned_and_then_heartbeat(k: u32, e: u32, ) -> Weight {
-		(139830000 as Weight)
-			.saturating_add((211000 as Weight).saturating_mul(k as Weight))
-			.saturating_add((654000 as Weight).saturating_mul(e as Weight))
-			.saturating_add(DbWeight::get().reads(4 as Weight))
-			.saturating_add(DbWeight::get().writes(1 as Weight))
+		(111_740_000 as Weight)
+			// Standard Error: 0
+			.saturating_add((217_000 as Weight).saturating_mul(k as Weight))
+			// Standard Error: 1_000
+			.saturating_add((510_000 as Weight).saturating_mul(e as Weight))
+			.saturating_add(T::DbWeight::get().reads(4 as Weight))
+			.saturating_add(T::DbWeight::get().writes(1 as Weight))
 	}
 }

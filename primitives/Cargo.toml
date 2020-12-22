@@ -41,6 +41,6 @@ std = [
     "sp-authority-discovery/std",
     "sp-api/std",
     "serde",
-    # "sp-keystore",
+    "sp-keystore",
     # "indracore-parachain/std",
 ]

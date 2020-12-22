@@ -25,7 +25,7 @@
 // use sp_runtime::traits::AppVerify;
 // use sp_inherents::InherentIdentifier;
 // use sp_arithmetic::traits::{BaseArithmetic, Saturating};
-// use application_crypto::KeyTypeId;
+use application_crypto::KeyTypeId;
 
 // pub use sp_runtime::traits::{BlakeTwo256, Hash as HashT};
 
@@ -35,6 +35,22 @@ pub use core_primitives::{
 	Balance, Header, Block, BlockId, UncheckedExtrinsic, Remark, DownwardMessage,
 	InboundDownwardMessage, CandidateHash, InboundHrmpMessage, OutboundHrmpMessage,
 };
+
+pub use crate::v0::{ValidatorId};
+
+/// The key type ID for parachain assignment key.
+pub const ASSIGNMENT_KEY_TYPE_ID: KeyTypeId = KeyTypeId(*b"asgn");
+
+// The public key of a keypair used by a validator for determining assignments
+/// to approve included parachain candidates.
+mod assigment_app {
+	use application_crypto::{app_crypto, sr25519};
+	app_crypto!(sr25519, super::ASSIGNMENT_KEY_TYPE_ID);
+}
+
+/// The public key of a keypair used by a validator for determining assignments
+/// to approve included parachain candidates.
+pub type AssignmentId = assigment_app::Public;
 
 // // Export some indracore_parachain primitives
 // pub use indracore_parachain::primitives::{
@@ -58,20 +74,6 @@ pub use core_primitives::{
 
 // /// Unique identifier for the Inclusion Inherent
 // pub const INCLUSION_INHERENT_IDENTIFIER: InherentIdentifier = *b"inclusn0";
-
-// /// The key type ID for parachain assignment key.
-// pub const ASSIGNMENT_KEY_TYPE_ID: KeyTypeId = KeyTypeId(*b"asgn");
-
-// // The public key of a keypair used by a validator for determining assignments
-// /// to approve included parachain candidates.
-// mod assigment_app {
-// 	use application_crypto::{app_crypto, sr25519};
-// 	app_crypto!(sr25519, super::ASSIGNMENT_KEY_TYPE_ID);
-// }
-
-// /// The public key of a keypair used by a validator for determining assignments
-// /// to approve included parachain candidates.
-// pub type AssignmentId = assigment_app::Public;
 
 // /// Get a collator signature payload on a relay-parent, block-data combo.
 // pub fn collator_signature_payload<H: AsRef<[u8]>>(
