@@ -18,7 +18,7 @@ pub use frame_support::weights::constants::ExtrinsicBaseWeight;
 
 /// Money matters.
 pub mod currency {
-	use primitives::Balance;
+	use primitives::v1::Balance;
 
 	pub const SELS: Balance = 1_000_000_000_000;
 	pub const DOLLARS: Balance = SELS / 100;       // 10_000_000_000
@@ -32,7 +32,7 @@ pub mod currency {
 
 /// Time and blocks.
 pub mod time {
-	use primitives::{Moment, BlockNumber};
+	use primitives::v1::{Moment, BlockNumber};
 	pub const MILLISECS_PER_BLOCK: Moment = 6000;
 	pub const SLOT_DURATION: Moment = MILLISECS_PER_BLOCK;
 	pub const EPOCH_DURATION_IN_BLOCKS: BlockNumber = 4 * HOURS;
@@ -48,7 +48,7 @@ pub mod time {
 
 pub mod fee {
 	pub use sp_runtime::Perbill;
-	use primitives::Balance;
+	use primitives::v1::Balance;
 	use frame_support::weights::{
 		WeightToFeePolynomial, WeightToFeeCoefficient, WeightToFeeCoefficients,
 		constants::ExtrinsicBaseWeight,

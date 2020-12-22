@@ -1,4 +1,3 @@
-
 // Copyright 2017-2020 Parity Technologies (UK) Ltd.
 // This file is part of Polkadot.
 
@@ -15,5 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Primitives which are necessary for parachain execution from a relay-chain
-//! perspective.
+//! Polkadot types shared between the runtime and the Node-side code.
+#![cfg_attr(not(feature = "std"), no_std)]
+
+pub mod v0;
+pub mod v1;

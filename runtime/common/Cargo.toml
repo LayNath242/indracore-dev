@@ -1,0 +1,20 @@
+[package]
+name = "runtime-common"
+version = "0.8.27"
+authors = ["Selendra <nath@selendra.org>"]
+edition = "2018"
+
+[dependencies]
+sp-runtime = { default-features = false, version = '2.0.0' }
+frame-support = { default-features = false, version = '2.0.0' }
+pallet-transaction-payment = { default-features = false, version = '2.0.0' }
+sp-io = { version = " 2.0.0", default-features = false }
+
+[features]
+default = ['std']
+std = [
+    "sp-runtime/std",
+    "frame-support/std",
+    "pallet-transaction-payment/std",
+    "sp-io/std",
+]

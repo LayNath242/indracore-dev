@@ -45,19 +45,20 @@ use frame_support::{
 use frame_system::{EnsureOneOf, EnsureRoot};
 use pallet_session::historical as pallet_session_historical;
 
-pub use primitives::{AccountId, Signature};
-use primitives::{AccountIndex, Balance, BlockNumber, Hash, Index, Moment};
+pub use primitives::v1::{AccountId, Signature};
+use primitives::v1::{AccountIndex, Balance, BlockNumber, Hash, Index, Moment};
 use sp_runtime::curve::PiecewiseLinear;
 use pallet_im_online::sr25519::AuthorityId as ImOnlineId;
 use sp_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 use sp_runtime::generic::Era;
 
 mod weights;
-mod common;
+mod impls;
 pub mod constants;
 
+use impls::{ CurrencyToVoteHandler, DealWithFees },
+
 use common::{ 
-	impls::{ CurrencyToVoteHandler, DealWithFees },
 	SlowAdjustingFeeUpdate,
 };
 use constants::{currency::*, time::*, fee::*};
@@ -837,7 +838,7 @@ impl pallet_sudo::Trait for Runtime {
 construct_runtime!(
 	pub enum Runtime where
 		Block = Block,
-		NodeBlock = primitives::Block,
+		NodeBlock = primitives::v1::Block,
 		UncheckedExtrinsic = UncheckedExtrinsic
 	{
 		System: frame_system::{Module, Call, Config, Storage, Event<T>},

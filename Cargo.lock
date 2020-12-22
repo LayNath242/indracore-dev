@@ -724,12 +724,10 @@ checksum = "b3a71ab494c0b5b860bdc8407ae08978052417070c2ced38573a9157ad75b8ac"
 name = "core-primitives"
 version = "2.0.0"
 dependencies = [
- "frame-system",
  "parity-scale-codec",
- "serde",
- "sp-application-crypto",
  "sp-core",
  "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -3265,7 +3263,6 @@ dependencies = [
 name = "node-indracore-runtime"
 version = "2.0.0"
 dependencies = [
- "core-primitives",
  "frame-benchmarking",
  "frame-executive",
  "frame-support",
@@ -3303,6 +3300,8 @@ dependencies = [
  "pallet-utility",
  "pallet-vesting",
  "parity-scale-codec",
+ "primitives",
+ "runtime-common",
  "serde",
  "smallvec 1.5.1",
  "sp-api",
@@ -4445,6 +4444,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "primitives"
+version = "2.0.0"
+dependencies = [
+ "bitvec",
+ "core-primitives",
+ "frame-system",
+ "parity-scale-codec",
+ "serde",
+ "sp-api",
+ "sp-application-crypto",
+ "sp-arithmetic",
+ "sp-authority-discovery",
+ "sp-core",
+ "sp-inherents",
+ "sp-runtime",
+ "sp-staking",
+ "sp-std",
+ "sp-version",
+]
+
+[[package]]
 name = "proc-macro-crate"
 version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4988,6 +5008,16 @@ checksum = "99371657d3c8e4d816fb6221db98fa408242b0b53bac08f8676a41f8554fe99f"
 dependencies = [
  "libc",
  "winapi 0.3.9",
+]
+
+[[package]]
+name = "runtime-common"
+version = "0.8.27"
+dependencies = [
+ "frame-support",
+ "pallet-transaction-payment",
+ "sp-io",
+ "sp-runtime",
 ]
 
 [[package]]

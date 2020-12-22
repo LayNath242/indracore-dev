@@ -72,8 +72,8 @@ pallet-proxy = { version = " 2.0.1", default-features = false }
 sp-consensus-babe = { version = "0.8.0",  default-features = false }
 pallet-babe = {  version = " 2.0.0", default-features = false }
 
-primitives = { package = "core-primitives", path = "../core-primitives", default-features = false }
-
+primitives = { path = "../../primitives", default-features = false }
+common = { package = "runtime-common", path = "../common", default-features = false }
 
 [features]
 default = ['std']

@@ -17,12 +17,13 @@
 //! Polkadot types shared between the runtime and the Node-side code.
 #![cfg_attr(not(feature = "std"), no_std)]
 
-pub mod v0;
-pub mod v1;
-
+use codec::{Encode, Decode};
 use sp_runtime::{
-	generic, traits::{Verify, BlakeTwo256, IdentifyAccount}, OpaqueExtrinsic, MultiSignature
+	generic, traits::{Verify, BlakeTwo256, IdentifyAccount}, MultiSignature
 };
+
+/// Opaque, encoded, unchecked extrinsic.
+pub use sp_runtime::OpaqueExtrinsic as UncheckedExtrinsic;
 
 /// An index to a block.
 pub type BlockNumber = u32;
@@ -63,6 +64,58 @@ pub type DigestItem = generic::DigestItem<Hash>;
 /// Header type.
 pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
 /// Block type.
-pub type Block = generic::Block<Header, OpaqueExtrinsic>;
+pub type Block = generic::Block<Header, UncheckedExtrinsic>;
 /// Block ID.
 pub type BlockId = generic::BlockId<Block>;
+
+/// Identifier for a chain. 32-bit should be plenty.
+pub type ChainId = u32;
+
+/// The information that goes alongside a transfer_into_parachain operation. Entirely opaque, it
+/// will generally be used for identifying the reason for the transfer. Typically it will hold the
+/// destination account to which the transfer should be credited. If still more information is
+/// needed, then this should be a hash with the pre-image presented via an off-chain mechanism on
+/// the parachain.
+pub type Remark = [u8; 32];
+
+/// Unit type wrapper around [`Hash`] that represents a candidate hash.
+///
+/// This type is produced by [`CandidateReceipt::hash`].
+///
+/// This type makes it easy to enforce that a hash is a candidate hash on the type level.
+#[derive(Clone, Copy, Encode, Decode, Hash, Eq, PartialEq, Debug, Default)]
+pub struct CandidateHash(pub Hash);
+
+/// A message sent from the relay-chain down to a parachain.
+///
+/// The size of the message is limited by the `config.max_downward_message_size` parameter.
+pub type DownwardMessage = sp_std::vec::Vec<u8>;
+
+#[derive(Encode, Decode, Clone, sp_runtime::RuntimeDebug, PartialEq, Eq, Hash)]
+pub struct OutboundHrmpMessage<Id> {
+	/// The para that will get this message in its downward message queue.
+	pub recipient: Id,
+	/// The message payload.
+	pub data: sp_std::vec::Vec<u8>,
+}
+
+/// An HRMP message seen from the perspective of a recipient.
+#[derive(Encode, Decode, Clone, sp_runtime::RuntimeDebug, PartialEq)]
+pub struct InboundHrmpMessage<BlockNumber = crate::BlockNumber> {
+	/// The block number at which this message was sent.
+	/// Specifically, it is the block number at which the candidate that sends this message was
+	/// enacted.
+	pub sent_at: BlockNumber,
+	/// The message payload.
+	pub data: sp_std::vec::Vec<u8>,
+}
+
+/// A wrapped version of `DownwardMessage`. The difference is that it has attached the block number when
+/// the message was sent.
+#[derive(Encode, Decode, Clone, sp_runtime::RuntimeDebug, PartialEq)]
+pub struct InboundDownwardMessage<BlockNumber = crate::BlockNumber> {
+	/// The block number at which this messages was put into the downward message queue.
+	pub sent_at: BlockNumber,
+	/// The actual downward message to processes.
+	pub msg: DownwardMessage,
+}

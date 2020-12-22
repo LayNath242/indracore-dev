@@ -21,7 +21,7 @@
 /// Struct that handles the conversion of Balance -> `u64`. This is used for staking's election
 /// calculation.
 
-use primitives::{Balance, AccountId};
+use primitives::v1::{Balance, AccountId};
 use sp_runtime::traits::Convert;
 use crate::{Balances, Authorship, Treasury, System };
 use frame_support::traits::{OnUnbalanced, Imbalance, Currency};
