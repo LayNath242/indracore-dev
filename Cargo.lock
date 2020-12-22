@@ -721,16 +721,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b3a71ab494c0b5b860bdc8407ae08978052417070c2ced38573a9157ad75b8ac"
 
 [[package]]
-name = "core-primitives"
-version = "2.0.0"
-dependencies = [
- "parity-scale-codec",
- "sp-core",
- "sp-runtime",
- "sp-std",
-]
-
-[[package]]
 name = "cpuid-bool"
 version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2122,6 +2112,37 @@ dependencies = [
 ]
 
 [[package]]
+name = "indracore-core-primitives"
+version = "2.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "sp-core",
+ "sp-runtime",
+ "sp-std",
+]
+
+[[package]]
+name = "indracore-primitives"
+version = "2.0.0"
+dependencies = [
+ "bitvec",
+ "frame-system",
+ "indracore-core-primitives",
+ "parity-scale-codec",
+ "serde",
+ "sp-api",
+ "sp-application-crypto",
+ "sp-arithmetic",
+ "sp-authority-discovery",
+ "sp-core",
+ "sp-inherents",
+ "sp-runtime",
+ "sp-staking",
+ "sp-std",
+ "sp-version",
+]
+
+[[package]]
 name = "instant"
 version = "0.1.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3270,6 +3291,7 @@ dependencies = [
  "frame-system-benchmarking",
  "frame-system-rpc-runtime-api",
  "hex-literal",
+ "indracore-primitives",
  "pallet-authority-discovery",
  "pallet-authorship",
  "pallet-babe",
@@ -3300,7 +3322,6 @@ dependencies = [
  "pallet-utility",
  "pallet-vesting",
  "parity-scale-codec",
- "primitives",
  "runtime-common",
  "serde",
  "smallvec 1.5.1",
@@ -3325,11 +3346,11 @@ dependencies = [
 name = "node-template"
 version = "2.0.0"
 dependencies = [
- "core-primitives",
  "derive_more",
  "frame-benchmarking",
  "frame-benchmarking-cli",
  "futures 0.3.5",
+ "indracore-primitives",
  "jsonrpc-core",
  "log",
  "node-indracore-runtime",
@@ -4441,27 +4462,6 @@ dependencies = [
  "impl-codec",
  "impl-serde",
  "uint",
-]
-
-[[package]]
-name = "primitives"
-version = "2.0.0"
-dependencies = [
- "bitvec",
- "core-primitives",
- "frame-system",
- "parity-scale-codec",
- "serde",
- "sp-api",
- "sp-application-crypto",
- "sp-arithmetic",
- "sp-authority-discovery",
- "sp-core",
- "sp-inherents",
- "sp-runtime",
- "sp-staking",
- "sp-std",
- "sp-version",
 ]
 
 [[package]]

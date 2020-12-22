@@ -60,7 +60,8 @@ sp-authority-discovery = { version = "2.0.0" }
 pallet-im-online = { version = '2.0.0' }
 telemetry = { package = "sc-telemetry", version = '2.0.0' }
 
-primitives = { package = "core-primitives", path = "../core-primitives"}
+primitives = { package = 'indracore-primitives', path = "../primitives"}
+
 
 sc-consensus-babe = '0.8.0'
 sp-consensus-babe = '0.8.0'

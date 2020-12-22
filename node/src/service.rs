@@ -23,7 +23,7 @@
 use std::sync::Arc;
 use sc_consensus_babe;
 use grandpa::{self, FinalityProofProvider as GrandpaFinalityProofProvider};
-use primitives::Block;
+use primitives::v1::Block;
 use node_indracore_runtime::RuntimeApi;
 use sc_service::{
 	config::{Role, Configuration}, error::{Error as ServiceError},

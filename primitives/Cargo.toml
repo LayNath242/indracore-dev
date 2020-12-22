@@ -1,7 +1,7 @@
 [package]
 authors = ['Selendra <nath@selendra.org>']
 edition = '2018'
-name = 'primitives'
+name = 'indracore-primitives'
 version = '2.0.0'
 
 [dependencies]
@@ -22,7 +22,7 @@ sp-api = { version = "2.0.0", default-features = false }
 sp-authority-discovery = { version = "2.0.0", default-features = false }
 
 # sp-keystore = { version = "0.8.0", path = "../keystore", optional = true }
-core-primitives = { path = "../core-primitives", default-features = false }
+core-primitives = { package = "indracore-core-primitives", path = "../core-primitives", default-features = false }
 # indracore-parachain = { path = "../../parachain", default-features = false }
 
 [features]

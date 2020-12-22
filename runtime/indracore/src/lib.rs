@@ -56,7 +56,7 @@ mod weights;
 mod impls;
 pub mod constants;
 
-use impls::{ CurrencyToVoteHandler, DealWithFees },
+use impls::{ CurrencyToVoteHandler, DealWithFees };
 
 use common::{ 
 	SlowAdjustingFeeUpdate,
