@@ -1,0 +1,14 @@
+[package]
+name = "indracore-erasure-coding"
+version = "0.8.27"
+authors = ["Selendra <nath@selendra.org>"]
+edition = "2018"
+
+[dependencies]
+primitives = { package = "indracore-primitives", path = "../../primitives" }
+
+reed_solomon = { package = "reed-solomon-erasure", version = "4.0.2" }
+parity-scale-codec = { version = "1.3.5", default-features = false, features = ["derive"] }
+sp-core = { path = "../../substrate/primitives/core"}
+trie = { package = "sp-trie", path = "../../substrate/primitives/trie" }
+thiserror = "1.0.22"
