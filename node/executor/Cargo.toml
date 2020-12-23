@@ -1,12 +1,10 @@
 [package]
 name = "node-executor"
 version = "2.0.0"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Selendra <nath@selendra.org>"]
 description = "Substrate node implementation in Rust."
 edition = "2018"
 license = "Apache-2.0"
-homepage = "https://substrate.dev"
-repository = "https://github.com/paritytech/substrate/"
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

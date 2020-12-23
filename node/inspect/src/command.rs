@@ -18,8 +18,8 @@
 
 //! Command ran by the CLI
 
-use crate::inspect::cli::{InspectCmd, InspectSubCmd};
-use crate::inspect::Inspector;
+use nodeinspect::cli::{InspectCmd, InspectSubCmd};
+use node_inspect::Inspector;
 use sc_cli::{CliConfiguration, ImportParams, Result, SharedParams};
 use sc_service::{new_full_client, Configuration, NativeExecutionDispatch};
 use sp_runtime::traits::Block;

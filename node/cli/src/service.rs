@@ -36,6 +36,40 @@ use sc_client_api::{ExecutorProvider, RemoteBackend};
 use node_executor::Executor;
 use crate::rpc;
 
+// #[derive(thiserror::Error, Debug)]
+// pub enum Error {
+// 	#[error(transparent)]
+// 	Io(#[from] std::io::Error),
+
+// 	#[error(transparent)]
+// 	AddrFormatInvalid(#[from] std::net::AddrParseError),
+
+// 	#[error(transparent)]
+// 	Sub(#[from] SubstrateServiceError),
+
+// 	#[error(transparent)]
+// 	Blockchain(#[from] sp_blockchain::Error),
+
+// 	#[error(transparent)]
+// 	Consensus(#[from] sp_consensus::Error),
+
+// 	#[error("Failed to create an overseer")]
+// 	Overseer(#[from] polkadot_overseer::SubsystemError),
+
+// 	#[error(transparent)]
+// 	Prometheus(#[from] prometheus_endpoint::PrometheusError),
+
+// 	#[error(transparent)]
+// 	Jaeger(#[from] polkadot_subsystem::jaeger::JaegerError),
+
+// 	#[cfg(feature = "full-node")]
+// 	#[error(transparent)]
+// 	Availability(#[from] AvailabilityError),
+
+// 	#[error("Authorities require the real overseer implementation")]
+// 	AuthoritiesRequireRealOverseer,
+// }
+
 type FullClient = sc_service::TFullClient<Block, RuntimeApi, Executor>;
 type FullBackend = sc_service::TFullBackend<Block>;
 type FullSelectChain = sc_consensus::LongestChain<FullBackend, Block>;
