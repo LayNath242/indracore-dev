@@ -48,7 +48,7 @@ decl_error! {
 	}
 }
 
-cldecl_module! {
+decl_module! {
 	/// A sudo wrapper to call into v1 paras module.
 	pub struct Module<T: Config> for enum Call where origin: <T as frame_system::Config>::Origin {
 		type Error = Error<T>;

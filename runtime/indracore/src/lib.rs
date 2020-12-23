@@ -14,6 +14,7 @@ use sp_runtime::{
 	Percent, ModuleId, Permill, Perbill,
 	transaction_validity::{TransactionValidity, TransactionSource, TransactionPriority},
 };
+use sp_std::collections::btree_map::BTreeMap;
 use sp_runtime::traits::{
 	self, BlakeTwo256, Block as BlockT, IdentityLookup, ConvertInto,
 	OpaqueKeys, SaturatedConversion, NumberFor, Verify,
@@ -35,29 +36,60 @@ pub use pallet_staking::StakerStatus;
 pub use sp_runtime::BuildStorage;
 pub use pallet_timestamp::Call as TimestampCall;
 pub use pallet_balances::Call as BalancesCall;
+
 use frame_support::{
 	construct_runtime, parameter_types, RuntimeDebug, debug,
 	traits::{KeyOwnerProofSystem, Randomness, LockIdentifier, InstanceFilter, Filter},
 	weights::{ Weight, constants::RocksDbWeight},
 };
-
 use frame_system::{EnsureOneOf, EnsureRoot};
 use pallet_session::historical as pallet_session_historical;
-
-pub use primitives::v1::{AccountId, Signature};
-use primitives::v1::{AccountIndex, Balance, BlockNumber, Hash, Index, Moment};
 use sp_runtime::curve::PiecewiseLinear;
 use pallet_im_online::sr25519::AuthorityId as ImOnlineId;
 use sp_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 
-mod weights;
-pub mod constants;
-
+pub use primitives::v1::{AccountId, Signature};
+use primitives::v1::{
+	AccountIndex, Balance, BlockNumber, Hash, Index,Moment,
+	GroupRotationInfo, CoreState, Id, ValidationData, ValidationCode, CandidateEvent,
+	ValidatorId, ValidatorIndex, CommittedCandidateReceipt, OccupiedCoreAssumption,
+	PersistedValidationData, InboundDownwardMessage, InboundHrmpMessage,
+	SessionInfo as SessionInfoData, SessionIndex,
+};
 use common::{ 
 	SlowAdjustingFeeUpdate, BlockWeights, BlockLength,
 	OffchainSolutionWeightLimit, BlockHashCount,
 	impls::DealWithFees, CurrencyToVote, 
 };
+use common::{paras_sudo_wrapper, paras_registrar};
+use xcm::v0::{MultiLocation, NetworkId};
+use xcm_executor::traits::IsConcrete;
+use xcm_builder::{
+	AccountId32Aliases, ChildParachainConvertsVia, SovereignSignedViaLocation,
+	CurrencyAdapter as XcmCurrencyAdapter, ChildParachainAsNative,
+	SignedAccountId32AsNative, ChildSystemParachainAsSuperuser, LocationInverter,
+};
+use indracore_parachain::primitives::Id as ParaId;
+use runtime_parachains::{
+	self,
+	runtime_api_impl::v1 as runtime_api_impl,
+};
+
+use runtime_parachains::origin as parachains_origin;
+use runtime_parachains::configuration as parachains_configuration;
+use runtime_parachains::inclusion as parachains_inclusion;
+use runtime_parachains::inclusion_inherent as parachains_inclusion_inherent;
+use runtime_parachains::initializer as parachains_initializer;
+use runtime_parachains::session_info as parachains_session_info;
+use runtime_parachains::paras as parachains_paras;
+use runtime_parachains::dmp as parachains_dmp;
+use runtime_parachains::ump as parachains_ump;
+use runtime_parachains::hrmp as parachains_hrmp;
+use runtime_parachains::scheduler as parachains_scheduler;
+use runtime_parachains::reward_points::RewardValidatorsWithEraPoints;
+
+mod weights;
+pub mod constants;
 use constants::{currency::*, time::*, fee::*};
 
 // Make the WASM binary available.
@@ -111,9 +143,12 @@ impl Filter<Call> for BaseFilter {
 			Call::Authorship(_) | Call::Staking(_) | Call::Offences(_) |
 			Call::Session(_) | Call::Grandpa(_) | Call::ImOnline(_) |
 			Call::AuthorityDiscovery(_) | Call::Tips(_) | Call::Bounties(_) |
-			Call::Utility(_) | Call::Vesting(_) |
+			Call::Utility(_) | Call::Vesting(_) | Call::Sudo(_) | 
 			Call::Identity(_) | Call::Proxy(_) | Call::Multisig(_) |
-			Call::Sudo(_)
+			Call::ParachainsConfiguration(_) |Call::Inclusion(_) |
+			Call::InclusionInherent(_) |Call::ParaScheduler(_) |Call::Paras(_) |
+			Call::Initializer(_) |Call::Dmp(_) |Call::Ump(_) |Call::Hrmp(_) |
+			Call::SessionInfo(_) |Call::Registrar(_) |Call::ParasSudoWrapper(_)
 			=> true,
 		}
 	}
@@ -821,6 +856,91 @@ impl pallet_proxy::Config for Runtime {
 	type AnnouncementDepositFactor = AnnouncementDepositFactor;
 }
 
+parameter_types! {
+	pub const ParathreadDeposit: Balance = 5 * DOLLARS;
+}
+
+impl parachains_origin::Config for Runtime {}
+
+impl parachains_configuration::Config for Runtime {}
+
+impl parachains_inclusion::Config for Runtime {
+	type Event = Event;
+	type RewardValidators = RewardValidatorsWithEraPoints<Runtime>;
+}
+
+impl parachains_paras::Config for Runtime {
+	type Origin = Origin;
+}
+
+parameter_types! {
+	pub const RocLocation: MultiLocation = MultiLocation::Null;
+	pub const RococoNetwork: NetworkId = NetworkId::Polkadot;
+	pub const Ancestry: MultiLocation = MultiLocation::Null;
+}
+
+pub type LocationConverter = (
+	ChildParachainConvertsVia<ParaId, AccountId>,
+	AccountId32Aliases<RococoNetwork, AccountId>,
+);
+
+pub type LocalAssetTransactor =
+	XcmCurrencyAdapter<
+		// Use this currency:
+		Balances,
+		// Use this currency when it is a fungible asset matching the given location or name:
+		IsConcrete<RocLocation>,
+		// We can convert the MultiLocations with our converter above:
+		LocationConverter,
+		// Our chain's account ID type (we can't get away without mentioning it explicitly):
+		AccountId,
+	>;
+
+type LocalOriginConverter = (
+	SovereignSignedViaLocation<LocationConverter, Origin>,
+	ChildParachainAsNative<parachains_origin::Origin, Origin>,
+	SignedAccountId32AsNative<RococoNetwork, Origin>,
+	ChildSystemParachainAsSuperuser<ParaId, Origin>,
+);
+
+pub struct XcmConfig;
+impl xcm_executor::Config for XcmConfig {
+	type Call = Call;
+	type XcmSender = ();
+	type AssetTransactor = LocalAssetTransactor;
+	type OriginConverter = LocalOriginConverter;
+	type IsReserve = ();
+	type IsTeleporter = ();
+	type LocationInverter = LocationInverter<Ancestry>;
+}
+
+impl parachains_session_info::Config for Runtime {}
+
+impl parachains_ump::Config for Runtime {
+	type UmpSink = crate::parachains_ump::XcmSink<XcmConfig>;
+}
+
+impl parachains_dmp::Config for Runtime {}
+
+impl parachains_hrmp::Config for Runtime {
+	type Origin = Origin;
+}
+
+impl parachains_inclusion_inherent::Config for Runtime {}
+
+impl parachains_scheduler::Config for Runtime {}
+
+impl parachains_initializer::Config for Runtime {
+	type Randomness = Babe;
+}
+
+impl paras_sudo_wrapper::Config for Runtime {}
+
+impl paras_registrar::Config for Runtime {
+	type Currency = Balances;
+	type ParathreadDeposit = ParathreadDeposit;
+	type Origin = Origin;
+}
 
 impl pallet_sudo::Config for Runtime {
 	type Event = Event;
@@ -865,6 +985,22 @@ construct_runtime!(
 		Proxy: pallet_proxy::{Module, Call, Storage, Event<T>},
 		Bounties: pallet_bounties::{Module, Call, Storage, Event<T>},
 		Tips: pallet_tips::{Module, Call, Storage, Event<T>},
+
+		// Parachains modules.
+		ParachainsOrigin: parachains_origin::{Module, Origin},
+		ParachainsConfiguration: parachains_configuration::{Module, Call, Storage, Config<T>},
+		Inclusion: parachains_inclusion::{Module, Call, Storage, Event<T>},
+		InclusionInherent: parachains_inclusion_inherent::{Module, Call, Storage, Inherent},
+		ParaScheduler: parachains_scheduler::{Module, Call, Storage},
+		Paras: parachains_paras::{Module, Call, Storage},
+		Initializer: parachains_initializer::{Module, Call, Storage},
+		Dmp: parachains_dmp::{Module, Call, Storage},
+		Ump: parachains_ump::{Module, Call, Storage},
+		Hrmp: parachains_hrmp::{Module, Call, Storage},
+		SessionInfo: parachains_session_info::{Module, Call, Storage},
+
+		Registrar: paras_registrar::{Module, Call, Storage},
+		ParasSudoWrapper: paras_sudo_wrapper::{Module, Call},
 	}
 );
 
@@ -1072,6 +1208,81 @@ impl_runtime_apis! {
 	impl sp_authority_discovery::AuthorityDiscoveryApi<Block> for Runtime {
 		fn authorities() -> Vec<AuthorityDiscoveryId> {
 			AuthorityDiscovery::authorities()
+		}
+	}
+
+	impl primitives::v1::ParachainHost<Block, Hash, BlockNumber> for Runtime {
+		fn validators() -> Vec<ValidatorId> {
+			runtime_api_impl::validators::<Runtime>()
+		}
+
+		fn validator_groups() -> (Vec<Vec<ValidatorIndex>>, GroupRotationInfo<BlockNumber>) {
+			runtime_api_impl::validator_groups::<Runtime>()
+		}
+
+		fn availability_cores() -> Vec<CoreState<Hash, BlockNumber>> {
+			runtime_api_impl::availability_cores::<Runtime>()
+		}
+
+		fn full_validation_data(para_id: Id, assumption: OccupiedCoreAssumption)
+			-> Option<ValidationData<BlockNumber>> {
+			runtime_api_impl::full_validation_data::<Runtime>(para_id, assumption)
+		}
+
+		fn persisted_validation_data(para_id: Id, assumption: OccupiedCoreAssumption)
+			-> Option<PersistedValidationData<BlockNumber>> {
+			runtime_api_impl::persisted_validation_data::<Runtime>(para_id, assumption)
+		}
+
+		fn check_validation_outputs(
+			para_id: Id,
+			outputs: primitives::v1::CandidateCommitments,
+		) -> bool {
+			runtime_api_impl::check_validation_outputs::<Runtime>(para_id, outputs)
+		}
+
+		fn session_index_for_child() -> SessionIndex {
+			runtime_api_impl::session_index_for_child::<Runtime>()
+		}
+
+		fn validation_code(para_id: Id, assumption: OccupiedCoreAssumption)
+			-> Option<ValidationCode> {
+			runtime_api_impl::validation_code::<Runtime>(para_id, assumption)
+		}
+
+		fn historical_validation_code(para_id: Id, context_height: BlockNumber)
+			-> Option<ValidationCode>
+		{
+			runtime_api_impl::historical_validation_code::<Runtime>(para_id, context_height)
+		}
+
+		fn candidate_pending_availability(para_id: Id) -> Option<CommittedCandidateReceipt<Hash>> {
+			runtime_api_impl::candidate_pending_availability::<Runtime>(para_id)
+		}
+
+		fn candidate_events() -> Vec<CandidateEvent<Hash>> {
+			runtime_api_impl::candidate_events::<Runtime, _>(|ev| {
+				match ev {
+					Event::parachains_inclusion(ev) => {
+						Some(ev)
+					}
+					_ => None,
+				}
+			})
+		}
+
+		fn session_info(index: SessionIndex) -> Option<SessionInfoData> {
+			runtime_api_impl::session_info::<Runtime>(index)
+		}
+
+		fn dmq_contents(recipient: Id) -> Vec<InboundDownwardMessage<BlockNumber>> {
+			runtime_api_impl::dmq_contents::<Runtime>(recipient)
+		}
+
+		fn inbound_hrmp_channels_contents(
+			recipient: Id
+		) -> BTreeMap<Id, Vec<InboundHrmpMessage<BlockNumber>>> {
+			runtime_api_impl::inbound_hrmp_channels_contents::<Runtime>(recipient)
 		}
 	}
 

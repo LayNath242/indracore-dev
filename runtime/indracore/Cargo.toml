@@ -74,6 +74,12 @@ sp-consensus-babe = { path = "../../substrate/primitives/consensus/babe",  defau
 
 primitives = { package = 'indracore-primitives', path = "../../primitives", default-features = false }
 common = { package = "runtime-common", path = "../common", default-features = false }
+runtime-parachains = { package = "indracore-runtime-parachains", path = "../parachains", default-features = false }
+indracore-parachain = { path = "../../parachain", default-features = false }
+xcm = { package = "xcm", path = "../../xcm", default-features = false }
+xcm-executor = { package = "xcm-executor", path = "../../xcm/xcm-executor", default-features = false }
+xcm-builder = { package = "xcm-builder", path = "../../xcm/xcm-builder", default-features = false }
+
 
 [features]
 default = ['std']
@@ -125,7 +131,11 @@ std = [
     'pallet-proxy/std',
     "pallet-bounties/std",
     "pallet-tips/std",
-    
+    "xcm/std",
+	"xcm-executor/std",
+	"xcm-builder/std",
+    "runtime-parachains/std",
+    "indracore-parachain/std",
 ]
 
 runtime-benchmarks = [

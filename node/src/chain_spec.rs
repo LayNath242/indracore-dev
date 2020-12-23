@@ -5,7 +5,7 @@ use node_indracore_runtime::{
 	SudoConfig, SystemConfig, BalancesConfig, SessionKeys,
 	CouncilConfig, TechnicalCommitteeConfig, GenesisConfig,
 	StakingConfig, SessionConfig, AuthorityDiscoveryConfig,
-	IndicesConfig, VestingConfig,
+	IndicesConfig, VestingConfig, ParachainsConfigurationConfig
 };
 use sp_finality_grandpa::AuthorityId as GrandpaId;
 use sp_runtime::{
@@ -236,6 +236,21 @@ fn testnet_genesis(
 		pallet_authority_discovery: Some(AuthorityDiscoveryConfig { keys: vec![] }),
 		pallet_indices: Some(IndicesConfig { indices: vec![] }),
 		pallet_vesting: Some(VestingConfig { vesting: vec![] }),
+		parachains_configuration: Some(ParachainsConfigurationConfig {
+			config: runtime_parachains::configuration::HostConfiguration {
+				validation_upgrade_frequency: 600u32,
+				validation_upgrade_delay: 300,
+				acceptance_period: 1200,
+				max_code_size: 5 * 1024 * 1024,
+				max_pov_size: 50 * 1024 * 1024,
+				max_head_data_size: 32 * 1024,
+				group_rotation_frequency: 20,
+				chain_availability_period: 4,
+				thread_availability_period: 4,
+				no_show_slots: 10,
+				..Default::default()
+			},
+		}),
 	}
  }
 

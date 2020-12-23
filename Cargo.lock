@@ -3654,6 +3654,7 @@ dependencies = [
  "frame-system-benchmarking",
  "frame-system-rpc-runtime-api",
  "hex-literal",
+ "indracore-parachain",
  "indracore-primitives",
  "indracore-runtime-parachains",
  "pallet-authority-discovery",
@@ -3720,6 +3721,7 @@ dependencies = [
  "frame-benchmarking-cli",
  "futures 0.3.8",
  "indracore-primitives",
+ "indracore-runtime-parachains",
  "jsonrpc-core",
  "log",
  "node-executor",
@@ -5581,6 +5583,7 @@ dependencies = [
  "frame-support",
  "frame-system",
  "indracore-primitives",
+ "indracore-runtime-parachains",
  "pallet-authorship",
  "pallet-balances",
  "pallet-session",
@@ -5588,10 +5591,12 @@ dependencies = [
  "pallet-timestamp",
  "pallet-transaction-payment",
  "pallet-treasury",
+ "parity-scale-codec",
  "sp-io",
  "sp-runtime",
  "sp-std",
  "static_assertions",
+ "xcm",
 ]
 
 [[package]]
