@@ -20,7 +20,7 @@ use node_indracore_runtime::constants::currency::*;
 use sp_consensus_babe::AuthorityId as BabeId;
 use pallet_im_online::sr25519::AuthorityId as ImOnlineId;
 use sp_authority_discovery::AuthorityId as AuthorityDiscoveryId;
-use primitives::Balance;
+use primitives::v1::Balance;
 
 #[derive(Default, Clone, Serialize, Deserialize, ChainSpecExtension)]
 #[serde(rename_all = "camelCase")]
@@ -194,6 +194,7 @@ fn testnet_genesis(
 				.collect(),
 			phantom: Default::default(),
 		}),
+		pallet_treasury: Some(Default::default()),
 		pallet_membership_Instance1:  Some(Default::default()),
 		pallet_elections_phragmen: Some(Default::default()),
 		pallet_democracy: Some(Default::default()),
