@@ -148,8 +148,14 @@ pub fn new_partial(config: &Configuration) -> Result<sc_service::PartialComponen
 	};
 
 	Ok(sc_service::PartialComponents {
-		client, backend, task_manager, keystore_container,
-		select_chain, import_queue, transaction_pool, inherent_data_providers,
+		client,
+		backend,
+		task_manager,
+		keystore_container,
+		select_chain,
+		import_queue,
+		transaction_pool,
+		inherent_data_providers,
 		other: (rpc_extensions_builder, import_setup, rpc_setup)
 	})
 }
