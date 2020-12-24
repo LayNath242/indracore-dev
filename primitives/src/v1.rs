@@ -1,4 +1,3 @@
-
 // Copyright 2017-2020 Parity Technologies (UK) Ltd.
 // This file is part of Polkadot.
 
@@ -16,6 +15,7 @@
 // along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
 
 //! V1 Primitives.
+
 use sp_std::prelude::*;
 use sp_std::collections::btree_map::BTreeMap;
 use codec::{Encode, Decode};
@@ -29,12 +29,34 @@ use application_crypto::KeyTypeId;
 
 pub use sp_runtime::traits::{BlakeTwo256, Hash as HashT};
 
-// Export some core primitives.
+// Export some core sp_core.
 pub use core_primitives::{
 	BlockNumber, Moment, Signature, AccountPublic, AccountId, AccountIndex, ChainId, Hash, Index,
 	Balance, Header, Block, BlockId, UncheckedExtrinsic, Remark, DownwardMessage,
 	InboundDownwardMessage, CandidateHash, InboundHrmpMessage, OutboundHrmpMessage,
 };
+
+// Export some indracore-parachain sp_core
+pub use indracore_parachain::primitives::{
+	Id, LOWEST_USER_ID, HrmpChannelId, UpwardMessage, HeadData, BlockData, ValidationCode,
+};
+
+// Export some basic parachain sp_core from v0.
+pub use crate::v0::{
+	CollatorId, CollatorSignature, PARACHAIN_KEY_TYPE_ID, ValidatorId, ValidatorIndex,
+	ValidatorSignature, SigningContext, Signed, ValidityAttestation,
+	CompactStatement, SignedStatement, ErasureChunk, EncodeAs,
+};
+
+// More exports from v0 for std.
+#[cfg(feature = "std")]
+pub use crate::v0::{ValidatorPair, CollatorPair};
+
+pub use sp_staking::SessionIndex;
+pub use sp_authority_discovery::AuthorityId as AuthorityDiscoveryId;
+
+/// Unique identifier for the Inclusion Inherent
+pub const INCLUSION_INHERENT_IDENTIFIER: InherentIdentifier = *b"inclusn0";
 
 /// The key type ID for parachain assignment key.
 pub const ASSIGNMENT_KEY_TYPE_ID: KeyTypeId = KeyTypeId(*b"asgn");
@@ -49,29 +71,6 @@ mod assigment_app {
 /// The public key of a keypair used by a validator for determining assignments
 /// to approve included parachain candidates.
 pub type AssignmentId = assigment_app::Public;
-
-// Export some indracore_parachain primitives
-pub use indracore_parachain::primitives::{
-	Id, LOWEST_USER_ID, HrmpChannelId, UpwardMessage, HeadData, BlockData, ValidationCode,
-};
-
-// Export some basic parachain primitives from v0.
-pub use crate::v0::{
-	CollatorId, CollatorSignature, PARACHAIN_KEY_TYPE_ID, ValidatorId, ValidatorIndex,
-	ValidatorSignature, SigningContext, Signed, ValidityAttestation,
-	CompactStatement, SignedStatement, ErasureChunk, EncodeAs,
-};
-
-// More exports from v0 for std.
-#[cfg(feature = "std")]
-pub use crate::v0::{ValidatorPair, CollatorPair};
-
-pub use sp_staking::SessionIndex;
-pub use sp_authority_discovery::AuthorityId as AuthorityDiscoveryId;
-
-
-/// Unique identifier for the Inclusion Inherent
-pub const INCLUSION_INHERENT_IDENTIFIER: InherentIdentifier = *b"inclusn0";
 
 /// Get a collator signature payload on a relay-parent, block-data combo.
 pub fn collator_signature_payload<H: AsRef<[u8]>>(
@@ -720,16 +719,37 @@ pub struct SessionInfo {
 sp_api::decl_runtime_apis! {
 	/// The API for querying the state of parachains on-chain.
 	pub trait ParachainHost<H: Decode = Hash, N: Encode + Decode = BlockNumber> {
+		// NOTE: Many runtime API are declared with `#[skip_initialize_block]`. This is because without
+		// this attribute before each runtime call, the `initialize_block` runtime API will be called.
+		// That in turns will lead to two things:
+		//
+		// (a) The frame_system module will be initialized to the next block.
+		// (b) Initialization sequences for each runtime module (pallet) will be run.
+		//
+		// (a) is undesirable because the runtime APIs are querying the state against a specific
+		// block state. However, due to that initialization the observed block number would be as if
+		// it was the next block.
+		//
+		// We dont want (b) mainly because block initialization can be very heavy. Upgrade enactment,
+		// storage migration, and whatever other logic exists in `on_initialize` will be executed
+		// if not explicitly opted out with the `#[skip_initialize_block]` attribute.
+		//
+		// Additionally, some runtime APIs may depend on state that is pruned on the `on_initialize`.
+		// At the moment of writing, this is `candidate_events`.
+
 		/// Get the current validators.
+		#[skip_initialize_block]
 		fn validators() -> Vec<ValidatorId>;
 
 		/// Returns the validator groups and rotation info localized based on the block whose state
 		/// this is invoked on. Note that `now` in the `GroupRotationInfo` should be the successor of
 		/// the number of the block.
+		#[skip_initialize_block]
 		fn validator_groups() -> (Vec<Vec<ValidatorIndex>>, GroupRotationInfo<N>);
 
 		/// Yields information on all availability cores. Cores are either free or occupied. Free
 		/// cores can have paras assigned to them.
+		#[skip_initialize_block]
 		fn availability_cores() -> Vec<CoreState<H, N>>;
 
 		/// Yields the full validation data for the given ParaId along with an assumption that
@@ -737,6 +757,7 @@ sp_api::decl_runtime_apis! {
 		///
 		/// Returns `None` if either the para is not registered or the assumption is `Freed`
 		/// and the para already occupies a core.
+		#[skip_initialize_block]
 		fn full_validation_data(para_id: Id, assumption: OccupiedCoreAssumption)
 			-> Option<ValidationData<N>>;
 
@@ -745,24 +766,29 @@ sp_api::decl_runtime_apis! {
 		///
 		/// Returns `None` if either the para is not registered or the assumption is `Freed`
 		/// and the para already occupies a core.
+		#[skip_initialize_block]
 		fn persisted_validation_data(para_id: Id, assumption: OccupiedCoreAssumption)
 			-> Option<PersistedValidationData<N>>;
 
 		/// Checks if the given validation outputs pass the acceptance criteria.
+		#[skip_initialize_block]
 		fn check_validation_outputs(para_id: Id, outputs: CandidateCommitments) -> bool;
 
 		/// Returns the session index expected at a child of the block.
 		///
 		/// This can be used to instantiate a `SigningContext`.
+		#[skip_initialize_block]
 		fn session_index_for_child() -> SessionIndex;
 
 		/// Get the session info for the given session, if stored.
+		#[skip_initialize_block]
 		fn session_info(index: SessionIndex) -> Option<SessionInfo>;
 
 		/// Fetch the validation code used by a para, making the given `OccupiedCoreAssumption`.
 		///
 		/// Returns `None` if either the para is not registered or the assumption is `Freed`
 		/// and the para already occupies a core.
+		#[skip_initialize_block]
 		fn validation_code(para_id: Id, assumption: OccupiedCoreAssumption)
 			-> Option<ValidationCode>;
 
@@ -771,31 +797,33 @@ sp_api::decl_runtime_apis! {
 		///
 		/// `context_height` may be no greater than the height of the block in whose
 		/// state the runtime API is executed.
+		#[skip_initialize_block]
 		fn historical_validation_code(para_id: Id, context_height: N)
 			-> Option<ValidationCode>;
 
 		/// Get the receipt of a candidate pending availability. This returns `Some` for any paras
 		/// assigned to occupied cores in `availability_cores` and `None` otherwise.
+		#[skip_initialize_block]
 		fn candidate_pending_availability(para_id: Id) -> Option<CommittedCandidateReceipt<H>>;
 
 		/// Get a vector of events concerning candidates that occurred within a block.
-		// NOTE: this needs to skip block initialization as events are wiped within block
-		// initialization.
 		#[skip_initialize_block]
 		fn candidate_events() -> Vec<CandidateEvent<H>>;
 
 		/// Get all the pending inbound messages in the downward message queue for a para.
+		#[skip_initialize_block]
 		fn dmq_contents(
 			recipient: Id,
 		) -> Vec<InboundDownwardMessage<N>>;
 
 		/// Get the contents of all channels addressed to the given recipient. Channels that have no
 		/// messages in them are also included.
+		#[skip_initialize_block]
 		fn inbound_hrmp_channels_contents(recipient: Id) -> BTreeMap<Id, Vec<InboundHrmpMessage<N>>>;
 	}
 }
 
-/// Custom validity errors used in Polkadot while validating transactions.
+/// Custom validity errors used in indracore while validating transactions.
 #[repr(u8)]
 pub enum ValidityError {
 	/// The Ethereum signature is invalid.

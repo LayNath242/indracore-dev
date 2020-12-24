@@ -17,4 +17,4 @@ indracore-node-subsystem = { path = "../../subsystem" }
 indracore-node-subsystem-util = { path = "../../subsystem-util" }
 
 [dev-dependencies]
-sp-core = { path = "../../../substrate/primitives/keystore" }
+sp-core = { path = "../../../substrate/primitives/core" }

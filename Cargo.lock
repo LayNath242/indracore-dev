@@ -156,9 +156,9 @@ dependencies = [
 
 [[package]]
 name = "arrayvec"
-version = "0.5.1"
+version = "0.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cff77d8686867eceff3105329d4698d96c2391c176d5d03adc90c7389162b5b8"
+checksum = "23b62fc65de8e4e7f52534fb52b0f3ed04746ae267519eef2a83941e8085068b"
 
 [[package]]
 name = "asn1_der"
@@ -318,9 +318,9 @@ dependencies = [
 
 [[package]]
 name = "async-trait"
-version = "0.1.38"
+version = "0.1.42"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6e1a4a2f97ce50c9d0282c1468816208588441492b40d813b2e0419c22c05e7f"
+checksum = "8d3a45e77e34375a7923b1e8febb049bb011f064714a8e17a1a616fef01da13d"
 dependencies = [
  "proc-macro2 1.0.24",
  "quote 1.0.7",
@@ -424,7 +424,7 @@ dependencies = [
  "cfg-if 0.1.10",
  "clang-sys",
  "clap",
- "env_logger",
+ "env_logger 0.7.1",
  "lazy_static",
  "lazycell",
  "log",
@@ -483,7 +483,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d8fb2d74254a3a0b5cac33ac9f8ed0e44aa50378d9dbb2e5d83bd21ed1dc2c8a"
 dependencies = [
  "arrayref",
- "arrayvec 0.5.1",
+ "arrayvec 0.5.2",
  "constant_time_eq",
 ]
 
@@ -1275,7 +1275,20 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "44533bbbb3bb3c1fa17d9f2e4e38bbbaf8396ba82193c4cb1b6445d711445d36"
 dependencies = [
  "atty",
- "humantime",
+ "humantime 1.3.0",
+ "log",
+ "regex",
+ "termcolor",
+]
+
+[[package]]
+name = "env_logger"
+version = "0.8.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f26ecb66b4bdca6c1409b40fb255eefc2bd4f6d135dab3c3124f80ffa2a9661e"
+dependencies = [
+ "atty",
+ "humantime 2.0.1",
  "log",
  "regex",
  "termcolor",
@@ -1385,12 +1398,28 @@ dependencies = [
 ]
 
 [[package]]
+name = "femme"
+version = "2.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2af1a24f391a5a94d756db5092c6576aad494b88a71a5a36b20c67b63e0df034"
+dependencies = [
+ "cfg-if 0.1.10",
+ "js-sys",
+ "log",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "wasm-bindgen",
+ "web-sys",
+]
+
+[[package]]
 name = "file-per-thread-logger"
 version = "0.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8b3937f028664bd0e13df401ba49a4567ccda587420365823242977f06609ed1"
 dependencies = [
- "env_logger",
+ "env_logger 0.7.1",
  "log",
 ]
 
@@ -2166,6 +2195,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "humantime"
+version = "2.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3c1ad908cc71012b7bea4d0c53ba96a8cba9962f048fa68d143376143d863b7a"
+
+[[package]]
 name = "hyper"
 version = "0.12.35"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2338,13 +2373,83 @@ dependencies = [
 
 [[package]]
 name = "indexmap"
-version = "1.5.0"
+version = "1.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5b88cd59ee5f71fea89a62248fc8f387d44400cefe05ef548466d61ced9029a7"
+checksum = "4fb1fa934250de4de8aef298d81c729a7d33d8c239daa3a7575e6b92bfc7313b"
 dependencies = [
  "autocfg 1.0.0",
- "hashbrown 0.8.1",
+ "hashbrown 0.9.1",
  "serde",
+]
+
+[[package]]
+name = "indracore-availability-bitfield-distribution"
+version = "0.1.0"
+dependencies = [
+ "assert_matches",
+ "bitvec",
+ "env_logger 0.8.2",
+ "futures 0.3.8",
+ "indracore-node-network-protocol",
+ "indracore-node-subsystem",
+ "indracore-node-subsystem-test-helpers",
+ "indracore-node-subsystem-util",
+ "indracore-primitives",
+ "log",
+ "maplit",
+ "parity-scale-codec",
+ "sp-application-crypto",
+ "sp-core",
+ "sp-keystore",
+ "tracing",
+ "tracing-futures",
+]
+
+[[package]]
+name = "indracore-availability-distribution"
+version = "0.1.0"
+dependencies = [
+ "assert_matches",
+ "futures 0.3.8",
+ "indracore-erasure-coding",
+ "indracore-node-network-protocol",
+ "indracore-node-subsystem",
+ "indracore-node-subsystem-test-helpers",
+ "indracore-node-subsystem-util",
+ "indracore-primitives",
+ "maplit",
+ "parity-scale-codec",
+ "sc-keystore",
+ "sp-application-crypto",
+ "sp-core",
+ "sp-keyring",
+ "sp-keystore",
+ "sp-tracing",
+ "thiserror",
+ "tracing",
+ "tracing-futures",
+]
+
+[[package]]
+name = "indracore-collator-protocol"
+version = "0.1.0"
+dependencies = [
+ "assert_matches",
+ "env_logger 0.8.2",
+ "futures 0.3.8",
+ "futures-timer 3.0.2",
+ "indracore-node-network-protocol",
+ "indracore-node-subsystem",
+ "indracore-node-subsystem-test-helpers",
+ "indracore-node-subsystem-util",
+ "indracore-primitives",
+ "log",
+ "smallvec 1.5.1",
+ "sp-core",
+ "sp-keyring",
+ "thiserror",
+ "tracing",
+ "tracing-futures",
 ]
 
 [[package]]
@@ -2355,6 +2460,328 @@ dependencies = [
  "sp-core",
  "sp-runtime",
  "sp-std",
+]
+
+[[package]]
+name = "indracore-erasure-coding"
+version = "0.8.27"
+dependencies = [
+ "indracore-primitives",
+ "parity-scale-codec",
+ "reed-solomon-erasure",
+ "sp-core",
+ "sp-trie",
+ "thiserror",
+]
+
+[[package]]
+name = "indracore-network-bridge"
+version = "0.1.0"
+dependencies = [
+ "assert_matches",
+ "async-trait",
+ "futures 0.3.8",
+ "indracore-node-network-protocol",
+ "indracore-node-subsystem",
+ "indracore-node-subsystem-test-helpers",
+ "indracore-primitives",
+ "parity-scale-codec",
+ "parking_lot 0.11.1",
+ "sc-authority-discovery",
+ "sc-network",
+ "sp-core",
+ "sp-keyring",
+ "tracing",
+ "tracing-futures",
+]
+
+[[package]]
+name = "indracore-node-collation-generation"
+version = "0.1.0"
+dependencies = [
+ "futures 0.3.8",
+ "indracore-erasure-coding",
+ "indracore-node-primitives",
+ "indracore-node-subsystem",
+ "indracore-node-subsystem-test-helpers",
+ "indracore-node-subsystem-util",
+ "indracore-primitives",
+ "sp-core",
+ "thiserror",
+ "tracing",
+ "tracing-futures",
+]
+
+[[package]]
+name = "indracore-node-core-av-store"
+version = "0.1.0"
+dependencies = [
+ "assert_matches",
+ "env_logger 0.8.2",
+ "futures 0.3.8",
+ "futures-timer 3.0.2",
+ "indracore-erasure-coding",
+ "indracore-node-subsystem",
+ "indracore-node-subsystem-test-helpers",
+ "indracore-node-subsystem-util",
+ "indracore-overseer",
+ "indracore-primitives",
+ "kvdb",
+ "kvdb-memorydb",
+ "kvdb-rocksdb",
+ "log",
+ "parity-scale-codec",
+ "sc-service",
+ "smallvec 1.5.1",
+ "sp-core",
+ "thiserror",
+ "tracing",
+ "tracing-futures",
+]
+
+[[package]]
+name = "indracore-node-core-bitfield-signing"
+version = "0.1.0"
+dependencies = [
+ "futures 0.3.8",
+ "indracore-node-subsystem",
+ "indracore-node-subsystem-util",
+ "indracore-primitives",
+ "sp-keystore",
+ "thiserror",
+ "tracing",
+ "tracing-futures",
+ "wasm-timer",
+]
+
+[[package]]
+name = "indracore-node-core-candidate-selection"
+version = "0.1.0"
+dependencies = [
+ "futures 0.3.8",
+ "indracore-node-subsystem",
+ "indracore-node-subsystem-util",
+ "indracore-primitives",
+ "sp-core",
+ "sp-keystore",
+ "thiserror",
+ "tracing",
+ "tracing-futures",
+]
+
+[[package]]
+name = "indracore-node-core-candidate-validation"
+version = "0.1.0"
+dependencies = [
+ "assert_matches",
+ "futures 0.3.8",
+ "indracore-node-primitives",
+ "indracore-node-subsystem",
+ "indracore-node-subsystem-test-helpers",
+ "indracore-node-subsystem-util",
+ "indracore-parachain",
+ "indracore-primitives",
+ "parity-scale-codec",
+ "sp-core",
+ "sp-keyring",
+ "tracing",
+ "tracing-futures",
+]
+
+[[package]]
+name = "indracore-node-core-chain-api"
+version = "0.1.0"
+dependencies = [
+ "futures 0.3.8",
+ "indracore-node-subsystem",
+ "indracore-node-subsystem-test-helpers",
+ "indracore-node-subsystem-util",
+ "indracore-primitives",
+ "maplit",
+ "sp-blockchain",
+ "sp-core",
+ "tracing",
+ "tracing-futures",
+]
+
+[[package]]
+name = "indracore-node-core-proposer"
+version = "0.1.0"
+dependencies = [
+ "futures 0.3.8",
+ "futures-timer 3.0.2",
+ "indracore-node-subsystem",
+ "indracore-overseer",
+ "indracore-primitives",
+ "sc-basic-authorship",
+ "sc-block-builder",
+ "sc-client-api",
+ "sp-api",
+ "sp-blockchain",
+ "sp-consensus",
+ "sp-core",
+ "sp-inherents",
+ "sp-runtime",
+ "sp-transaction-pool",
+ "substrate-prometheus-endpoint",
+ "tracing",
+]
+
+[[package]]
+name = "indracore-node-core-provisioner"
+version = "0.1.0"
+dependencies = [
+ "bitvec",
+ "futures 0.3.8",
+ "futures-timer 3.0.2",
+ "indracore-node-subsystem",
+ "indracore-node-subsystem-util",
+ "indracore-primitives",
+ "sp-application-crypto",
+ "sp-keystore",
+ "thiserror",
+ "tracing",
+ "tracing-futures",
+]
+
+[[package]]
+name = "indracore-node-core-runtime-api"
+version = "0.1.0"
+dependencies = [
+ "futures 0.3.8",
+ "indracore-node-subsystem",
+ "indracore-node-subsystem-test-helpers",
+ "indracore-node-subsystem-util",
+ "indracore-primitives",
+ "sp-api",
+ "sp-core",
+ "tracing",
+ "tracing-futures",
+]
+
+[[package]]
+name = "indracore-node-network-protocol"
+version = "0.1.0"
+dependencies = [
+ "indracore-node-primitives",
+ "indracore-primitives",
+ "parity-scale-codec",
+ "sc-network",
+]
+
+[[package]]
+name = "indracore-node-primitives"
+version = "0.1.0"
+dependencies = [
+ "futures 0.3.8",
+ "indracore-primitives",
+ "indracore-statement-table",
+ "parity-scale-codec",
+ "sp-consensus-vrf",
+ "sp-core",
+ "sp-runtime",
+]
+
+[[package]]
+name = "indracore-node-subsystem"
+version = "0.1.0"
+dependencies = [
+ "assert_matches",
+ "async-std",
+ "async-trait",
+ "derive_more",
+ "futures 0.3.8",
+ "futures-timer 3.0.2",
+ "indracore-node-network-protocol",
+ "indracore-node-primitives",
+ "indracore-node-subsystem-test-helpers",
+ "indracore-primitives",
+ "indracore-statement-table",
+ "lazy_static",
+ "log",
+ "mick-jaeger",
+ "parity-scale-codec",
+ "parking_lot 0.11.1",
+ "pin-project 1.0.2",
+ "sc-network",
+ "smallvec 1.5.1",
+ "sp-core",
+ "substrate-prometheus-endpoint",
+ "thiserror",
+ "tracing",
+ "tracing-futures",
+]
+
+[[package]]
+name = "indracore-node-subsystem-test-helpers"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "futures 0.3.8",
+ "futures-timer 3.0.2",
+ "indracore-node-primitives",
+ "indracore-node-subsystem",
+ "indracore-node-subsystem-util",
+ "indracore-overseer",
+ "indracore-primitives",
+ "indracore-statement-table",
+ "parity-scale-codec",
+ "parking_lot 0.11.1",
+ "pin-project 1.0.2",
+ "sc-network",
+ "smallvec 1.5.1",
+ "sp-core",
+ "tracing",
+ "tracing-futures",
+]
+
+[[package]]
+name = "indracore-node-subsystem-util"
+version = "0.1.0"
+dependencies = [
+ "assert_matches",
+ "async-trait",
+ "env_logger 0.8.2",
+ "futures 0.3.8",
+ "futures-timer 3.0.2",
+ "indracore-node-primitives",
+ "indracore-node-subsystem",
+ "indracore-node-subsystem-test-helpers",
+ "indracore-primitives",
+ "log",
+ "parity-scale-codec",
+ "parking_lot 0.11.1",
+ "pin-project 1.0.2",
+ "sc-network",
+ "sp-application-crypto",
+ "sp-core",
+ "sp-keystore",
+ "streamunordered",
+ "substrate-prometheus-endpoint",
+ "thiserror",
+ "tracing",
+ "tracing-futures",
+]
+
+[[package]]
+name = "indracore-overseer"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "femme",
+ "futures 0.3.8",
+ "futures-timer 3.0.2",
+ "indracore-node-network-protocol",
+ "indracore-node-primitives",
+ "indracore-node-subsystem",
+ "indracore-node-subsystem-util",
+ "indracore-primitives",
+ "kv-log-macro",
+ "sc-client-api",
+ "sp-core",
+ "streamunordered",
+ "tracing",
+ "tracing-futures",
 ]
 
 [[package]]
@@ -2377,6 +2804,27 @@ dependencies = [
  "sp-std",
  "sp-wasm-interface",
  "thiserror",
+]
+
+[[package]]
+name = "indracore-pov-distribution"
+version = "0.1.0"
+dependencies = [
+ "assert_matches",
+ "env_logger 0.8.2",
+ "futures 0.3.8",
+ "indracore-node-network-protocol",
+ "indracore-node-subsystem",
+ "indracore-node-subsystem-test-helpers",
+ "indracore-node-subsystem-util",
+ "indracore-primitives",
+ "log",
+ "smallvec 1.5.1",
+ "sp-core",
+ "sp-keyring",
+ "thiserror",
+ "tracing",
+ "tracing-futures",
 ]
 
 [[package]]
@@ -2453,6 +2901,39 @@ dependencies = [
 ]
 
 [[package]]
+name = "indracore-statement-distribution"
+version = "0.1.0"
+dependencies = [
+ "arrayvec 0.5.2",
+ "assert_matches",
+ "futures 0.3.8",
+ "indexmap",
+ "indracore-node-network-protocol",
+ "indracore-node-primitives",
+ "indracore-node-subsystem",
+ "indracore-node-subsystem-test-helpers",
+ "indracore-node-subsystem-util",
+ "indracore-primitives",
+ "sc-keystore",
+ "sp-application-crypto",
+ "sp-core",
+ "sp-keyring",
+ "sp-keystore",
+ "sp-staking",
+ "tracing",
+ "tracing-futures",
+]
+
+[[package]]
+name = "indracore-statement-table"
+version = "0.8.27"
+dependencies = [
+ "indracore-primitives",
+ "parity-scale-codec",
+ "sp-core",
+]
+
+[[package]]
 name = "instant"
 version = "0.1.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2460,6 +2941,12 @@ checksum = "63312a18f7ea8760cdd0a7c5aac1a619752a246b833545e3e36d1f81f7cd9e66"
 dependencies = [
  "cfg-if 0.1.10",
 ]
+
+[[package]]
+name = "integer-encoding"
+version = "1.1.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4f4ebd0bd29be0f11973e9b3e219005661042a019fd757798c36a47c87852625"
 
 [[package]]
 name = "integer-sqrt"
@@ -2948,7 +3435,7 @@ version = "0.26.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6506b7b7982f7626fc96a91bc61be4b1fe7ae9ac23824f0ecefcce21cb39238c"
 dependencies = [
- "arrayvec 0.5.1",
+ "arrayvec 0.5.2",
  "bytes 0.5.6",
  "either",
  "fnv",
@@ -3415,6 +3902,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "mick-jaeger"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4247b181b96e62eacb5a1e7a2f1a39a78b945cb0434c0fceaae4ed1882555957"
+dependencies = [
+ "futures 0.3.8",
+ "rand 0.7.3",
+ "thrift",
+]
+
+[[package]]
 name = "minicbor"
 version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3713,6 +4211,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "node-inspect"
+version = "0.8.0"
+dependencies = [
+ "derive_more",
+ "log",
+ "parity-scale-codec",
+ "sc-cli",
+ "sc-client-api",
+ "sc-service",
+ "sp-blockchain",
+ "sp-core",
+ "sp-runtime",
+ "structopt",
+]
+
+[[package]]
 name = "node-template"
 version = "2.0.0"
 dependencies = [
@@ -3720,12 +4234,32 @@ dependencies = [
  "frame-benchmarking",
  "frame-benchmarking-cli",
  "futures 0.3.8",
+ "indracore-availability-bitfield-distribution",
+ "indracore-availability-distribution",
+ "indracore-collator-protocol",
+ "indracore-network-bridge",
+ "indracore-node-collation-generation",
+ "indracore-node-core-av-store",
+ "indracore-node-core-bitfield-signing",
+ "indracore-node-core-candidate-selection",
+ "indracore-node-core-candidate-validation",
+ "indracore-node-core-chain-api",
+ "indracore-node-core-proposer",
+ "indracore-node-core-provisioner",
+ "indracore-node-core-runtime-api",
+ "indracore-node-subsystem",
+ "indracore-node-subsystem-util",
+ "indracore-overseer",
+ "indracore-parachain",
+ "indracore-pov-distribution",
  "indracore-primitives",
  "indracore-runtime-parachains",
+ "indracore-statement-distribution",
  "jsonrpc-core",
  "log",
  "node-executor",
  "node-indracore-runtime",
+ "node-inspect",
  "pallet-im-online",
  "pallet-transaction-payment-rpc",
  "parity-scale-codec",
@@ -3766,6 +4300,7 @@ dependencies = [
  "structopt",
  "substrate-build-script-utils",
  "substrate-frame-rpc-system",
+ "thiserror",
 ]
 
 [[package]]
@@ -3911,6 +4446,15 @@ name = "openssl-probe"
 version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "77af24da69f9d9341038eba93a073b1fdaaa1b788221b00a69bce9e762cb32de"
+
+[[package]]
+name = "ordered-float"
+version = "1.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3305af35278dd29f46fcdd139e0b1fbfae2153f0e5928b39b035542dd31e37b7"
+dependencies = [
+ "num-traits 0.2.12",
+]
 
 [[package]]
 name = "output_vt100"
@@ -4555,7 +5099,7 @@ version = "1.3.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7c740e5fbcb6847058b40ac7e5574766c6388f585e184d769910fe0d3a2ca861"
 dependencies = [
- "arrayvec 0.5.1",
+ "arrayvec 0.5.2",
  "bitvec",
  "byte-slice-cast",
  "parity-scale-codec-derive",
@@ -5157,7 +5701,7 @@ version = "0.9.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a44883e74aa97ad63db83c4bf8ca490f02b2fc02f92575e720c8551e843c945f"
 dependencies = [
- "env_logger",
+ "env_logger 0.7.1",
  "log",
  "rand 0.7.3",
  "rand_core 0.5.1",
@@ -5453,6 +5997,15 @@ dependencies = [
  "getrandom",
  "redox_syscall",
  "rust-argon2",
+]
+
+[[package]]
+name = "reed-solomon-erasure"
+version = "4.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a415a013dd7c5d4221382329a5a3482566da675737494935cbbbcdec04662f9d"
+dependencies = [
+ "smallvec 1.5.1",
 ]
 
 [[package]]
@@ -6797,7 +7350,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "021b403afe70d81eea68f6ea12f6b3c9588e5d536a94c3bf80f15e7faa267862"
 dependencies = [
  "arrayref",
- "arrayvec 0.5.1",
+ "arrayvec 0.5.2",
  "curve25519-dalek 2.1.0",
  "getrandom",
  "merlin",
@@ -7925,6 +8478,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "streamunordered"
+version = "0.5.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f9394ee1338fee8370bee649f8a7170b3a56917903a0956467ad192dcf8699ca"
+dependencies = [
+ "futures-core",
+ "futures-sink",
+ "futures-util",
+ "slab",
+]
+
+[[package]]
 name = "string"
 version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -8333,6 +8898,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d050e60b33d41c19108b32cea32164033a9013fe3b46cbd4457559bfbf77afaa"
 dependencies = [
  "num_cpus",
+]
+
+[[package]]
+name = "thrift"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0c6d965454947cc7266d22716ebfd07b18d84ebaf35eec558586bbb2a8cb6b5b"
+dependencies = [
+ "byteorder",
+ "integer-encoding",
+ "log",
+ "ordered-float",
+ "threadpool",
 ]
 
 [[package]]
@@ -9048,6 +9626,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f3edbcc9536ab7eababcc6d2374a0b7bfe13a2b6d562c5e07f370456b1a8f33d"
 dependencies = [
  "cfg-if 0.1.10",
+ "serde",
+ "serde_json",
  "wasm-bindgen-macro",
 ]
 

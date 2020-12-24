@@ -16,7 +16,7 @@ sc-block-builder = { path = "../../../substrate/client/block-builder" }
 sc-client-api = { path = "../../../substrate/client/api" }
 sp-api = { path = "../../../substrate/primitives/api" }
 sp-blockchain = { path = "../../../substrate/primitives/blockchain" }
-sp-consensus = { path = "../../../substrate/primitives/consensus" }
+sp-consensus = { path = "../../../substrate/primitives/consensus/common" }
 sp-core = { path = "../../../substrate/primitives/core" }
 sp-inherents = { path = "../../../substrate/primitives/inherents" }
 sp-runtime = { path = "../../../substrate/primitives/runtime" }

@@ -16,6 +16,7 @@
 
 //! Primitives which are necessary for parachain execution from a relay-chain
 //! perspective.
+
 use sp_std::prelude::*;
 #[cfg(feature = "std")]
 use sp_std::convert::TryInto;
@@ -25,7 +26,6 @@ use codec::{Encode, Decode};
 use bitvec::vec::BitVec;
 #[cfg(feature = "std")]
 use serde::{Serialize, Deserialize};
-
 
 #[cfg(feature = "std")]
 use sp_keystore::{CryptoStore, SyncCryptoStorePtr, Error as KeystoreError};
@@ -40,12 +40,10 @@ pub use sp_runtime::traits::{BlakeTwo256, Hash as HashT, Verify, IdentifyAccount
 pub use core_primitives::*;
 pub use codec::Compact;
 
-
 pub use indracore_parachain::primitives::{
 	Id, LOWEST_USER_ID, UpwardMessage, HeadData, BlockData,
 	ValidationCode,
 };
-
 
 /// The key type ID for a collator key.
 pub const COLLATOR_KEY_TYPE_ID: KeyTypeId = KeyTypeId(*b"coll");
@@ -216,7 +214,6 @@ pub struct LocalValidationData<N = BlockNumber> {
 	/// block.
 	pub code_upgrade_allowed: Option<N>,
 }
-
 
 /// Commitments made in a `CandidateReceipt`. Many of these are outputs of validation.
 #[derive(PartialEq, Eq, Clone, Encode, Decode)]
@@ -795,7 +792,7 @@ pub mod id {
 /// This helper trait ensures that we can encode Statement as CompactStatement,
 /// and anything as itself.
 ///
-/// This resembles `parity_scale_codec::EncodeLike`, but it's distinct:
+/// This resembles `codec::EncodeLike`, but it's distinct:
 /// EncodeLike is a marker trait which asserts at the typesystem level that
 /// one type's encoding is a valid encoding for another type. It doesn't
 /// perform any type conversion when encoding.
@@ -926,7 +923,7 @@ impl<Payload: EncodeAs<RealPayload>, RealPayload: Encode> Signed<Payload, RealPa
 	}
 }
 
-/// Custom validity errors used in Polkadot while validating transactions.
+/// Custom validity errors used in indracore while validating transactions.
 #[repr(u8)]
 pub enum ValidityError {
 	/// The Ethereum signature is invalid.
@@ -973,6 +970,7 @@ pub mod fisherman {
 		type GenericPublic = sp_core::sr25519::Public;
 	}
 }
+
 
 #[cfg(test)]
 mod tests {
