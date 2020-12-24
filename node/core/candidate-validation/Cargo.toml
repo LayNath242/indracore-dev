@@ -1,0 +1,25 @@
+[package]
+name = "indracore-node-core-candidate-validation"
+version = "0.1.0"
+authors = ["Selendra <nath@selendra.org>"]
+edition = "2018"
+
+[dependencies]
+futures = "0.3.8"
+tracing = "0.1.22"
+tracing-futures = "0.2.4"
+
+sp-core = { path = "../../../substrate/primitives/core" }
+parity-scale-codec = { version = "1.3.5", default-features = false, features = ["bit-vec", "derive"] }
+
+indracore-primitives = { path = "../../../primitives" }
+indracore-parachain = { path = "../../../parachain" }
+indracore-node-primitives = { path = "../../primitives" }
+indracore-subsystem = { package = "indracore-node-subsystem", path = "../../subsystem" }
+indracore-node-subsystem-util = { path = "../../subsystem-util" }
+
+[dev-dependencies]
+sp-keyring = {path = "../../../substrate/primitives/keyring" }
+futures = { version = "0.3.8", features = ["thread-pool"] }
+assert_matches = "1.4.0"
+indracore-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
