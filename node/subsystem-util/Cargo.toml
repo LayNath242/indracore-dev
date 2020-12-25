@@ -1,7 +1,7 @@
 [package]
 name = "indracore-node-subsystem-util"
 version = "0.1.0"
-authors = ["Selendra <nath@selendra.org>"]
+authors = ["Selendra <info@selendra.org>"]
 edition = "2018"
 description = "Subsystem traits and message definitions"
 
@@ -21,8 +21,8 @@ indracore-node-primitives = { path = "../primitives" }
 indracore-node-subsystem = { path = "../subsystem" }
 indracore-primitives = { path = "../../primitives" }
 
-sc-network = { path = "../../substrate/client/network" }
-sp-core = { path = "../../substrate/primitives/core"}
+sc-network = { path = "../../substrate/client/network"}
+sp-core = { path = "../../substrate/primitives/core" }
 sp-application-crypto = { path = "../../substrate/primitives/application-crypto" }
 sp-keystore = { path = "../../substrate/primitives/keystore" }
 substrate-prometheus-endpoint = { path = "../../substrate/utils/prometheus" }

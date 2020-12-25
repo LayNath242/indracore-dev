@@ -102,7 +102,7 @@ pub enum NetworkAction {
 /// An abstraction over networking for the purposes of this subsystem.
 pub trait Network: Send + 'static {
 	/// Get a stream of all events occurring on the network. This may include events unrelated
-	/// to the indracore protocol - the user of this function should filter only for events related
+	/// to the Indracore protocol - the user of this function should filter only for events related
 	/// to the [`VALIDATION_PROTOCOL_NAME`](VALIDATION_PROTOCOL_NAME)
 	/// or [`COLLATION_PROTOCOL_NAME`](COLLATION_PROTOCOL_NAME)
 	fn event_stream(&mut self) -> BoxStream<'static, NetworkEvent>;

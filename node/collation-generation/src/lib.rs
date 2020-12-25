@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
 
-//! The collation generation subsystem is the interface between polkadot and the collators.
+//! The collation generation subsystem is the interface between indracore and the collators.
 
 #![deny(missing_docs)]
 
@@ -210,7 +210,6 @@ async fn handle_new_activations<Context: SubsystemContext>(
 					(scheduled_core, OccupiedCoreAssumption::Free)
 				}
 				CoreState::Occupied(_occupied_core) => {
-					// TODO: https://github.com/paritytech/polkadot/issues/1573
 					tracing::trace!(
 						target: LOG_TARGET,
 						core_idx = %core_idx,

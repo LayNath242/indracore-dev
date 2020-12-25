@@ -1,7 +1,7 @@
 [package]
 name = "indracore-node-core-av-store"
 version = "0.1.0"
-authors = ["Selendra <nath@selendra.org>"]
+authors = ["Selendra <info@selendra.org>"]
 edition = "2018"
 
 [dependencies]
@@ -12,9 +12,9 @@ kvdb-rocksdb = "0.9.1"
 thiserror = "1.0.22"
 tracing = "0.1.22"
 tracing-futures = "0.2.4"
-parity-scale-codec = { version = "1.3.5", features = ["derive"] }
 
-erasure = { package = "indracore-erasure-coding", path = "../../erasure-coding" }
+parity-scale-codec = { version = "1.3.5", features = ["derive"] }
+erasure = { package = "indracore-erasure-coding", path = "../../../erasure-coding" }
 indracore-subsystem = { package = "indracore-node-subsystem", path = "../../subsystem" }
 indracore-node-subsystem-util = { path = "../../subsystem-util" }
 indracore-overseer = { path = "../../overseer" }

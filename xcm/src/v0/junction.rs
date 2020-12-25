@@ -28,8 +28,8 @@ pub enum NetworkId {
 	Named(Vec<u8>),
 	/// The Polkadot Relay chain
 	Polkadot,
-	/// Kusama.
-	Kusama,
+	///Selendra
+	Indracore
 }
 
 /// A single item in a path to describe the relative location of a consensus system.

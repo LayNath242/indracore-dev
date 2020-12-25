@@ -1,0 +1,59 @@
+[package]
+name = "indracore-cli"
+version = "0.8.27"
+authors = ["Selendra <info@selendra.org>"]
+description = "indracore Relay-chain Client Node"
+edition = "2018"
+
+[package.metadata.wasm-pack.profile.release]
+# `wasm-opt` has some problems on linux, see
+# https://github.com/rustwasm/wasm-pack/issues/781 etc.
+wasm-opt = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+log = "0.4.11"
+thiserror = "1.0.22"
+structopt = { version = "0.3.21", optional = true }
+wasm-bindgen = { version = "0.2.69", optional = true }
+wasm-bindgen-futures = { version = "0.4.19", optional = true }
+tracing-futures = "0.2.4"
+
+frame-benchmarking-cli = { path = "../substrate/utils/frame/benchmarking-cli", optional = true }
+browser-utils = { package = "substrate-browser-utils", path = "../substrate/utils/browser", optional = true }
+
+sp-core = { path = "../substrate/primitives/core" }
+sp-trie = { path = "../substrate/primitives/trie", default-features = false }
+
+sc-tracing = { path = "../substrate/client/tracing" }
+sc-cli = { path = "../substrate/client/cli", optional = true }
+sc-service = { path = "../substrate/client/service", optional = true }
+
+service = { package = "indracore-service", path = "../node/service", default-features = false, optional = true }
+indracore-parachain = { path = "../parachain", optional = true }
+
+[build-dependencies]
+substrate-build-script-utils = { path = "../substrate/utils/build-script-utils" }
+
+[features]
+default = [ "wasmtime", "db", "cli", "full-node", "trie-memory-tracker", "indracore-parachain" ]
+wasmtime = [ "sc-cli/wasmtime" ]
+db = [ "service/db" ]
+cli = [
+	"structopt",
+	"sc-cli",
+	"sc-service",
+	"frame-benchmarking-cli",
+]
+browser = [
+	"wasm-bindgen",
+	"wasm-bindgen-futures",
+	"browser-utils",
+	"service",
+]
+runtime-benchmarks = [ "service/runtime-benchmarks" ]
+trie-memory-tracker = [ "sp-trie/memory-tracker" ]
+full-node = [ "service/full-node" ]
+real-overseer = [ "service/real-overseer" ]

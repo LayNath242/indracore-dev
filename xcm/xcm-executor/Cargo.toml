@@ -1,5 +1,5 @@
 [package]
-authors = ["Selendra <nath@selendra.org>"]
+authors = ["Selendra <info@selendra.org>"]
 edition = "2018"
 name = "xcm-executor"
 description = "An abstract and configurable XCM message executor."

@@ -42,7 +42,7 @@ use std::{fmt, pin::Pin, sync::Arc, time};
 /// How long proposal can take before we give up and err out
 const PROPOSE_TIMEOUT: core::time::Duration = core::time::Duration::from_millis(2500);
 
-/// Custom Proposer factory for indracore
+/// Custom Proposer factory for Indracore
 pub struct ProposerFactory<TxPool, Backend, Client> {
 	inner: sc_basic_authorship::ProposerFactory<TxPool, Backend, Client>,
 	overseer: OverseerHandler,
@@ -109,7 +109,7 @@ where
 	}
 }
 
-/// Custom Proposer for indracore.
+/// Custom Proposer for Indracore.
 ///
 /// This proposer gets the ProvisionerInherentData and injects it into the wrapped
 /// proposer's inherent data, then delegates the actual proposal generation.

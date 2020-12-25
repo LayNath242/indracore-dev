@@ -1,6 +1,6 @@
 use super::*;
 use bitvec::bitvec;
-use indracore_primitives::v1::{OccupiedCore, ScheduledCore};
+use polkadot_primitives::v1::{OccupiedCore, ScheduledCore};
 
 pub fn occupied_core(para_id: u32) -> CoreState {
 	CoreState::Occupied(OccupiedCore {
@@ -45,7 +45,7 @@ mod select_availability_bitfields {
 	use super::{default_bitvec, occupied_core};
 	use futures::executor::block_on;
 	use std::sync::Arc;
-	use indracore_primitives::v1::{SigningContext, ValidatorIndex, ValidatorId};
+	use polkadot_primitives::v1::{SigningContext, ValidatorIndex, ValidatorId};
 	use sp_application_crypto::AppKey;
 	use sp_keystore::{CryptoStore, SyncCryptoStorePtr, testing::KeyStore};
 
@@ -194,11 +194,11 @@ mod select_candidates {
 	use futures_timer::Delay;
 	use super::super::*;
 	use super::{build_occupied_core, occupied_core, scheduled_core, default_bitvec};
-	use indracore_node_subsystem::messages::{
+	use polkadot_node_subsystem::messages::{
 		AllMessages, RuntimeApiMessage,
 		RuntimeApiRequest::{AvailabilityCores, PersistedValidationData as PersistedValidationDataReq},
 	};
-	use indracore_primitives::v1::{
+	use polkadot_primitives::v1::{
 		BlockNumber, CandidateDescriptor, PersistedValidationData, CommittedCandidateReceipt, CandidateCommitments,
 	};
 

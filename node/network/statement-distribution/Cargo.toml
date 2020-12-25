@@ -1,7 +1,7 @@
 [package]
 name = "indracore-statement-distribution"
 version = "0.1.0"
-authors = ["Selendra <nath@selendra.org>"]
+authors = ["Selendra <info@selendra.org>"]
 description = "Statement Distribution Subsystem"
 edition = "2018"
 

@@ -1,15 +1,14 @@
 [package]
 name = "indracore-node-collation-generation"
 version = "0.1.0"
-authors = ["Selendra <nath@selendra.org>"]
+authors = ["Selendra <info@selendra.org>"]
 edition = "2018"
 
 [dependencies]
 futures = "0.3.8"
 tracing = "0.1.22"
 tracing-futures = "0.2.4"
-
-indracore-erasure-coding = { path = "../erasure-coding" }
+indracore-erasure-coding = { path = "../../erasure-coding" }
 indracore-node-primitives = { path = "../primitives" }
 indracore-node-subsystem = { path = "../subsystem" }
 indracore-node-subsystem-util = { path = "../subsystem-util" }

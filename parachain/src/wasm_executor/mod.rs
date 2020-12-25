@@ -61,7 +61,7 @@ const MAX_VALIDATION_RESULT_HEADER_MEM: usize = MAX_CODE_MEM + 1024; // 16.001 M
 /// of specially crafted code that take enourmous amounts of time and memory to compile.
 ///
 /// At the same time, since PVF validates self-contained candidates, validation workers don't require
-/// extensive communication with polkadot host, therefore there should be no observable performance penalty
+/// extensive communication with indracore host, therefore there should be no observable performance penalty
 /// coming from inter process communication.
 ///
 /// All of the above should give a sense why isolation is crucial for a typical use-case.
@@ -199,7 +199,6 @@ pub fn validate_candidate_internal(
 ) -> Result<ValidationResult, ValidationError> {
 	let executor = sc_executor::WasmExecutor::new(
 		sc_executor::WasmExecutionMethod::Interpreted,
-		// TODO: Make sure we don't use more than 1GB: https://github.com/paritytech/polkadot/issues/699
 		Some(1024),
 		HostFunctions::host_functions(),
 		8

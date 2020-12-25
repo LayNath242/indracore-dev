@@ -1,7 +1,7 @@
 [package]
 name = "indracore-runtime-parachains"
 version = "0.8.0"
-authors = ["Selendra <nath@selendra.org>"]
+authors = ["Selendra <info@selendra.org>"]
 edition = "2018"
 
 [dependencies]
@@ -11,14 +11,10 @@ log = "0.4.11"
 rustc-hex = { version = "2.1.0", default-features = false }
 serde = { version = "1.0.118", features = [ "derive" ], optional = true }
 derive_more = "0.99.11"
-libsecp256k1 = { version = "0.3.5", default-features = false, optional = true }
-rand = { version = "0.7.3", default-features = false }
-rand_chacha = { version = "0.2.2", default-features = false }
-
 
 inherents = { package = "sp-inherents", path = "../../substrate/primitives/inherents", default-features = false }
 sp-api = { path = "../../substrate/primitives/api", default-features = false }
-sp-std = { package = "sp-std", path = "../../substrate/primitives/std", default-features = false }
+sp-std = { path = "../../substrate/primitives/std", default-features = false }
 sp-io = { path = "../../substrate/primitives/io", default-features = false }
 sp-runtime = { path = "../../substrate/primitives/runtime", default-features = false }
 sp-session = { path = "../../substrate/primitives/session", default-features = false }
@@ -26,9 +22,9 @@ sp-staking = { path = "../../substrate/primitives/staking", default-features = f
 sp-core = { path = "../../substrate/primitives/core", default-features = false }
 sp-keystore = { path = "../../substrate/primitives/keystore", optional = true }
 
-frame-benchmarking = { path = "../../substrate/frame/benchmarking", default-features = false, optional = true }
-frame-system = {path = "../../substrate/frame/system", default-features = false }
 frame-support = { path = "../../substrate/frame/support", default-features = false }
+frame-benchmarking = { path = "../../substrate/frame/benchmarking", default-features = false, optional = true }
+frame-system = { path = "../../substrate/frame/system", default-features = false }
 pallet-authority-discovery = { path = "../../substrate/frame/authority-discovery", default-features = false }
 pallet-authorship = { path = "../../substrate/frame/authorship", default-features = false }
 pallet-balances = { path = "../../substrate/frame/balances", default-features = false }
@@ -38,26 +34,34 @@ pallet-timestamp = { path = "../../substrate/frame/timestamp", default-features 
 pallet-vesting = { path = "../../substrate/frame/vesting", default-features = false }
 pallet-offences = { path = "../../substrate/frame/offences", default-features = false }
 
+
 xcm = { package = "xcm", path = "../../xcm", default-features = false }
 xcm-executor = { package = "xcm-executor", path = "../../xcm/xcm-executor", default-features = false }
 primitives = { package = "indracore-primitives", path = "../../primitives", default-features = false }
+libsecp256k1 = { version = "0.3.5", default-features = false, optional = true }
+
+rand = { version = "0.7.3", default-features = false }
+rand_chacha = { version = "0.2.2", default-features = false }
 
 [dev-dependencies]
 futures = "0.3.8"
 hex-literal = "0.3.1"
-pallet-babe = { path = "../../substrate/frame/babe" }
+serde_json = "1.0.60"
+libsecp256k1 = "0.3.5"
+
+keyring = { package = "sp-keyring", path = "../../substrate/primitives/keyring" }
+sp-trie = { path = "../../substrate/primitives/trie" }
 sp-application-crypto = { path = "../../substrate/primitives/application-crypto" }
+sp-version = { path = "../../substrate/primitives/version", default-features = false }
+sc-keystore = { path = "../../substrate/client/keystore"}
+
+pallet-babe = { path = "../../substrate/frame/babe" }
 pallet-randomness-collective-flip = { path = "../../substrate/frame/randomness-collective-flip" }
 pallet-staking-reward-curve = { path = "../../substrate/frame/staking/reward-curve" }
 pallet-treasury = { path = "../../substrate/frame/treasury" }
 
-keyring = { package = "sp-keyring", path = "../../substrate/primitives/keyring" }
-sp-trie = { path = "../../substrate/primitives/trie" }
-sp-version = { path = "../../substrate/primitives/version", default-features = false }
-sc-keystore = { path = "../../substrate/client/keystore"}
 
-serde_json = "1.0.60"
-libsecp256k1 = "0.3.5"
+
 
 [features]
 default = ["std"]
