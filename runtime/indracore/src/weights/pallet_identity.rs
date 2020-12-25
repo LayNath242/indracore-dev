@@ -20,9 +20,9 @@
 //! EXECUTION: Some(Wasm), WASM-EXECUTION: Compiled, CHAIN: Some("polkadot-dev"), DB CACHE: 128
 
 // Executed Command:
-// target/release/polkadot
+// target/release/indracore
 // benchmark
-// --chain=polkadot-dev
+// --chain=indracore-dev
 // --steps=50
 // --repeat=20
 // --pallet=pallet_identity
@@ -31,7 +31,7 @@
 // --wasm-execution=compiled
 // --heap-pages=4096
 // --header=./file_header.txt
-// --output=./runtime/polkadot/src/weights/
+// --output=./runtime/indracore/src/weights/
 
 
 #![allow(unused_parens)]

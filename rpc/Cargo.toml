@@ -1,0 +1,34 @@
+[package]
+name = "indracore-rpc"
+version = "0.8.27"
+authors = ["Parity Technologies <admin@parity.io>"]
+edition = "2018"
+
+[dependencies]
+jsonrpc-core = "15.1.0"
+parity-scale-codec = { version = "1.3.5", default-features = false }
+
+sc-client-api = { path = "../substrate/client/api"  }
+sc-chain-spec = { path = "../substrate/client/chain-spec" }
+sc-rpc = { path = "../substrate/client/rpc" }
+sc-consensus-babe = { path = "../substrate/client/consensus/babe"}
+sc-consensus-babe-rpc = { path = "../substrate/client/consensus/babe/rpc"}
+sc-consensus-epochs = { path = "../substrate/client/consensus/epochs"}
+sc-finality-grandpa = { path = "../substrate/client/finality-grandpa" }
+sc-finality-grandpa-rpc = { path = "../substrate/client/finality-grandpa/rpc" }
+sc-keystore = { path = "../substrate/client/keystore"}
+sc-sync-state-rpc = { path = "../substrate/client/sync-state-rpc"}
+
+txpool-api = { package = "sp-transaction-pool", path = "../substrate/primitives/transaction-pool" }
+sp-blockchain = { path = "../substrate/primitives/blockchain"  }
+sp-keystore = { path = "../substrate/primitives/keystore"  }
+sp-runtime = { path = "../substrate/primitives/runtime"  }
+sp-api = { path = "../substrate/primitives/api"  }
+sp-consensus = { path = "../substrate/primitives/consensus/common"  }
+sp-consensus-babe = { path = "../substrate/primitives/consensus/babe"  }
+sp-block-builder = { path = "../substrate/primitives/block-builder" }
+
+frame-rpc-system = { package = "substrate-frame-rpc-system", path = "../substrate/utils/frame/rpc/system"  }
+pallet-transaction-payment-rpc = { path = "../substrate/frame/transaction-payment/rpc" }
+
+indracore-primitives = { path = "../primitives" }

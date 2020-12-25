@@ -14,11 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Common runtime code for Polkadot and Kusama.
+//! Common runtime code for Indracore
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
+// pub mod slot_range;
+// pub mod slots;
+// pub mod crowdfund;
+pub mod purchase;
 pub mod impls;
+pub mod paras_sudo_wrapper;
+pub mod paras_registrar;
 
 use primitives::v1::{BlockNumber, ValidatorId, AssignmentId};
 use sp_runtime::{Perquintill, Perbill, FixedPointNumber};
@@ -45,7 +51,7 @@ pub type NegativeImbalance<T> = <pallet_balances::Module<T> as Currency<<T as fr
 
 /// The sequence of bytes a valid wasm module binary always starts with. Apart from that it's also a
 /// valid wasm module.
-// const WASM_MAGIC: &[u8] = &[0x00, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00];
+const WASM_MAGIC: &[u8] = &[0x00, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00];
 
 /// We assume that an on-initialize consumes 2.5% of the weight on average, hence a single extrinsic
 /// will not be allowed to consume more than `AvailableBlockRatio - 2.5%`.
@@ -108,7 +114,7 @@ parameter_types! {
 }
 
 /// Parameterized slow adjusting fee updated based on
-/// https://w3f-research.readthedocs.io/en/latest/polkadot/Token%20Economics.html#-2.-slow-adjusting-mechanism
+/// https://w3f-research.readthedocs.io/en/latest/polkadot/economics/1-token-economics.html
 pub type SlowAdjustingFeeUpdate<R> = TargetedFeeAdjustment<
 	R,
 	TargetBlockFullness,

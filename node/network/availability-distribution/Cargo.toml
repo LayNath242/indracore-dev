@@ -1,0 +1,29 @@
+[package]
+name = "indracore-availability-distribution"
+version = "0.1.0"
+authors = ["Selendra <info@selendra.org>"]
+edition = "2018"
+
+[dependencies]
+futures = "0.3.8"
+tracing = "0.1.22"
+tracing-futures = "0.2.4"
+parity-scale-codec = { version = "1.3.5", features = ["std"]  }
+indracore-primitives = { path = "../../../primitives" }
+indracore-erasure-coding = { path = "../../../erasure-coding" }
+indracore-subsystem = { package = "indracore-node-subsystem", path = "../../subsystem" }
+indracore-node-network-protocol = { path = "../../network/protocol" }
+indracore-node-subsystem-util = { path = "../../subsystem-util" }
+sp-core = { path = "../../../substrate/primitives/core", features = ["std"]  }
+sp-keystore = { path = "../../../substrate/primitives/keystore" }
+thiserror = "1.0.22"
+
+[dev-dependencies]
+indracore-subsystem-testhelpers = { package = "indracore-node-subsystem-test-helpers", path = "../../subsystem-test-helpers" }
+sp-core = { path = "../../../substrate/primitives/core", features = ["std"] }
+sp-application-crypto = { path = "../../../substrate/primitives/application-crypto" }
+sp-keyring = { path = "../../../substrate/primitives/keyring" }
+sp-tracing = { path = "../../../substrate/primitives/tracing" }
+sc-keystore = { path = "../../../substrate/client/keystore" }
+assert_matches = "1.4.0"
+maplit = "1.0"

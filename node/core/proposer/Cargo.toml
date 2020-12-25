@@ -1,0 +1,26 @@
+[package]
+name = "indracore-node-core-proposer"
+version = "0.1.0"
+authors = ["Selendra <info@selendra.org>"]
+edition = "2018"
+
+[dependencies]
+futures = "0.3.8"
+futures-timer = "3.0.2"
+tracing = "0.1.22"
+
+indracore-node-subsystem = { path = "../../subsystem" }
+indracore-overseer = { path = "../../overseer" }
+indracore-primitives = { path = "../../../primitives" }
+
+sc-basic-authorship = { path = "../../../substrate/client/basic-authorship" }
+sc-block-builder = { path = "../../../substrate/client/block-builder" }
+sc-client-api = { path = "../../../substrate/client/api" }
+sp-api = { path = "../../../substrate/primitives/api" }
+sp-blockchain = { path = "../../../substrate/primitives/blockchain" }
+sp-consensus = { path = "../../../substrate/primitives/consensus/common" }
+sp-core = { path = "../../../substrate/primitives/core" }
+sp-inherents = { path = "../../../substrate/primitives/inherents" }
+sp-runtime = { path = "../../../substrate/primitives/runtime" }
+sp-transaction-pool = { path = "../../../substrate/primitives/transaction-pool" }
+prometheus-endpoint = { package = "substrate-prometheus-endpoint", path = "../../../substrate/utils/prometheus" }

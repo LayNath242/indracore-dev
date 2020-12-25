@@ -1,0 +1,27 @@
+[package]
+name = "indracore-pov-distribution"
+version = "0.1.0"
+authors = ["Parity Technologies <admin@parity.io>"]
+edition = "2018"
+
+[dependencies]
+futures = "0.3.8"
+thiserror = "1.0.21"
+tracing = "0.1.22"
+tracing-futures = "0.2.4"
+
+indracore-primitives = { path = "../../../primitives" }
+indracore-subsystem = { package = "indracore-node-subsystem", path = "../../subsystem" }
+indracore-node-subsystem-util = { path = "../../subsystem-util" }
+indracore-node-network-protocol = { path = "../../network/protocol" }
+
+[dev-dependencies]
+assert_matches = "1.4.0"
+env_logger = "0.8.1"
+log = "0.4.11"
+smallvec = "1.5.1"
+
+sp-core = {path = "../../../substrate/primitives/core" }
+sp-keyring = {path = "../../../substrate/primitives/keyring" }
+
+indracore-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
