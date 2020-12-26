@@ -46,6 +46,10 @@ pallet-staking-reward-curve = { package = "pallet-staking-reward-curve", path = 
 pallet-grandpa = { path = "../../substrate/frame/grandpa", default-features = false }
 pallet-timestamp = { path = "../../substrate/frame/timestamp", default-features = false }
 pallet-offences = { path = "../../substrate/frame/offences", default-features = false }
+pallet-contracts = { path = "../../substrate/frame/contracts", default_features = false }
+pallet-contracts-primitives = { path = "../../substrate/frame/contracts/common", default_features = false }
+pallet-contracts-rpc-runtime-api = { path = "../../substrate/frame/contracts/rpc/runtime-api", default_features = false }
+pallet-randomness-collective-flip = { path = "../../substrate/frame/randomness-collective-flip", default-features = false }
 
 runtime-common = { package = "indracore-runtime-common", path = "../common", default-features = false }
 primitives = { package = "indracore-primitives", path = "../../primitives", default-features = false }
@@ -105,6 +109,10 @@ std = [
 	"xcm/std",
 	"xcm-executor/std",
 	"xcm-builder/std",
+	'pallet-contracts/std',
+    'pallet-contracts-primitives/std',
+	"pallet-contracts-rpc-runtime-api/std",
+	"pallet-randomness-collective-flip/std",
 ]
 # When enabled, the runtime api will not be build.
 #

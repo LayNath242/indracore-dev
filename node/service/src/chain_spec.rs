@@ -186,6 +186,11 @@ fn indracore_staging_testnet_config_genesis(wasm_binary: &[u8]) -> indracore::Ge
 		pallet_authority_discovery: Some(indracore::AuthorityDiscoveryConfig { keys: vec![] }),
 		pallet_vesting: Some(indracore::VestingConfig { vesting: vec![] }),
 		pallet_treasury: Some(Default::default()),
+		pallet_contracts: Some(indracore::ContractsConfig {
+			current_schedule: pallet_contracts::Schedule {
+				..Default::default()
+			},
+		}),
 	}
 }
 
@@ -248,6 +253,11 @@ fn xelendra_staging_testnet_config_genesis(wasm_binary: &[u8]) -> xelendra_runti
 		pallet_staking: Some(Default::default()),
 		pallet_sudo: Some(xelendra_runtime::SudoConfig {
 			key: endowed_accounts[0].clone(),
+		}),
+		pallet_contracts: Some(xelendra_runtime::ContractsConfig {
+			current_schedule: pallet_contracts::Schedule {
+				..Default::default()
+			},
 		}),
 		parachains_configuration: Some(xelendra_runtime::ParachainsConfigurationConfig {
 			config: indracore_runtime_parachains::configuration::HostConfiguration {
@@ -454,6 +464,11 @@ pub fn indracore_testnet_genesis(
 		pallet_authority_discovery: Some(indracore::AuthorityDiscoveryConfig { keys: vec![] }),
 		pallet_vesting: Some(indracore::VestingConfig { vesting: vec![] }),
 		pallet_treasury: Some(Default::default()),
+		pallet_contracts: Some(indracore::ContractsConfig {
+			current_schedule: pallet_contracts::Schedule {
+				..Default::default()
+			},
+		}),
 	}
 }
 
@@ -510,6 +525,11 @@ pub fn xelendra_testnet_genesis(
 		}),
 		pallet_staking: Some(Default::default()),
 		pallet_sudo: Some(xelendra_runtime::SudoConfig { key: root_key }),
+		pallet_contracts: Some(xelendra_runtime::ContractsConfig {
+			current_schedule: pallet_contracts::Schedule {
+				..Default::default()
+			},
+		}),
 		parachains_configuration: Some(xelendra_runtime::ParachainsConfigurationConfig {
 			config: indracore_runtime_parachains::configuration::HostConfiguration {
 				validation_upgrade_frequency: 600u32,

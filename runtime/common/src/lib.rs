@@ -208,7 +208,7 @@ mod multiplier_tests {
 		pub const BlockHashCount: u64 = 250;
 		pub const AvailableBlockRatio: Perbill = Perbill::one();
 		pub BlockLength: frame_system::limits::BlockLength =
-			frame_system::limits::BlockLength::max(2 * 1024);
+			frame_system::limits::BlockLength::max(5 * 1024 * 1024, NORMAL_DISPATCH_RATIO);
 		pub BlockWeights: frame_system::limits::BlockWeights =
 			frame_system::limits::BlockWeights::simple_max(1024);
 	}

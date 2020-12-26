@@ -127,7 +127,7 @@ impl Filter<Call> for BaseFilter {
 			Call::AuthorityDiscovery(_) |
 			Call::Utility(_) | Call::Vesting(_) |
 			Call::Identity(_) | Call::Proxy(_) | Call::Multisig(_) |
-			Call::Bounties(_) | Call::Tips(_)
+			Call::Bounties(_) | Call::Tips(_) | Call::Contracts(_)
 			=> true,
 		}
 	}
@@ -856,6 +856,35 @@ impl pallet_proxy::Config for Runtime {
 	type AnnouncementDepositFactor = AnnouncementDepositFactor;
 }
 
+parameter_types! {
+	pub const TombstoneDeposit: Balance = 16 * MILLICENTS;
+	pub const RentByteFee: Balance = 4 * MILLICENTS;
+	pub const RentDepositOffset: Balance = 1000 * MILLICENTS;
+	pub const SurchargeReward: Balance = 150 * MILLICENTS;
+	pub const SignedClaimHandicap: u32 = 2;
+	pub const MaxDepth: u32 = 32;
+	pub const StorageSizeOffset: u32 = 8;
+	pub const MaxValueSize: u32 = 16 * 1024;
+}
+
+impl pallet_contracts::Config for Runtime {
+	type Time = Timestamp;
+	type Randomness = RandomnessCollectiveFlip;
+	type Currency = Balances;
+	type Event = Event;
+	type RentPayment = ();
+	type SignedClaimHandicap = SignedClaimHandicap;
+	type TombstoneDeposit = TombstoneDeposit;
+	type StorageSizeOffset = StorageSizeOffset;
+	type RentByteFee = RentByteFee;
+	type RentDepositOffset = RentDepositOffset;
+	type SurchargeReward = SurchargeReward;
+	type MaxDepth = MaxDepth;
+	type MaxValueSize = MaxValueSize;
+	type WeightPrice = pallet_transaction_payment::Module<Self>;
+	type WeightInfo = pallet_contracts::weights::SubstrateWeight<Self>;
+}
+
 construct_runtime! {
 	pub enum Runtime where
 		Block = Block,
@@ -866,15 +895,12 @@ construct_runtime! {
 		System: frame_system::{Module, Call, Storage, Config, Event<T>},
 		RandomnessCollectiveFlip: pallet_randomness_collective_flip::{Module, Storage},
 		Scheduler: pallet_scheduler::{Module, Call, Storage, Event<T>},
-
 		// Must be before session.
 		Babe: pallet_babe::{Module, Call, Storage, Config, Inherent, ValidateUnsigned},
-
 		Timestamp: pallet_timestamp::{Module, Call, Storage, Inherent},
 		Indices: pallet_indices::{Module, Call, Storage, Config<T>, Event<T>},
 		Balances: pallet_balances::{Module, Call, Storage, Config<T>, Event<T>},
 		TransactionPayment: pallet_transaction_payment::{Module, Storage},
-
 		// Consensus support.
 		Authorship: pallet_authorship::{Module, Call, Storage},
 		Staking: pallet_staking::{Module, Call, Storage, Config<T>, Event<T>, ValidateUnsigned},
@@ -884,7 +910,6 @@ construct_runtime! {
 		Grandpa: pallet_grandpa::{Module, Call, Storage, Config, Event, ValidateUnsigned},
 		ImOnline: pallet_im_online::{Module, Call, Storage, Event<T>, ValidateUnsigned, Config<T>},
 		AuthorityDiscovery: pallet_authority_discovery::{Module, Call, Config},
-
 		// Governance stuff.
 		Democracy: pallet_democracy::{Module, Call, Storage, Config, Event<T>},
 		Council: pallet_collective::<Instance1>::{Module, Call, Storage, Origin<T>, Event<T>, Config<T>},
@@ -896,21 +921,18 @@ construct_runtime! {
 		Vesting: pallet_vesting::{Module, Call, Storage, Event<T>, Config<T>},
 		// Cunning utilities. Usable initially.
 		Utility: pallet_utility::{Module, Call, Event},
-
 		// Identity. Late addition.
 		Identity: pallet_identity::{Module, Call, Storage, Event<T>},
-
 		// Proxy module. Late addition.
 		Proxy: pallet_proxy::{Module, Call, Storage, Event<T>},
-
 		// Multisig dispatch. Late addition.
 		Multisig: pallet_multisig::{Module, Call, Storage, Event<T>},
-
 		// Bounties module.
 		Bounties: pallet_bounties::{Module, Call, Storage, Event<T>},
-
 		// Tips module.
 		Tips: pallet_tips::{Module, Call, Storage, Event<T>},
+		// Contract module
+		Contracts: pallet_contracts::{Module, Call, Config<T>, Storage, Event<T>},
 
 	}
 }
@@ -1187,6 +1209,33 @@ sp_api::impl_runtime_apis! {
 		}
 	}
 
+	impl pallet_contracts_rpc_runtime_api::ContractsApi<Block, AccountId, Balance, BlockNumber>
+		for Runtime
+	{
+		fn call(
+			origin: AccountId,
+			dest: AccountId,
+			value: Balance,
+			gas_limit: u64,
+			input_data: Vec<u8>,
+		) -> pallet_contracts_primitives::ContractExecResult {
+			Contracts::bare_call(origin, dest, value, gas_limit, input_data)
+		}
+
+		fn get_storage(
+			address: AccountId,
+			key: [u8; 32],
+		) -> pallet_contracts_primitives::GetStorageResult {
+			Contracts::get_storage(address, key)
+		}
+
+		fn rent_projection(
+			address: AccountId,
+		) -> pallet_contracts_primitives::RentProjectionResult<BlockNumber> {
+			Contracts::rent_projection(address)
+		}
+	}
+
 	#[cfg(feature = "runtime-benchmarks")]
 	impl frame_benchmarking::Benchmark<Block> for Runtime {
 		fn dispatch_benchmark(
@@ -1242,6 +1291,7 @@ sp_api::impl_runtime_apis! {
 			add_benchmark!(params, batches, pallet_treasury, Treasury);
 			add_benchmark!(params, batches, pallet_utility, Utility);
 			add_benchmark!(params, batches, pallet_vesting, Vesting);
+			add_benchmark!(params, batches, pallet_contracts, Contracts);
 
 			if batches.is_empty() { return Err("Benchmark not found for this pallet.".into()) }
 			Ok(batches)

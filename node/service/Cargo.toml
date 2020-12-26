@@ -45,6 +45,7 @@ pallet-babe = { path = "../../substrate/frame/babe" }
 pallet-im-online = { path = "../../substrate/frame/im-online" }
 pallet-staking = { path = "../../substrate/frame/staking" }
 pallet-transaction-payment-rpc-runtime-api = { path = "../../substrate/frame/transaction-payment/rpc/runtime-api" }
+pallet-contracts = { path = "../../substrate/frame/contracts" }
 
 # Substrate Other
 frame-benchmarking = { path = "../../substrate/frame/benchmarking" }
@@ -89,6 +90,7 @@ indracore-node-core-provisioner = { path = "../core/provisioner", optional = tru
 indracore-node-core-runtime-api = { path = "../core/runtime-api", optional = true }
 indracore-pov-distribution = { path = "../network/pov-distribution", optional = true }
 indracore-statement-distribution = { path = "../network/statement-distribution", optional = true }
+pallet-contracts-rpc = { path = "../../substrate/frame/contracts/rpc/" }
 
 [dev-dependencies]
 indracore-test-client = { path = "../test/client" }
