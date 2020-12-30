@@ -13,4 +13,4 @@ indracore-node-subsystem = { path = "../../subsystem" }
 indracore-node-subsystem-util = { path = "../../subsystem-util" }
 sp-keystore = { path = "../../../substrate/primitives/keystore" }
 wasm-timer = "0.2.5"
-thiserror = "1.0.22"
+thiserror = "1.0.23"

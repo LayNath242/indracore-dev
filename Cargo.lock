@@ -2577,7 +2577,6 @@ dependencies = [
  "log",
  "sc-cli 0.8.0",
  "sc-service 0.8.0",
- "sc-tracing 2.0.0",
  "sp-core 2.0.0",
  "sp-trie 2.0.0",
  "structopt",

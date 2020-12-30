@@ -26,7 +26,7 @@ sc-network = { path = "../../substrate/client/network" }
 smallvec = "1.5.1"
 sp-core = { path = "../../substrate/primitives/core" }
 substrate-prometheus-endpoint = { path = "../../substrate/utils/prometheus" }
-thiserror = "1.0.22"
+thiserror = "1.0.23"
 log = "0.4.11"
 
 [dev-dependencies]

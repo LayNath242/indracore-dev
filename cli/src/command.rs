@@ -248,7 +248,7 @@ pub fn run() -> Result<()> {
 				cmd.run::<service::indracore_runtime::Block, service::IndracoreExecutor>(config)
 			})
 		},
-		Some(Subcommand::Key(cmd)) => cmd.run(),
+		Some(Subcommand::Key(cmd)) => cmd.run(&cli),
 	}?;
 	Ok(())
 }
