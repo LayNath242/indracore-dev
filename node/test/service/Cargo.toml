@@ -57,6 +57,6 @@ substrate-test-client = { path = "../../../substrate/test-utils/client" }
 
 [dev-dependencies]
 pallet-balances = { path = "../../../substrate/frame/balances", default-features = false }
-serde_json = "1.0.60"
+serde_json = "1.0.61"
 substrate-test-utils = { path = "../../../substrate/test-utils" }
 tokio = { version = "0.2", features = ["macros"] }

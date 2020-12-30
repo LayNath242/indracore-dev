@@ -39,6 +39,7 @@ sp-session = { path = "../../substrate/primitives/session" }
 sp-storage = { path = "../../substrate/primitives/storage" }
 sp-transaction-pool = { path = "../../substrate/primitives/transaction-pool" }
 sp-trie = { path = "../../substrate/primitives/trie" }
+sp-state-machine = { path = "../../substrate/primitives/state-machine" }
 
 # Substrate Pallets
 pallet-babe = { path = "../../substrate/frame/babe" }
