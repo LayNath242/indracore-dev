@@ -807,7 +807,8 @@ impl InstanceFilter<Call> for ProxyType {
 				Call::Utility(..) |
 				Call::Identity(..) |
 				Call::Proxy(..) |
-				Call::Multisig(..)
+				Call::Multisig(..) |
+				Call::Contracts(..) 
 			),
 			ProxyType::Governance => matches!(c,
 				Call::Democracy(..) |

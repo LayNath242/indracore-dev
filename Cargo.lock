@@ -3275,7 +3275,7 @@ dependencies = [
  "indracore-test-client",
  "pallet-babe",
  "pallet-contracts",
- "pallet-contracts-rpc",
+ "pallet-contracts-rpc-runtime-api",
  "pallet-im-online",
  "pallet-staking",
  "pallet-transaction-payment-rpc-runtime-api",
