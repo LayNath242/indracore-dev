@@ -18,10 +18,6 @@
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
-// pub mod slot_range;
-// pub mod slots;
-// pub mod crowdfund;
-pub mod purchase;
 pub mod impls;
 pub mod paras_sudo_wrapper;
 pub mod paras_registrar;
