@@ -60,7 +60,7 @@ pub type XelendraChainSpec = service::GenericChainSpec<XelendraGenesisExt, Exten
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct XelendraGenesisExt {
 	/// The runtime genesis config.
-	runtime_genesis_config: rococo::GenesisConfig,
+	runtime_genesis_config: xelendra::GenesisConfig,
 	/// The session length in blocks.
 	///
 	/// If `None` is supplied, the default value is used.
@@ -74,7 +74,7 @@ impl sp_runtime::BuildStorage for XelendraGenesisExt {
 	) -> Result<(), String> {
 		sp_state_machine::BasicExternalities::execute_with_storage(storage, || {
 			if let Some(length) = self.session_length_in_blocks.as_ref() {
-				rococo::constants::time::EpochDurationInBlocks::set(length);
+				xelendra::constants::time::EpochDurationInBlocks::set(length);
 			}
 		});
 		self.runtime_genesis_config.assimilate_storage(storage)

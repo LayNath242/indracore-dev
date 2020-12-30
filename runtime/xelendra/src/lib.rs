@@ -42,7 +42,7 @@ use runtime_parachains::{
 };
 use frame_support::{
 	parameter_types, construct_runtime, debug,
-	traits::{KeyOwnerProofSystem, Filter},
+	traits::{KeyOwnerProofSystem, Filter, Randomness},
 	weights::Weight,
 };
 use sp_runtime::{
@@ -103,7 +103,7 @@ include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 /// Runtime version (Xelendra).
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("xelendra"),
-	impl_name: create_runtime_str!("parity-xelendra-v1"),
+	impl_name: create_runtime_str!("Selendra-node"),
 	authoring_version: 0,
 	spec_version: 12,
 	impl_version: 0,
@@ -212,7 +212,6 @@ construct_runtime! {
 		Contracts: pallet_contracts::{Module, Call, Config<T>, Storage, Event<T>},
 	}
 }
-
 parameter_types! {
 	pub const TombstoneDeposit: Balance = 16 * MILLICENTS;
 	pub const RentByteFee: Balance = 4 * MILLICENTS;
@@ -241,7 +240,6 @@ impl pallet_contracts::Config for Runtime {
 	type WeightPrice = pallet_transaction_payment::Module<Self>;
 	type WeightInfo = pallet_contracts::weights::SubstrateWeight<Self>;
 }
-
 
 pub struct BaseFilter;
 impl Filter<Call> for BaseFilter {
@@ -360,13 +358,13 @@ parameter_types! {
 	pub const RewardCurve: &'static PiecewiseLinear<'static> = &REWARD_CURVE;
 	pub const MaxNominatorRewardedPerValidator: u32 = 64;
 	// quarter of the last session will be for election.
-	pub const ElectionLookahead: BlockNumber = EpochDurationInBlocks::get() / 4;
+	pub ElectionLookahead: BlockNumber = EpochDurationInBlocks::get() / 4;
 	pub const MaxIterations: u32 = 10;
 	pub MinSolutionScoreBump: Perbill = Perbill::from_rational_approximation(5u32, 10_000);
 }
 
 parameter_types! {
-	pub const SessionDuration: BlockNumber = EpochDurationInBlocks::get() as _;
+	pub SessionDuration: BlockNumber = EpochDurationInBlocks::get() as _;
 }
 
 parameter_types! {
@@ -489,7 +487,6 @@ impl pallet_session::Config for Runtime {
 }
 
 parameter_types! {
-	pub const EpochDuration: u64 = EPOCH_DURATION_IN_BLOCKS as u64;
 	pub const ExpectedBlockTime: Moment = MILLISECS_PER_BLOCK;
 }
 
@@ -695,7 +692,7 @@ sp_api::impl_runtime_apis! {
 		}
 
 		fn random_seed() -> <Block as BlockT>::Hash {
-			Babe::randomness().into()
+			RandomnessCollectiveFlip::random_seed()
 		}
 	}
 
@@ -827,6 +824,7 @@ sp_api::impl_runtime_apis! {
 			// probability of a slot being empty), is done in accordance to the
 			// slot duration and expected target block time, for safely
 			// resisting network delays of maximum two seconds.
+			// <https://research.web3.foundation/en/latest/polkadot/BABE/Babe/#6-practical-results>
 			babe_primitives::BabeGenesisConfiguration {
 				slot_duration: Babe::slot_duration(),
 				epoch_length: EpochDurationInBlocks::get().into(),
