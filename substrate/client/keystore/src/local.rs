@@ -168,8 +168,8 @@ impl SyncCryptoStore for LocalKeystore {
 			.into_iter()
 			.collect::<HashSet<_>>();
 		Ok(keys.into_iter()
-		   .filter(|key| all_keys.contains(key))
-		   .collect::<Vec<_>>())
+			.filter(|key| all_keys.contains(key))
+			.collect::<Vec<_>>())
 	}
 
 	fn sign_with(
