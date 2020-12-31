@@ -222,7 +222,15 @@ pub fn run() -> Result<()> {
 			})
 		},
 		Some(Subcommand::ValidationWorker(cmd)) => {
-			let _ = sc_cli::init_logger("", sc_tracing::TracingReceiver::Log, None, false);
+			let _ = sc_cli::init_logger(
+				sc_cli::InitLoggerParams {
+					pattern: "".into(),
+					tracing_receiver: Default::default(),
+					tracing_targets: None,
+					disable_log_reloading: false,
+					disable_log_color: true,
+				},
+			);
 
 			if cfg!(feature = "browser") || cfg!(target_os = "android") {
 				Err(sc_cli::Error::Input("Cannot run validation worker in browser".into()))
@@ -240,7 +248,7 @@ pub fn run() -> Result<()> {
 				cmd.run::<service::indracore_runtime::Block, service::IndracoreExecutor>(config)
 			})
 		},
-		Some(Subcommand::Key(cmd)) => cmd.run(),
+		Some(Subcommand::Key(cmd)) => cmd.run(&cli),
 	}?;
 	Ok(())
 }

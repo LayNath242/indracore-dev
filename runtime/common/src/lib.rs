@@ -18,10 +18,6 @@
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
-// pub mod slot_range;
-// pub mod slots;
-// pub mod crowdfund;
-pub mod purchase;
 pub mod impls;
 pub mod paras_sudo_wrapper;
 pub mod paras_registrar;
@@ -208,7 +204,7 @@ mod multiplier_tests {
 		pub const BlockHashCount: u64 = 250;
 		pub const AvailableBlockRatio: Perbill = Perbill::one();
 		pub BlockLength: frame_system::limits::BlockLength =
-			frame_system::limits::BlockLength::max(2 * 1024);
+			frame_system::limits::BlockLength::max(5 * 1024 * 1024, NORMAL_DISPATCH_RATIO);
 		pub BlockWeights: frame_system::limits::BlockWeights =
 			frame_system::limits::BlockWeights::simple_max(1024);
 	}
@@ -235,6 +231,7 @@ mod multiplier_tests {
 		type OnNewAccount = ();
 		type OnKilledAccount = ();
 		type SystemWeightInfo = ();
+		type SS58Prefix = ();
 	}
 
 	type System = frame_system::Module<Runtime>;

@@ -1,6 +1,6 @@
 [package]
 name = "indracore-runtime"
-version = "0.8.27"
+version = "0.2.0"
 authors = ["Selendra <info@selendra.org>"]
 edition = "2018"
 build = "build.rs"
@@ -69,6 +69,9 @@ pallet-vesting = { path = "../../substrate/frame/vesting", default-features = fa
 pallet-utility = { path = "../../substrate/frame/utility", default-features = false }
 pallet-offences-benchmarking = { path = "../../substrate/frame/offences/benchmarking", default-features = false, optional = true }
 pallet-session-benchmarking = { path = "../../substrate/frame/session/benchmarking", default-features = false, optional = true }
+pallet-contracts = { path = "../../substrate/frame/contracts", default_features = false }
+pallet-contracts-primitives = { path = "../../substrate/frame/contracts/common", default_features = false }
+pallet-contracts-rpc-runtime-api = { path = "../../substrate/frame/contracts/rpc/runtime-api", default_features = false }
 
 runtime-common = { package = "indracore-runtime-common", path = "../common", default-features = false }
 primitives = { package = "indracore-primitives", path = "../../primitives", default-features = false }
@@ -78,7 +81,7 @@ hex-literal = "0.3.1"
 libsecp256k1 = "0.3.5"
 tiny-keccak = "2.0.2"
 trie-db = "0.22.1"
-serde_json = "1.0.60"
+serde_json = "1.0.61"
 
 keyring = { package = "sp-keyring", path = "../../substrate/primitives/keyring" }
 sp-trie = { path = "../../substrate/primitives/trie" }
@@ -144,6 +147,9 @@ std = [
 	"runtime-common/std",
 	"pallet-vesting/std",
 	"pallet-utility/std",
+	'pallet-contracts/std',
+    'pallet-contracts-primitives/std',
+	"pallet-contracts-rpc-runtime-api/std",
 ]
 runtime-benchmarks = [
 	"runtime-common/runtime-benchmarks",
@@ -174,6 +180,7 @@ runtime-benchmarks = [
 	"pallet-session-benchmarking",
 	"frame-system-benchmarking",
 	"hex-literal",
+	"pallet-contracts/runtime-benchmarks",
 ]
 
 # When enabled, the runtime api will not be build.

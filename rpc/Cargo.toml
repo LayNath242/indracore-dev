@@ -30,5 +30,6 @@ sp-block-builder = { path = "../substrate/primitives/block-builder" }
 
 frame-rpc-system = { package = "substrate-frame-rpc-system", path = "../substrate/utils/frame/rpc/system"  }
 pallet-transaction-payment-rpc = { path = "../substrate/frame/transaction-payment/rpc" }
+pallet-contracts-rpc = { path = "../substrate/frame/contracts/rpc/" }
 
 indracore-primitives = { path = "../primitives" }

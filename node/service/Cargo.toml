@@ -39,12 +39,15 @@ sp-session = { path = "../../substrate/primitives/session" }
 sp-storage = { path = "../../substrate/primitives/storage" }
 sp-transaction-pool = { path = "../../substrate/primitives/transaction-pool" }
 sp-trie = { path = "../../substrate/primitives/trie" }
+sp-state-machine = { path = "../../substrate/primitives/state-machine" }
 
 # Substrate Pallets
 pallet-babe = { path = "../../substrate/frame/babe" }
 pallet-im-online = { path = "../../substrate/frame/im-online" }
 pallet-staking = { path = "../../substrate/frame/staking" }
 pallet-transaction-payment-rpc-runtime-api = { path = "../../substrate/frame/transaction-payment/rpc/runtime-api" }
+pallet-contracts = { path = "../../substrate/frame/contracts" }
+pallet-contracts-rpc-runtime-api = { path = "../../substrate/frame/contracts/rpc/runtime-api" }
 
 # Substrate Other
 frame-benchmarking = { path = "../../substrate/frame/benchmarking" }

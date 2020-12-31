@@ -1,9 +1,8 @@
 # Substrate &middot; [![GitHub license](https://img.shields.io/badge/license-GPL3%2FApache2-blue)](#LICENSE) [![GitLab Status](https://gitlab.parity.io/parity/substrate/badges/master/pipeline.svg)](https://gitlab.parity.io/parity/substrate/pipelines) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](docs/CONTRIBUTING.adoc)
 
 <p align="center">
-  <img src="docs/media/sub.gif">
+  <img src="../substrate/docs/media/sub.gif">
 </p>
-
 
 Substrate is a next-generation framework for blockchain innovation 🚀.
 

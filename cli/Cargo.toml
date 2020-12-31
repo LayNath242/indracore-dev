@@ -15,7 +15,7 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 log = "0.4.11"
-thiserror = "1.0.22"
+thiserror = "1.0.23"
 structopt = { version = "0.3.21", optional = true }
 wasm-bindgen = { version = "0.2.69", optional = true }
 wasm-bindgen-futures = { version = "0.4.19", optional = true }
@@ -27,7 +27,6 @@ browser-utils = { package = "substrate-browser-utils", path = "../substrate/util
 sp-core = { path = "../substrate/primitives/core" }
 sp-trie = { path = "../substrate/primitives/trie", default-features = false }
 
-sc-tracing = { path = "../substrate/client/tracing" }
 sc-cli = { path = "../substrate/client/cli", optional = true }
 sc-service = { path = "../substrate/client/service", optional = true }
 
