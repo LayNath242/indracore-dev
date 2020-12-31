@@ -202,4 +202,3 @@ mod tests {
 		assert_eq!(storage.child_storage(&child_info, &b"1"[..]), Ok(Some(b"3".to_vec())));
 	}
 }
-
