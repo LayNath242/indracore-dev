@@ -1,0 +1,31 @@
+[package]
+name = "cumulus-service"
+version = "0.1.0"
+authors = ["Selendra <info@selendra.org>"]
+edition = "2018"
+
+[dependencies]
+# Cumulus dependencies
+cumulus-consensus = { path = "../consensus" }
+cumulus-collator = { path = "../collator" }
+cumulus-primitives = { path = "../primitives" }
+
+# Substrate dependencies
+sc-service = { path = "../../substrate/client/service" }
+sc-client-api = { path = "../../substrate/client/api" }
+sc-cli = { path = "../../substrate/client/cli" }
+
+sp-consensus = { path = "../../substrate/primitives/consensus/common" }
+sp-runtime = { path = "../../substrate/primitives/runtime" }
+sp-api = { path = "../../substrate/primitives/api" }
+sp-core = { path = "../../substrate/primitives/core" }
+sp-inherents = { path = "../../substrate/primitives/inherents" }
+sp-blockchain = { path = "../../substrate/primitives/blockchain" }
+
+# Indracore dependencies
+indracore-primitives = { path = "../../primitives" }
+indracore-service = { path = "../../node/service" }
+indracore-overseer = { path = "../../node/overseer" }
+
+# Other deps
+futures = "0.3.6"
