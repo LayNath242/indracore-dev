@@ -1,0 +1,54 @@
+[package]
+name = "cumulus-runtime"
+version = "0.1.0"
+authors = ["Selendra <info@selendra.org>"]
+edition = "2018"
+
+[dependencies]
+# Other dependencies
+codec = { package = "parity-scale-codec", version = "1.3.5", default-features = false, features = [ "derive" ] }
+hash-db = { version = "0.15.2", default-features = false }
+memory-db = { version = "0.24.0", default-features = false }
+trie-db = { version = "0.22.0", default-features = false }
+
+cumulus-primitives = { path = "../primitives", default-features = false }
+parachain = { package = "indracore-parachain", path = "../../parachain", default-features = false, features = [ "wasm-api" ] }
+
+sp-std = { path = "../../substrate/primitives/std", default-features = false }
+sp-runtime = { path = "../../substrate/primitives/runtime", default-features = false }
+sp-core = { path = "../../substrate/primitives/core", default-features = false }
+sp-io = { path = "../../substrate/primitives/io", default-features = false }
+sp-trie = { path = "../../substrate/primitives/trie", default-features = false }
+sp-state-machine = { path = "../../substrate/primitives/state-machine", default-features = false }
+sp-externalities = { path = "../../substrate/primitives/externalities", default-features = false }
+
+frame-executive = { path = "../../substrate/frame/executive", default-features = false }
+
+[dev-dependencies]
+sc-block-builder = { path = "../../substrate/client/block-builder", default-features = false }
+sc-client-api = { path = "../../substrate/client/api", default-features = false }
+sp-keyring = { path = "../../substrate/primitives/keyring" }
+sp-blockchain = { path = "../../substrate/primitives/blockchain" }
+sc-executor = { path = "../../substrate/client/executor" }
+sp-consensus = { path = "../../substrate/primitives/consensus/common" }
+cumulus-test-client = { path = "../test/client" }
+env_logger = "0.7.1"
+
+[features]
+default = ["std"]
+std = [
+	"codec/std",
+    "memory-db/std",
+	"hash-db/std",
+    "trie-db/std",
+	"sp-std/std",
+	"sp-io/std",
+	"sp-runtime/std",
+	"sp-core/std",
+	"sp-state-machine/std",
+	"sp-externalities/std",
+	"sp-trie/std",
+    "frame-executive/std",
+    "cumulus-primitives/std",
+	"parachain/std",
+]

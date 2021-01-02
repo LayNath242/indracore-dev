@@ -1,0 +1,68 @@
+[package]
+name = "cumulus-test-service"
+version = '0.1.0'
+authors = ["Selendra <info@selendra.org>"]
+edition = '2018'
+
+[dependencies]
+codec = { package = 'parity-scale-codec', version = '1.0.0' }
+rand = "0.7.3"
+serde = { version = "1.0.101", features = ["derive"] }
+
+# Substrate
+sc-basic-authorship = { path = "../../../substrate/client/basic-authorship" }
+sc-block-builder = { path = "../../../substrate/client/block-builder" }
+sc-chain-spec = { path = "../../../substrate/client/chain-spec" }
+sc-client-api = { path = "../../../substrate/client/api" }
+sc-cli = { path = "../../../substrate/client/cli" }
+sc-executor = { path = "../../../substrate/client/executor" }
+sc-network = { path = "../../../substrate/client/network" }
+sc-rpc = { path = "../../../substrate/client/rpc" }
+sc-service = { path = "../../../substrate/client/service" }
+sc-transaction-pool = { path = "../../../substrate/client/transaction-pool" }
+
+sp-api = { path = "../../../substrate/primitives/api" }
+sp-block-builder = { path = "../../../substrate/primitives/block-builder" }
+sp-consensus = { path = "../../../substrate/primitives/consensus/common" }
+sp-core = { path = "../../../substrate/primitives/core" }
+sp-inherents = { path = "../../../substrate/primitives/inherents" }
+sp-keyring = { path = "../../../substrate/primitives/keyring" }
+sp-offchain = { path = "../../../substrate/primitives/offchain" }
+sp-runtime = {  path = "../../../substrate/primitives/runtime", default-features = false }
+sp-session = { path = "../../../substrate/primitives/session" }
+sp-state-machine = { path = "../../../substrate/primitives/state-machine" }
+sp-timestamp = { path = "../../../substrate/primitives/timestamp" }
+sp-transaction-pool = { path = "../../../substrate/primitives/transaction-pool" }
+sp-trie = { path = "../../../substrate/primitives/trie" }
+
+substrate-test-client = { path = "../../../substrate/test-utils/client" }
+
+# Indracore
+indracore-primitives = { path = "../../../primitives" }
+indracore-service = { path = "../../../node/service" }
+indracore-test-service = { path = "../../../node/test/service" }
+indracore-overseer = { path = "../../../node/overseer" }
+
+# Cumulus
+cumulus-consensus = { path = "../../consensus" }
+cumulus-network = { path = "../../network" }
+cumulus-primitives = { path = "../../primitives" }
+cumulus-service = { path = "../../service" }
+cumulus-test-runtime = { path = "../runtime" }
+
+# RPC related dependencies
+jsonrpc-core = "15.1.0"
+
+[dev-dependencies]
+futures = { version = "0.3.5" }
+tokio = { version = "0.2.21", features = ["macros"] }
+
+# Indracore dependencies
+indracore-test-runtime = { path = "../../../runtime/test-runtime" }
+indracore-test-service = { path = "../../../node/test/service" }
+
+# Substrate dependencies
+pallet-sudo = { path = "../../../substrate/frame/sudo" }
+substrate-test-runtime-client = { path = "../../../substrate/test-utils/runtime/client" }
+substrate-test-utils = { path = "../../../substrate/test-utils" }
+sc-cli = { path = "../../../substrate/client/cli" }

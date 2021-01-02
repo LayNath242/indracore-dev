@@ -6,7 +6,7 @@ path = "src/main.rs"
 name = "indracore"
 description = "Implementation of a node in Rust based on the Substrate framework."
 license = "GPL-3.0-only"
-version = "0.8.27"
+version = "0.2.0"
 authors = ["Selendra <info@selendra.org>"]
 edition = "2018"
 readme = "README.md"
@@ -36,6 +36,7 @@ members = [
 	"parachain/test-parachains",
 	"parachain/test-parachains/adder",
 	"parachain/test-parachains/adder/collator",
+	"cumulus/network"
 ]
 
 [badges]
