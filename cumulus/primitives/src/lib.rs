@@ -29,10 +29,10 @@ pub use indracore_primitives::v1::{
 pub mod genesis;
 
 /// An inbound HRMP message.
-pub type InboundHrmpMessage = _primitives::v1::InboundHrmpMessage<relay_chain::BlockNumber>;
+pub type InboundHrmpMessage = indracore_primitives::v1::InboundHrmpMessage<relay_chain::BlockNumber>;
 
 /// And outbound HRMP message
-pub type OutboundHrmpMessage = _primitives::v1::OutboundHrmpMessage<ParaId>;
+pub type OutboundHrmpMessage = indracore_primitives::v1::OutboundHrmpMessage<ParaId>;
 
 /// Identifiers and types related to Cumulus Inherents
 pub mod inherents {

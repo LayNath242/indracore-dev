@@ -31,7 +31,6 @@ sp-keyring = { path = "../../substrate/primitives/keyring" }
 sp-blockchain = { path = "../../substrate/primitives/blockchain" }
 sc-executor = { path = "../../substrate/client/executor" }
 sp-consensus = { path = "../../substrate/primitives/consensus/common" }
-cumulus-test-client = { path = "../test/client" }
 env_logger = "0.7.1"
 
 [features]

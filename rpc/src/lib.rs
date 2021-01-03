@@ -96,7 +96,7 @@ pub struct FullDeps<C, P, SC, B> {
 pub fn create_full<C, P, SC, B>(deps: FullDeps<C, P, SC, B>) -> RpcExtension where
 	C: ProvideRuntimeApi<Block> + HeaderBackend<Block> + AuxStore +
 		HeaderMetadata<Block, Error=BlockChainError> + Send + Sync + 'static,
-	C::Api: pallet_contracts_rpc::ContractsRuntimeApi<Block, AccountId, Balance, BlockNumber>,
+	// C::Api: pallet_contracts_rpc::ContractsRuntimeApi<Block, AccountId, Balance, BlockNumber>,
 	C::Api: frame_rpc_system::AccountNonceApi<Block, AccountId, Nonce>,
 	C::Api: pallet_transaction_payment_rpc::TransactionPaymentRuntimeApi<Block, Balance>,
 	C::Api: BabeApi<Block>,
@@ -110,7 +110,7 @@ pub fn create_full<C, P, SC, B>(deps: FullDeps<C, P, SC, B>) -> RpcExtension whe
 	use pallet_transaction_payment_rpc::{TransactionPayment, TransactionPaymentApi};
 	use sc_finality_grandpa_rpc::{GrandpaApi, GrandpaRpcHandler};
 	use sc_consensus_babe_rpc::BabeRpcHandler;
-	use pallet_contracts_rpc::{Contracts, ContractsApi};
+	// use pallet_contracts_rpc::{Contracts, ContractsApi};
 
 	let mut io = jsonrpc_core::IoHandler::default();
 	let FullDeps {
@@ -135,9 +135,9 @@ pub fn create_full<C, P, SC, B>(deps: FullDeps<C, P, SC, B>) -> RpcExtension whe
 		finality_provider,
 	} = grandpa;
 
-	io.extend_with(
-		ContractsApi::to_delegate(Contracts::new(client.clone()))
-	);
+	// io.extend_with(
+	// 	ContractsApi::to_delegate(Contracts::new(client.clone()))
+	// );
 	io.extend_with(
 		SystemApi::to_delegate(FullSystem::new(client.clone(), pool, deny_unsafe))
 	);

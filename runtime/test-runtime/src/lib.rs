@@ -44,7 +44,7 @@ use primitives::v1::{
 	InboundDownwardMessage, InboundHrmpMessage, SessionInfo as SessionInfoData,
 };
 use runtime_common::{
-	claims, SlowAdjustingFeeUpdate, paras_sudo_wrapper,
+	SlowAdjustingFeeUpdate, paras_sudo_wrapper,
 	BlockHashCount, BlockWeights, BlockLength,
 };
 use sp_runtime::{
@@ -421,13 +421,6 @@ parameter_types! {
 	pub Prefix: &'static [u8] = b"Pay KSMs to the Kusama account:";
 }
 
-impl claims::Config for Runtime {
-	type Event = Event;
-	type VestingSchedule = Vesting;
-	type Prefix = Prefix;
-	type MoveClaimOrigin = frame_system::EnsureRoot<AccountId>;
-}
-
 parameter_types! {
 	pub storage MinVestedTransfer: Balance = 100 * DOLLARS;
 }
@@ -504,9 +497,6 @@ construct_runtime! {
 		Session: pallet_session::{Module, Call, Storage, Event, Config<T>},
 		Grandpa: pallet_grandpa::{Module, Call, Storage, Config, Event},
 		AuthorityDiscovery: pallet_authority_discovery::{Module, Call, Config},
-
-		// Claims. Usable initially.
-		Claims: claims::{Module, Call, Storage, Event<T>, Config<T>, ValidateUnsigned},
 
 		// Vesting. Usable initially, but removed once all vesting is finished.
 		Vesting: pallet_vesting::{Module, Call, Storage, Event<T>, Config<T>},
@@ -740,6 +730,10 @@ sp_api::impl_runtime_apis! {
 
 		fn current_epoch_start() -> babe_primitives::SlotNumber {
 			Babe::current_epoch_start()
+		}
+
+		fn current_epoch() -> babe_primitives::Epoch {
+			Babe::current_epoch()
 		}
 
 		fn generate_key_ownership_proof(

@@ -35,9 +35,6 @@ parking_lot = "0.10.2"
 derive_more = "0.99.2"
 
 [dev-dependencies]
-# Cumulus deps
-cumulus-test-service = { path = "../test/service" }
-
 # Indracore deps
 indracore-test-client = { path = "../../node/test/client" }
 
