@@ -34,5 +34,4 @@ pub use self::error::Error;
 pub use parachain::wasm_executor::run_worker as run_validation_worker;
 
 mod error;
-
-pub mod block_production
+pub mod block_production;
