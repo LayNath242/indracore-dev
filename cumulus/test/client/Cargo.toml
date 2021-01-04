@@ -18,17 +18,18 @@ sp-blockchain = { path = "../../../substrate/primitives/blockchain" }
 sp-inherents = { path = "../../../substrate/primitives/inherents" }
 sp-timestamp = { path = "../../../substrate/primitives/timestamp" }
 sp-state-machine = { path = "../../../substrate/primitives/state-machine" }
-
 substrate-test-client = { path = "../../../substrate/test-utils/client" }
-
 frame-system = { path = "../../../substrate/frame/system" }
 pallet-transaction-payment = { path = "../../../substrate/frame/transaction-payment" }
 pallet-balances = { path = "../../../substrate/frame/balances" }
 
+# Cumulus deps
 cumulus-test-runtime = { path = "../runtime" }
 cumulus-test-service = { path = "../service" }
 cumulus-primitives = { path = "../../primitives" }
 
+# Indracore deps
 indracore-primitives = { path = "../../../primitives" }
 
+# Other deps
 codec = { package = "parity-scale-codec", version = "1.0.5", default-features = false, features = [ "derive" ] }

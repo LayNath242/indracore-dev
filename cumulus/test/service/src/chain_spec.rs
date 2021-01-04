@@ -121,4 +121,3 @@ fn testnet_genesis(
 		pallet_sudo: Some(cumulus_test_runtime::SudoConfig { key: root_key }),
 	}
 }
-
