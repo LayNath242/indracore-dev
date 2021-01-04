@@ -49,6 +49,8 @@ members = [
 	"cumulus/primitives",
 	"cumulus/xcm-handler",
 	"indracore",
+	"xelendra-parachain/runtime",
+	"xelendra-parachain/node"
 ]
 
 # make sure dev builds with backtrace do
