@@ -6,7 +6,9 @@ edition = "2018"
 
 [dependencies]
 serde = { version = "1.0.118", optional = true, features = ["derive"] }
+hex-literal = "0.3.1"
 parity-scale-codec = { version = "1.3.5", default-features = false, features = ["bit-vec", "derive"] }
+
 primitives = { package = "sp-core", git = "https://github.com/paritytech/substrate", branch = "master", default-features = false }
 inherents = { package = "sp-inherents", git = "https://github.com/paritytech/substrate", branch = "master", default-features = false }
 application-crypto = { package = "sp-application-crypto", git = "https://github.com/paritytech/substrate", branch = "master", default-features = false }
@@ -23,6 +25,7 @@ indracore-core-primitives = { path = "../core-primitives", default-features = fa
 trie = { package = "sp-trie", git = "https://github.com/paritytech/substrate", branch = "master", default-features = false }
 bitvec = { version = "0.17.4", default-features = false, features = ["alloc"] }
 frame-system = { git = "https://github.com/paritytech/substrate", branch = "master", default-features = false }
+sp-io = { git = "https://github.com/paritytech/substrate", default-features = false, branch = "master" }
 
 [dev-dependencies]
 sp-serializer = { git = "https://github.com/paritytech/substrate", branch = "master" }
@@ -31,6 +34,7 @@ pretty_assertions = "0.6.1"
 [features]
 default = ["std"]
 std = [
+	"sp-io/std",
 	"application-crypto/std",
 	"parity-scale-codec/std",
 	"primitives/std",
