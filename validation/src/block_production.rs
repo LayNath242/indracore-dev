@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
 
-//! The block production pipeline of Polkadot.
+//! The block production pipeline of Indracore.
 //!
 //! The `ProposerFactory` exported by this module will be wrapped by some
 //! consensus engine, and triggered when it is time to create a block.
@@ -76,6 +76,7 @@ where
 		Block,
 		State = sp_api::StateBackendFor<Client, Block>
 	> + 'static,
+	// Rust bug: https://github.com/rust-lang/rust/issues/24159
 	sp_api::StateBackendFor<Client, Block>: sp_api::StateBackend<HashFor<Block>> + Send,
 {
 	type CreateProposer = Pin<Box<

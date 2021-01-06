@@ -115,6 +115,8 @@ impl crate::hrmp::Config for Test {
 
 impl crate::scheduler::Config for Test { }
 
+impl crate::inclusion_inherent::Config for Test { }
+
 impl crate::inclusion::Config for Test {
 	type Event = TestEvent;
 	type RewardValidators = TestRewardValidators;

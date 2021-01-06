@@ -20,12 +20,13 @@ tracing-futures = "0.2.4"
 indracore-node-primitives = { path = "../primitives" }
 indracore-node-subsystem = { path = "../subsystem" }
 indracore-primitives = { path = "../../primitives" }
+indracore-node-jaeger = { path = "../jaeger" }
 
-sc-network = { path = "../../substrate/client/network"}
-sp-core = { path = "../../substrate/primitives/core" }
-sp-application-crypto = { path = "../../substrate/primitives/application-crypto" }
-sp-keystore = { path = "../../substrate/primitives/keystore" }
-substrate-prometheus-endpoint = { path = "../../substrate/utils/prometheus" }
+sc-network = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-application-crypto = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
+substrate-prometheus-endpoint = { git = "https://github.com/paritytech/substrate", branch = "master" }
 
 [dev-dependencies]
 assert_matches = "1.4.0"

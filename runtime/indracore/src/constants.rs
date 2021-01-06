@@ -18,10 +18,11 @@
 pub mod currency {
 	use primitives::v0::Balance;
 
-	pub const SELS: Balance = 1_000_000_000_000_000;
-	pub const DOLLARS: Balance = SELS / 100;       // 10_000_000_000_000
-	pub const CENTS: Balance = DOLLARS / 100;      // 100_000_000_000
-	pub const MILLICENTS: Balance = CENTS / 1_000; // 100_000_000
+	pub const SELS: Balance = 1_000_000_000_000;
+	pub const DOLLARS: Balance = SELS / 100;       // 10_000_000_000
+	pub const CENTS: Balance = DOLLARS / 100;      // 100_000_000
+	pub const MILLICENTS: Balance = CENTS / 1_000; // 100_000
+
 
 	pub const fn deposit(items: u32, bytes: u32) -> Balance {
 		items as Balance * 20 * DOLLARS + (bytes as Balance) * 100 * MILLICENTS
@@ -71,7 +72,7 @@ pub mod fee {
 	impl WeightToFeePolynomial for WeightToFee {
 		type Balance = Balance;
 		fn polynomial() -> WeightToFeeCoefficients<Self::Balance> {
-			// in Polkadot, extrinsic base weight (smallest non-zero weight) is mapped to 1/10 CENT:
+			// in Indracore, extrinsic base weight (smallest non-zero weight) is mapped to 1/10 CENT:
 			let p = super::currency::CENTS;
 			let q = 10 * Balance::from(ExtrinsicBaseWeight::get());
 			smallvec![WeightToFeeCoefficient {

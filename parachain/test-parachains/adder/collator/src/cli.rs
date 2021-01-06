@@ -63,7 +63,7 @@ pub struct Cli {
 
 impl SubstrateCli for Cli {
 	fn impl_name() -> String {
-		"Selendra indracore".into()
+		"Selendra Indracore".into()
 	}
 
 	fn impl_version() -> String {

@@ -33,13 +33,13 @@ async fn start_inner(chain_spec: String, log_level: String) -> Result<Client, Bo
 	set_console_error_panic_hook();
 	init_console_log(log_level.parse()?)?;
 
-	let chain_spec = service::PolkadotChainSpec::from_json_bytes(chain_spec.as_bytes().to_vec())
+	let chain_spec = service::IndracoreChainSpec::from_json_bytes(chain_spec.as_bytes().to_vec())
 		.map_err(|e| format!("{:?}", e))?;
 	let config = browser_configuration(chain_spec).await?;
 
 	info!("Selendra browser node");
 	info!("  version {}", config.impl_version);
-	info!("  by Selendra indracore, 2019-2020");
+	info!("  by Selendra Technologies, 2018-2020");
 	info!("📋 Chain specification: {}", config.chain_spec.name());
 	info!("🏷  Node name: {}", config.network.node_name);
 	info!("👤 Role: {}", config.display_role());

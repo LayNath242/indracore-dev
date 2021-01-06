@@ -95,7 +95,7 @@ include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 /// Runtime version (Test).
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("indracore-test-runtime"),
-	impl_name: create_runtime_str!("parity-indracore-test-runtime"),
+	impl_name: create_runtime_str!("selendra-indracore-test-runtime"),
 	authoring_version: 2,
 	spec_version: 1055,
 	impl_version: 0,
@@ -418,7 +418,7 @@ parameter_types! {
 }
 
 parameter_types! {
-	pub Prefix: &'static [u8] = b"Pay KSMs to the Kusama account:";
+	pub Prefix: &'static [u8] = b"Pay SEL to the Indracore account:";
 }
 
 parameter_types! {
@@ -718,6 +718,7 @@ sp_api::impl_runtime_apis! {
 			// probability of a slot being empty), is done in accordance to the
 			// slot duration and expected target block time, for safely
 			// resisting network delays of maximum two seconds.
+			// <https://research.web3.foundation/en/latest/polkadot/BABE/Babe/#6-practical-results>
 			babe_primitives::BabeGenesisConfiguration {
 				slot_duration: Babe::slot_duration(),
 				epoch_length: EpochDuration::get(),

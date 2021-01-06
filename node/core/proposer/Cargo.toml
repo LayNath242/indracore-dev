@@ -8,19 +8,17 @@ edition = "2018"
 futures = "0.3.8"
 futures-timer = "3.0.2"
 tracing = "0.1.22"
-
 indracore-node-subsystem = { path = "../../subsystem" }
 indracore-overseer = { path = "../../overseer" }
 indracore-primitives = { path = "../../../primitives" }
-
-sc-basic-authorship = { path = "../../../substrate/client/basic-authorship" }
-sc-block-builder = { path = "../../../substrate/client/block-builder" }
-sc-client-api = { path = "../../../substrate/client/api" }
-sp-api = { path = "../../../substrate/primitives/api" }
-sp-blockchain = { path = "../../../substrate/primitives/blockchain" }
-sp-consensus = { path = "../../../substrate/primitives/consensus/common" }
-sp-core = { path = "../../../substrate/primitives/core" }
-sp-inherents = { path = "../../../substrate/primitives/inherents" }
-sp-runtime = { path = "../../../substrate/primitives/runtime" }
-sp-transaction-pool = { path = "../../../substrate/primitives/transaction-pool" }
-prometheus-endpoint = { package = "substrate-prometheus-endpoint", path = "../../../substrate/utils/prometheus" }
+sc-basic-authorship = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-block-builder = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-client-api = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-api = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-blockchain = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-consensus = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-inherents = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-runtime = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-transaction-pool = { git = "https://github.com/paritytech/substrate", branch = "master" }
+prometheus-endpoint = { package = "substrate-prometheus-endpoint", git = "https://github.com/paritytech/substrate", branch = "master" }

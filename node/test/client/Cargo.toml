@@ -1,6 +1,6 @@
 [package]
 name = "indracore-test-client"
-version = "0.2.0"
+version = "0.8.27"
 authors = ["Selendra <info@selendra.org>"]
 edition = "2018"
 
@@ -14,18 +14,18 @@ indracore-primitives = { path = "../../../primitives" }
 indracore-node-subsystem = { path = "../../subsystem" }
 
 # Substrate dependencies
-substrate-test-client = { path = "../../../substrate/test-utils/client" }
-sc-service = { path = "../../../substrate/client/service" }
-sc-block-builder = { path = "../../../substrate/client/block-builder"  }
-sc-consensus = { path = "../../../substrate/client/consensus/common"  }
-sp-blockchain = { path = "../../../substrate/primitives/blockchain"  }
-sp-runtime = { path = "../../../substrate/primitives/runtime"  }
-sp-inherents = { path = "../../../substrate/primitives/inherents"  }
-sp-core = { path = "../../../substrate/primitives/core"  }
-sp-api = { path = "../../../substrate/primitives/api"  }
-sp-timestamp = { path = "../../../substrate/primitives/timestamp"  }
-sp-consensus = { path = "../../../substrate/primitives/consensus/common"  }
-sp-state-machine = { path = "../../../substrate/primitives/state-machine"  }
+substrate-test-client = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-service = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-block-builder = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-consensus = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-blockchain = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-runtime = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-inherents = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-api = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-timestamp = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-consensus = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-state-machine = { git = "https://github.com/paritytech/substrate", branch = "master" }
 
 [dev-dependencies]
-sp-keyring = { path = "../../../substrate/primitives/keyring" }
+sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "master" }
