@@ -22,19 +22,19 @@
 
 use futures::{channel::{mpsc, oneshot}, lock::Mutex, prelude::*, future, Future};
 use sp_keystore::{Error as KeystoreError, SyncCryptoStorePtr};
-use indracore_node_subsystem::{
-	jaeger,
+use polkadot_node_subsystem::{
+	jaeger, PerLeafSpan, JaegerSpan,
 	messages::{
 		AllMessages, AvailabilityStoreMessage, BitfieldDistributionMessage,
 		BitfieldSigningMessage, RuntimeApiMessage, RuntimeApiRequest,
 	},
 	errors::RuntimeApiError,
 };
-use indracore_node_subsystem_util::{
+use polkadot_node_subsystem_util::{
 	self as util, JobManager, JobTrait, Validator, FromJobCommand, metrics::{self, prometheus},
 };
-use indracore_primitives::v1::{AvailabilityBitfield, CoreState, Hash, ValidatorIndex};
-use std::{pin::Pin, time::Duration, iter::FromIterator};
+use polkadot_primitives::v1::{AvailabilityBitfield, CoreState, Hash, ValidatorIndex};
+use std::{pin::Pin, time::Duration, iter::FromIterator, sync::Arc};
 use wasm_timer::{Delay, Instant};
 
 /// Delay between starting a bitfield signing job and its attempting to create a bitfield.
@@ -215,9 +215,10 @@ impl JobTrait for BitfieldSigningJob {
 	const NAME: &'static str = "BitfieldSigningJob";
 
 	/// Run a job for the parent block indicated
-	#[tracing::instrument(skip(keystore, metrics, _receiver, sender), fields(subsystem = LOG_TARGET))]
+	#[tracing::instrument(skip(span, keystore, metrics, _receiver, sender), fields(subsystem = LOG_TARGET))]
 	fn run(
 		relay_parent: Hash,
+		span: Arc<JaegerSpan>,
 		keystore: Self::RunArgs,
 		metrics: Self::Metrics,
 		_receiver: mpsc::Receiver<BitfieldSigningMessage>,
@@ -225,7 +226,7 @@ impl JobTrait for BitfieldSigningJob {
 	) -> Pin<Box<dyn Future<Output = Result<(), Self::Error>> + Send>> {
 		let metrics = metrics.clone();
 		async move {
-			let span = jaeger::hash_span(&relay_parent, "run:bitfield-signing");
+			let span = PerLeafSpan::new(span, "bitfield-signing");
 			let _span = span.child("delay");
 			let wait_until = Instant::now() + JOB_DELAY;
 
@@ -296,7 +297,7 @@ pub type BitfieldSigningSubsystem<Spawner, Context> = JobManager<Spawner, Contex
 mod tests {
 	use super::*;
 	use futures::{pin_mut, executor::block_on};
-	use indracore_primitives::v1::{CandidateHash, OccupiedCore};
+	use polkadot_primitives::v1::{CandidateHash, OccupiedCore};
 
 	fn occupied_core(para_id: u32, candidate_hash: CandidateHash) -> CoreState {
 		CoreState::Occupied(OccupiedCore {

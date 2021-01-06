@@ -2747,9 +2747,25 @@ dependencies = [
 ]
 
 [[package]]
+name = "indracore-node-jaeger"
+version = "0.1.0"
+dependencies = [
+ "async-std",
+ "indracore-primitives",
+ "lazy_static",
+ "log",
+ "mick-jaeger",
+ "parking_lot 0.11.1",
+ "sc-network",
+ "sp-core",
+ "thiserror",
+]
+
+[[package]]
 name = "indracore-node-network-protocol"
 version = "0.1.0"
 dependencies = [
+ "indracore-node-jaeger",
  "indracore-node-primitives",
  "indracore-primitives",
  "parity-scale-codec",
@@ -2779,6 +2795,7 @@ dependencies = [
  "derive_more",
  "futures 0.3.8",
  "futures-timer 3.0.2",
+ "indracore-node-jaeger",
  "indracore-node-network-protocol",
  "indracore-node-primitives",
  "indracore-node-subsystem-test-helpers",
@@ -2831,6 +2848,7 @@ dependencies = [
  "env_logger 0.8.2",
  "futures 0.3.8",
  "futures-timer 3.0.2",
+ "indracore-node-jaeger",
  "indracore-node-primitives",
  "indracore-node-subsystem",
  "indracore-node-subsystem-test-helpers",
@@ -2920,6 +2938,7 @@ version = "0.8.27"
 dependencies = [
  "bitvec",
  "frame-system",
+ "hex-literal",
  "indracore-core-primitives",
  "indracore-parachain",
  "parity-scale-codec",
@@ -2931,6 +2950,7 @@ dependencies = [
  "sp-authority-discovery",
  "sp-core",
  "sp-inherents",
+ "sp-io",
  "sp-keystore",
  "sp-runtime",
  "sp-serializer",

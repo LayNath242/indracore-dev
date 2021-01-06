@@ -37,7 +37,7 @@ use indracore_node_primitives::{
 	FromTableMisbehavior, Statement, SignedFullStatement, MisbehaviorReport, ValidationResult,
 };
 use indracore_subsystem::{
-	jaeger::{self, JaegerSpan},
+	JaegerSpan, PerLeafSpan,
 	messages::{
 		AllMessages, AvailabilityStoreMessage, CandidateBackingMessage, CandidateSelectionMessage,
 		CandidateValidationMessage, PoVDistributionMessage, ProvisionableData,
@@ -627,6 +627,8 @@ impl CandidateBackingJob {
 
 		Ok(())
 	}
+
+	/// Check if there have happened any new misbehaviors and issue necessary messages.
 	#[tracing::instrument(level = "trace", skip(self), fields(subsystem = LOG_TARGET))]
 	async fn issue_new_misbehaviors(&mut self) -> Result<(), Error> {
 		let mut reports = Vec::new();
@@ -919,9 +921,10 @@ impl util::JobTrait for CandidateBackingJob {
 
 	const NAME: &'static str = "CandidateBackingJob";
 
-	#[tracing::instrument(skip(keystore, metrics, rx_to, tx_from), fields(subsystem = LOG_TARGET))]
+	#[tracing::instrument(skip(span, keystore, metrics, rx_to, tx_from), fields(subsystem = LOG_TARGET))]
 	fn run(
 		parent: Hash,
+		span: Arc<JaegerSpan>,
 		keystore: SyncCryptoStorePtr,
 		metrics: Metrics,
 		rx_to: mpsc::Receiver<Self::ToJob>,
@@ -948,7 +951,7 @@ impl util::JobTrait for CandidateBackingJob {
 				}
 			}
 
-			let span = jaeger::hash_span(&parent, "run:backing");
+			let span = PerLeafSpan::new(span, "backing");
 			let _span = span.child("runtime-apis");
 
 			let (validators, groups, session_index, cores) = futures::try_join!(
@@ -1336,7 +1339,10 @@ mod tests {
 	) {
 		// Start work on some new parent.
 		virtual_overseer.send(FromOverseer::Signal(
-			OverseerSignal::ActiveLeaves(ActiveLeavesUpdate::start_work(test_state.relay_parent)))
+			OverseerSignal::ActiveLeaves(ActiveLeavesUpdate::start_work(
+				test_state.relay_parent,
+				Arc::new(JaegerSpan::Disabled),
+			)))
 		).await;
 
 		// Check that subsystem job issues a request for a validator set.

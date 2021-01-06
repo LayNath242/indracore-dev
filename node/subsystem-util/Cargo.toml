@@ -20,6 +20,7 @@ tracing-futures = "0.2.4"
 indracore-node-primitives = { path = "../primitives" }
 indracore-node-subsystem = { path = "../subsystem" }
 indracore-primitives = { path = "../../primitives" }
+indracore-node-jaeger = { path = "../jaeger" }
 
 sc-network = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
