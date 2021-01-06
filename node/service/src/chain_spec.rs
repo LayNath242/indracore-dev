@@ -140,7 +140,7 @@ fn indracore_staging_testnet_config_genesis(wasm_binary: &[u8]) -> indracore::Ge
 		AuthorityDiscoveryId,
 	)> = vec![];
 
-	const ENDOWMENT: Balance = 2u128.pow(32) * SELS;
+	let endownment: Balance = 2u128.pow(32) * SELS;
 	const STASH: Balance = 100 * SELS;
 
 	indracore::GenesisConfig {
@@ -151,7 +151,7 @@ fn indracore_staging_testnet_config_genesis(wasm_binary: &[u8]) -> indracore::Ge
 		pallet_balances: Some(indracore::BalancesConfig {
 			balances: endowed_accounts
 				.iter()
-				.map(|k: &AccountId| (k.clone(), ENDOWMENT))
+				.map(|k: &AccountId| (k.clone(), endownment))
 				.chain(initial_authorities.iter().map(|x| (x.0.clone(), STASH)))
 				.collect(),
 		}),
@@ -565,7 +565,7 @@ pub fn indracore_testnet_genesis(
 ) -> indracore::GenesisConfig {
 	let endowed_accounts: Vec<AccountId> = endowed_accounts.unwrap_or_else(testnet_accounts);
 
-	const ENDOWMENT: Balance = 2u128.pow(32) * SELS;
+	let endownment: Balance = 2u128.pow(32) * SELS;
 	const STASH: Balance = 100 * SELS;
 
 	indracore::GenesisConfig {
@@ -577,7 +577,7 @@ pub fn indracore_testnet_genesis(
 		pallet_balances: Some(indracore::BalancesConfig {
 			balances: endowed_accounts
 				.iter()
-				.map(|k| (k.clone(), ENDOWMENT))
+				.map(|k| (k.clone(), endownment))
 				.collect(),
 		}),
 		pallet_session: Some(indracore::SessionConfig {
