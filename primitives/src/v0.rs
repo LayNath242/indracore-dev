@@ -22,23 +22,23 @@ use sp_std::prelude::*;
 use sp_std::convert::TryInto;
 use sp_std::cmp::Ordering;
 
-use codec::{Encode, Decode};
+use parity_scale_codec::{Encode, Decode};
 use bitvec::vec::BitVec;
 #[cfg(feature = "std")]
 use serde::{Serialize, Deserialize};
 
 #[cfg(feature = "std")]
 use sp_keystore::{CryptoStore, SyncCryptoStorePtr, Error as KeystoreError};
-use sp_core::RuntimeDebug;
-use sp_runtime::traits::{AppVerify, Block as BlockT};
-use sp_inherents::InherentIdentifier;
+use primitives::RuntimeDebug;
+use runtime_primitives::traits::{AppVerify, Block as BlockT};
+use inherents::InherentIdentifier;
 #[cfg(feature = "std")]
 use application_crypto::AppKey;
 use application_crypto::KeyTypeId;
 
-pub use sp_runtime::traits::{BlakeTwo256, Hash as HashT, Verify, IdentifyAccount};
-pub use core_primitives::*;
-pub use codec::Compact;
+pub use runtime_primitives::traits::{BlakeTwo256, Hash as HashT, Verify, IdentifyAccount};
+pub use indracore_core_primitives::*;
+pub use parity_scale_codec::Compact;
 
 pub use indracore_parachain::primitives::{
 	Id, LOWEST_USER_ID, UpwardMessage, HeadData, BlockData,
@@ -790,7 +790,7 @@ pub mod id {
 /// This helper trait ensures that we can encode Statement as CompactStatement,
 /// and anything as itself.
 ///
-/// This resembles `codec::EncodeLike`, but it's distinct:
+/// This resembles `parity_scale_codec::EncodeLike`, but it's distinct:
 /// EncodeLike is a marker trait which asserts at the typesystem level that
 /// one type's encoding is a valid encoding for another type. It doesn't
 /// perform any type conversion when encoding.
@@ -921,7 +921,7 @@ impl<Payload: EncodeAs<RealPayload>, RealPayload: Encode> Signed<Payload, RealPa
 	}
 }
 
-/// Custom validity errors used in indracore while validating transactions.
+/// Custom validity errors used in Indracore while validating transactions.
 #[repr(u8)]
 pub enum ValidityError {
 	/// The Ethereum signature is invalid.
@@ -945,7 +945,7 @@ impl From<ValidityError> for u8 {
 /// Any rewards for misbehavior reporting will be paid out to this account.
 pub mod fisherman {
 	use super::{Signature, Verify};
-	use sp_core::crypto::KeyTypeId;
+	use primitives::crypto::KeyTypeId;
 
 	/// Key type for the reporting module. Used for reporting BABE, GRANDPA
 	/// and Parachain equivocations.
@@ -964,8 +964,8 @@ pub mod fisherman {
 	pub struct FishermanAppCrypto;
 	impl frame_system::offchain::AppCrypto<<Signature as Verify>::Signer, Signature> for FishermanAppCrypto {
 		type RuntimeAppPublic = FishermanId;
-		type GenericSignature = sp_core::sr25519::Signature;
-		type GenericPublic = sp_core::sr25519::Public;
+		type GenericSignature = primitives::sr25519::Signature;
+		type GenericPublic = primitives::sr25519::Public;
 	}
 }
 

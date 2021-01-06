@@ -71,10 +71,19 @@ impl InitIndracoreBlockBuilder for Client {
 			.put_data(sp_timestamp::INHERENT_IDENTIFIER, &timestamp)
 			.expect("Put timestamp inherent data");
 
+		let parent_header = self.header(at)
+			.expect("Get the parent block header")
+			.expect("The target block header must exist");
+		let provisioner_data = indracore_node_subsystem::messages::ProvisionerInherentData::default();
+		let inclusion_inherent_data = (
+			provisioner_data.0,
+			provisioner_data.1,
+			parent_header,
+		);
 		inherent_data
 			.put_data(
 				indracore_primitives::v1::INCLUSION_INHERENT_IDENTIFIER,
-				&indracore_node_subsystem::messages::ProvisionerInherentData::default(),
+				&inclusion_inherent_data,
 			)
 			.expect("Put inclusion inherent data");
 

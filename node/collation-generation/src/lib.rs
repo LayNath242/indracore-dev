@@ -209,8 +209,7 @@ async fn handle_new_activations<Context: SubsystemContext>(
 				CoreState::Scheduled(scheduled_core) => {
 					(scheduled_core, OccupiedCoreAssumption::Free)
 				}
-				CoreState::Occupied(_occupied_core) => {
-					tracing::trace!(
+				CoreState::Occupied(_occupied_core) => {					tracing::trace!(
 						target: LOG_TARGET,
 						core_idx = %core_idx,
 						relay_parent = ?relay_parent,

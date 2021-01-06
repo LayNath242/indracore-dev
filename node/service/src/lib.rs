@@ -119,6 +119,7 @@ pub enum Error {
 	AuthoritiesRequireRealOverseer,
 }
 
+/// Can be called for a `Configuration` to check if it is a configuration for the `xelendra` network.
 pub trait IdentifyVariant {
 
 	/// Returns if this is a configuration for the `Xelendra` network.
@@ -128,7 +129,7 @@ pub trait IdentifyVariant {
 impl IdentifyVariant for Box<dyn ChainSpec> {
 
 	fn is_xelendra(&self) -> bool {
-		self.id().starts_with("xelendra") || self.id().starts_with("rco")
+		self.id().starts_with("xelendra") || self.id().starts_with("xel")
 	}
 }
 

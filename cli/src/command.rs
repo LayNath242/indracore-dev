@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
 
-// use log::info;
+use log::info;
 use service::{IdentifyVariant, self};
 use sc_cli::{SubstrateCli, RuntimeVersion, Role};
 use crate::cli::{Cli, Subcommand};
@@ -243,7 +243,9 @@ pub fn run() -> Result<()> {
 		Some(Subcommand::Benchmark(cmd)) => {
 			let runner = cli.create_runner(cmd)?;
 			let chain_spec = &runner.config().chain_spec;
+
 			set_default_ss58_version(chain_spec);
+
 			runner.sync_run(|config| {
 				cmd.run::<service::indracore_runtime::Block, service::IndracoreExecutor>(config)
 			})

@@ -288,7 +288,7 @@ async fn store_available_data(
 //
 // This will compute the erasure root internally and compare it to the expected erasure root.
 // This returns `Err()` iff there is an internal error. Otherwise, it returns either `Ok(Ok(()))` or `Ok(Err(_))`.
-#[tracing::instrument(level = "trace", skip(tx_from, pov), fields(subsystem = LOG_TARGET))]
+#[tracing::instrument(level = "trace", skip(tx_from, pov, span), fields(subsystem = LOG_TARGET))]
 async fn make_pov_available(
 	tx_from: &mut mpsc::Sender<FromJobCommand>,
 	validator_index: Option<ValidatorIndex>,
@@ -297,31 +297,39 @@ async fn make_pov_available(
 	candidate_hash: CandidateHash,
 	validation_data: indracore_primitives::v1::PersistedValidationData,
 	expected_erasure_root: Hash,
+	span: Option<&JaegerSpan>,
 ) -> Result<Result<(), InvalidErasureRoot>, Error> {
 	let available_data = AvailableData {
 		pov,
 		validation_data,
 	};
 
-	let chunks = erasure_coding::obtain_chunks_v1(
-		n_validators,
-		&available_data,
-	)?;
+	{
+		let _span = span.as_ref().map(|s| s.child("erasure-coding"));
 
-	let branches = erasure_coding::branches(chunks.as_ref());
-	let erasure_root = branches.root();
+		let chunks = erasure_coding::obtain_chunks_v1(
+			n_validators,
+			&available_data,
+		)?;
 
-	if erasure_root != expected_erasure_root {
-		return Ok(Err(InvalidErasureRoot));
+		let branches = erasure_coding::branches(chunks.as_ref());
+		let erasure_root = branches.root();
+
+		if erasure_root != expected_erasure_root {
+			return Ok(Err(InvalidErasureRoot));
+		}
 	}
 
-	store_available_data(
-		tx_from,
-		validator_index,
-		n_validators as u32,
-		candidate_hash,
-		available_data,
-	).await?;
+	{
+		let _span = span.as_ref().map(|s| s.child("store-data"));
+		store_available_data(
+			tx_from,
+			validator_index,
+			n_validators as u32,
+			candidate_hash,
+			available_data,
+		).await?;
+	}
 
 	Ok(Ok(()))
 }
@@ -423,7 +431,6 @@ async fn validate_and_make_available(
 				);
 				Err(candidate)
 			} else {
-				let _span = span.as_ref().map(|s| s.child("make-available"));
 				let erasure_valid = make_pov_available(
 					&mut tx_from,
 					validator_index,
@@ -432,6 +439,7 @@ async fn validate_and_make_available(
 					candidate.hash(),
 					validation_data,
 					candidate.descriptor.erasure_root,
+					span.as_ref(),
 				).await?;
 
 				match erasure_valid {
@@ -619,8 +627,6 @@ impl CandidateBackingJob {
 
 		Ok(())
 	}
-
-	/// Check if there have happened any new misbehaviors and issue necessary messages.
 	#[tracing::instrument(level = "trace", skip(self), fields(subsystem = LOG_TARGET))]
 	async fn issue_new_misbehaviors(&mut self) -> Result<(), Error> {
 		let mut reports = Vec::new();
@@ -660,7 +666,7 @@ impl CandidateBackingJob {
 		&mut self,
 		statement: &SignedFullStatement,
 	) -> Result<Option<TableSummary>, Error> {
-		let _span = {
+		let import_statement_span = {
 			// create a span only for candidates we're already aware of.
 			let candidate_hash = statement.payload().candidate_hash();
 			self.get_unbacked_statement_child(&candidate_hash, statement.validator_index())
@@ -670,30 +676,40 @@ impl CandidateBackingJob {
 
 		let summary = self.table.import_statement(&self.table_context, stmt);
 
-		if let Some(ref summary) = summary {
-			if let Some(attested) = self.table.attested_candidate(
-				&summary.candidate,
-				&self.table_context,
-			) {
-				// `HashSet::insert` returns true if the thing wasn't in there already.
-				// one of the few places the Rust-std folks did a bad job with API
-				if self.backed.insert(summary.candidate) {
-					self.remove_unbacked_span(&summary.candidate);
+		let unbacked_span = if let Some(attested) = summary.as_ref()
+			.and_then(|s| self.table.attested_candidate(&s.candidate, &self.table_context))
+		{
+			let candidate_hash = attested.candidate.hash();
+			// `HashSet::insert` returns true if the thing wasn't in there already.
+			if self.backed.insert(candidate_hash) {
+				let span = self.remove_unbacked_span(&candidate_hash);
 
-					if let Some(backed) =
-						table_attested_to_backed(attested, &self.table_context)
-					{
-						let message = ProvisionerMessage::ProvisionableData(
-							self.parent,
-							ProvisionableData::BackedCandidate(backed.receipt()),
-						);
-						self.send_to_provisioner(message).await?;
-					}
+				if let Some(backed) =
+					table_attested_to_backed(attested, &self.table_context)
+				{
+					let message = ProvisionerMessage::ProvisionableData(
+						self.parent,
+						ProvisionableData::BackedCandidate(backed.receipt()),
+					);
+					self.send_to_provisioner(message).await?;
+
+					span.as_ref().map(|s| s.child("backed"));
+					span
+				} else {
+					None
 				}
+			} else {
+				None
 			}
-		}
+		} else {
+			None
+		};
 
 		self.issue_new_misbehaviors().await?;
+
+		// It is important that the child span is dropped before its parent span (`unbacked_span`)
+		drop(import_statement_span);
+		drop(unbacked_span);
 
 		Ok(summary)
 	}
@@ -866,8 +882,8 @@ impl CandidateBackingJob {
 		})
 	}
 
-	fn remove_unbacked_span(&mut self, hash: &CandidateHash) {
-		self.unbacked_candidates.remove(hash);
+	fn remove_unbacked_span(&mut self, hash: &CandidateHash) -> Option<JaegerSpan> {
+		self.unbacked_candidates.remove(hash)
 	}
 
 	async fn send_to_provisioner(&mut self, msg: ProvisionerMessage) -> Result<(), Error> {
@@ -1230,6 +1246,7 @@ mod tests {
 					hrmp_mqc_heads: Vec::new(),
 					dmq_mqc_head: Default::default(),
 					max_pov_size: 1024,
+					relay_storage_root: Default::default(),
 				},
 				transient: TransientValidationData {
 					max_code_size: 1000,

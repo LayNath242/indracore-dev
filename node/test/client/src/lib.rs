@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
 
-//! A Polkadot test client.
+//! A Indracore test client.
 //!
 //! This test client is using the Indracore test runtime.
 

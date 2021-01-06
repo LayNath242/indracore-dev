@@ -14,16 +14,16 @@ indracore-erasure-coding = { path = "../../../erasure-coding" }
 indracore-subsystem = { package = "indracore-node-subsystem", path = "../../subsystem" }
 indracore-node-network-protocol = { path = "../../network/protocol" }
 indracore-node-subsystem-util = { path = "../../subsystem-util" }
-sp-core = { path = "../../../substrate/primitives/core", features = ["std"]  }
-sp-keystore = { path = "../../../substrate/primitives/keystore" }
+sp-core = { git = "https://github.com/paritytech/substrate", branch = "master", features = ["std"]  }
+sp-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
 thiserror = "1.0.23"
 
 [dev-dependencies]
 indracore-subsystem-testhelpers = { package = "indracore-node-subsystem-test-helpers", path = "../../subsystem-test-helpers" }
-sp-core = { path = "../../../substrate/primitives/core", features = ["std"] }
-sp-application-crypto = { path = "../../../substrate/primitives/application-crypto" }
-sp-keyring = { path = "../../../substrate/primitives/keyring" }
-sp-tracing = { path = "../../../substrate/primitives/tracing" }
-sc-keystore = { path = "../../../substrate/client/keystore" }
+sp-core = { git = "https://github.com/paritytech/substrate", branch = "master", features = ["std"] }
+sp-application-crypto = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-tracing = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
 assert_matches = "1.4.0"
 maplit = "1.0"

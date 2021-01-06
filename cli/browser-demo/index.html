@@ -2,10 +2,10 @@
 <html>
   <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
-	<title>Polkadot node</title>
+	<title>Indracore node</title>
 	<link rel="shortcut icon" href="/favicon.png" />
 	<script type="module">
-import { start_client, default as init } from './pkg/polkadot_cli.js';
+import { start_client, default as init } from './pkg/indracore_cli.js';
 
 function log(msg) {
 	document.getElementsByTagName('body')[0].innerHTML += msg + '\n';
@@ -13,10 +13,10 @@ function log(msg) {
 
 async function start() {
 	log('Loading WASM');
-	await init('./pkg/polkadot_cli_bg.wasm');
+	await init('./pkg/indracore_cli_bg.wasm');
 	log('Successfully loaded WASM');
 	log('Fetching chain spec');
-	const chain_spec_response = await fetch("https://raw.githubusercontent.com/paritytech/polkadot/master/node/service/res/westend.json");
+	const chain_spec_response = await fetch("https://github.com/selendra/indracore/tree/main/node/cli/res/indracore-sel.json");
 	const chain_spec_text = await chain_spec_response.text();
 
 	// Build our client.

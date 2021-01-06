@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
 
-//! PoV Distribution Subsystem of Polkadot.
+//! PoV Distribution Subsystem of Indracore.
 //!
 //! This is a gossip implementation of code that is responsible for distributing PoVs
 //! among validators.

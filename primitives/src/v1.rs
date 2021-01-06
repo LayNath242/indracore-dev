@@ -18,30 +18,30 @@
 
 use sp_std::prelude::*;
 use sp_std::collections::btree_map::BTreeMap;
-use codec::{Encode, Decode};
+use parity_scale_codec::{Encode, Decode};
 use bitvec::vec::BitVec;
 
-use sp_core::RuntimeDebug;
-use sp_runtime::traits::AppVerify;
-use sp_inherents::InherentIdentifier;
+use primitives::RuntimeDebug;
+use runtime_primitives::traits::AppVerify;
+use inherents::InherentIdentifier;
 use sp_arithmetic::traits::{BaseArithmetic, Saturating};
 use application_crypto::KeyTypeId;
 
-pub use sp_runtime::traits::{BlakeTwo256, Hash as HashT};
+pub use runtime_primitives::traits::{BlakeTwo256, Hash as HashT};
 
-// Export some core sp_core.
-pub use core_primitives::{
+// Export some core primitives.
+pub use indracore_core_primitives::v1::{
 	BlockNumber, Moment, Signature, AccountPublic, AccountId, AccountIndex, ChainId, Hash, Nonce,
 	Balance, Header, Block, BlockId, UncheckedExtrinsic, Remark, DownwardMessage,
 	InboundDownwardMessage, CandidateHash, InboundHrmpMessage, OutboundHrmpMessage,
 };
 
-// Export some indracore-parachain sp_core
+// Export some indracore-parachain primitives
 pub use indracore_parachain::primitives::{
 	Id, LOWEST_USER_ID, HrmpChannelId, UpwardMessage, HeadData, BlockData, ValidationCode,
 };
 
-// Export some basic parachain sp_core from v0.
+// Export some basic parachain primitives from v0.
 pub use crate::v0::{
 	CollatorId, CollatorSignature, PARACHAIN_KEY_TYPE_ID, ValidatorId, ValidatorIndex,
 	ValidatorSignature, SigningContext, Signed, ValidityAttestation,
@@ -283,6 +283,8 @@ pub struct PersistedValidationData<N = BlockNumber> {
 	pub parent_head: HeadData,
 	/// The relay-chain block number this is in the context of.
 	pub block_number: N,
+	/// The relay-chain block storage root this is in the context of.
+	pub relay_storage_root: Hash,
 	/// The list of MQC heads for the inbound channels paired with the sender para ids. This
 	/// vector is sorted ascending by the para id and doesn't contain multiple entries with the same
 	/// sender.
@@ -822,7 +824,7 @@ sp_api::decl_runtime_apis! {
 	}
 }
 
-/// Custom validity errors used in indracore while validating transactions.
+/// Custom validity errors used in Indracore while validating transactions.
 #[repr(u8)]
 pub enum ValidityError {
 	/// The Ethereum signature is invalid.

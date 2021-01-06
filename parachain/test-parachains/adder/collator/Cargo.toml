@@ -23,18 +23,18 @@ indracore-service = { path = "../../../../node/service" }
 indracore-node-primitives = { path = "../../../../node/primitives" }
 indracore-node-subsystem = { path = "../../../../node/subsystem" }
 
-sc-cli = { path = "../../../../substrate/client/cli" }
-sp-core = { path = "../../../../substrate/primitives/core" }
-sc-authority-discovery = { path = "../../../../substrate/client/authority-discovery" }
-sc-service = { path = "../../../../substrate/client/service" }
+sc-cli = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-authority-discovery = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-service = { git = "https://github.com/paritytech/substrate", branch = "master" }
 
 [dev-dependencies]
-indracore-parachain = { path = "../../../../parachain" }
+indracore-parachain = { path = "../../.." }
 indracore-test-service = { path = "../../../../node/test/service" }
 
-substrate-test-utils = { path = "../../../../substrate/test-utils" }
-sc-service = { path = "../../../../substrate/client/service" }
-sp-keyring = { path = "../../../../substrate/primitives/keyring" }
+substrate-test-utils = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-service = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "master" }
 
 tokio = { version = "0.2", features = ["macros"] }
 

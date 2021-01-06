@@ -1,12 +1,12 @@
 [package]
 name = "indracore-pov-distribution"
 version = "0.1.0"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Selendra <info@selendra.org>"]
 edition = "2018"
 
 [dependencies]
 futures = "0.3.8"
-thiserror = "1.0.21"
+thiserror = "1.0.23"
 tracing = "0.1.22"
 tracing-futures = "0.2.4"
 
@@ -21,7 +21,7 @@ env_logger = "0.8.1"
 log = "0.4.11"
 smallvec = "1.5.1"
 
-sp-core = {path = "../../../substrate/primitives/core" }
-sp-keyring = {path = "../../../substrate/primitives/keyring" }
+sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "master" }
 
 indracore-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
