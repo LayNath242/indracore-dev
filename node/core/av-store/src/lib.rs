@@ -507,6 +507,9 @@ where
 		match res {
 			Err(e) => {
 				e.trace();
+				if let Error::Subsystem(SubsystemError::Context(_)) = e {
+					break;
+				}
 			}
 			Ok(true) => {
 				tracing::info!(target: LOG_TARGET, "received `Conclude` signal, exiting");
@@ -1000,9 +1003,7 @@ fn store_chunks(
 		);
 	}
 
-	for chunk in chunks {
-		subsystem.chunks_cache.entry(*candidate_hash).or_default().insert(chunk.index, chunk.clone());
-
+	for chunk in &chunks {
 		let pruning_record = ChunkPruningRecord {
 			candidate_hash: candidate_hash.clone(),
 			block_number,
@@ -1023,6 +1024,8 @@ fn store_chunks(
 			chunk.encode(),
 		);
 	}
+
+	subsystem.chunks_cache.entry(*candidate_hash).or_default().extend(chunks.into_iter().map(|c| (c.index, c)));
 
 	tx.put_vec(
 		columns::META,
