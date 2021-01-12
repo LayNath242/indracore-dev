@@ -8,7 +8,7 @@ edition = "2018"
 futures = "0.3.8"
 tracing = "0.1.22"
 tracing-futures = "0.2.4"
-sp-blockchain = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-blockchain = { git = "https://github.com/LayNath242/substrate", branch = "master" }
 indracore-primitives = { path = "../../../primitives" }
 indracore-subsystem = { package = "indracore-node-subsystem", path = "../../subsystem" }
 indracore-node-subsystem-util = { path = "../../subsystem-util" }
@@ -17,4 +17,4 @@ indracore-node-subsystem-util = { path = "../../subsystem-util" }
 futures = { version = "0.3.8", features = ["thread-pool"] }
 maplit = "1.0.2"
 indracore-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
-sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-core = { git = "https://github.com/LayNath242/substrate", branch = "master" }

@@ -23,7 +23,7 @@ assert_matches = "1.4.0"
 smallvec = "1.6.0"
 futures-timer = "3.0.2"
 
-sp-core = { git = "https://github.com/paritytech/substrate", branch = "master", features = ["std"] }
-sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-core = { git = "https://github.com/LayNath242/substrate", branch = "master", features = ["std"] }
+sp-keyring = { git = "https://github.com/LayNath242/substrate", branch = "master" }
 
 indracore-subsystem-testhelpers = { package = "indracore-node-subsystem-test-helpers", path = "../../subsystem-test-helpers" }

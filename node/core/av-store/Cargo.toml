@@ -21,7 +21,7 @@ indracore-node-subsystem-util = { path = "../../subsystem-util" }
 indracore-overseer = { path = "../../overseer" }
 indracore-primitives = { path = "../../../primitives" }
 
-sc-service = { git = "https://github.com/paritytech/substrate", branch = "master", default-features = false }
+sc-service = { git = "https://github.com/LayNath242/substrate", branch = "master", default-features = false }
 
 [dev-dependencies]
 log = "0.4.11"
@@ -30,6 +30,6 @@ assert_matches = "1.4.0"
 smallvec = "1.6.0"
 kvdb-memorydb = "0.7.0"
 
-sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-core = { git = "https://github.com/LayNath242/substrate", branch = "master" }
 indracore-node-subsystem-util = { path = "../../subsystem-util" }
 indracore-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }

@@ -11,7 +11,7 @@ tracing = "0.1.22"
 tracing-futures = "0.2.4"
 indracore-primitives = { path = "../../../primitives" }
 node-primitives = { package = "indracore-node-primitives", path = "../../primitives" }
-sp-staking = { git = "https://github.com/paritytech/substrate", branch = "master", default-features = false }
+sp-staking = { git = "https://github.com/LayNath242/substrate", branch = "master", default-features = false }
 indracore-subsystem = { package = "indracore-node-subsystem", path = "../../subsystem" }
 indracore-node-subsystem-util = { path = "../../subsystem-util" }
 indracore-node-network-protocol = { path = "../../network/protocol" }
@@ -21,8 +21,8 @@ indexmap = "1.6.1"
 [dev-dependencies]
 indracore-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
 assert_matches = "1.4.0"
-sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "master" }
-sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
-sp-application-crypto = { git = "https://github.com/paritytech/substrate", branch = "master" }
-sp-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
-sc-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-keyring = { git = "https://github.com/LayNath242/substrate", branch = "master" }
+sp-core = { git = "https://github.com/LayNath242/substrate", branch = "master" }
+sp-application-crypto = { git = "https://github.com/LayNath242/substrate", branch = "master" }
+sp-keystore = { git = "https://github.com/LayNath242/substrate", branch = "master" }
+sc-keystore = { git = "https://github.com/LayNath242/substrate", branch = "master" }

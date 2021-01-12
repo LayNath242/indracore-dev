@@ -22,7 +22,7 @@ env_logger = "0.8.1"
 log = "0.4.11"
 smallvec = "1.6.0"
 
-sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
-sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-core = { git = "https://github.com/LayNath242/substrate", branch = "master" }
+sp-keyring = { git = "https://github.com/LayNath242/substrate", branch = "master" }
 
 indracore-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
