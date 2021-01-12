@@ -13,6 +13,7 @@ thiserror = "1.0.23"
 tracing = "0.1.22"
 tracing-futures = "0.2.4"
 smallvec = "1.6.1"
+bitvec = "0.17.4"
 
 parity-scale-codec = { version = "1.3.5", features = ["derive"] }
 erasure = { package = "indracore-erasure-coding", path = "../../../erasure-coding" }
@@ -33,3 +34,5 @@ kvdb-memorydb = "0.8.0"
 sp-core = { git = "https://github.com/LayNath242/substrate", branch = "master" }
 indracore-node-subsystem-util = { path = "../../subsystem-util" }
 indracore-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
+sp-keyring = { git = "https://github.com/LayNath242/substrate", branch = "master" }
+parking_lot = "0.11.1"
