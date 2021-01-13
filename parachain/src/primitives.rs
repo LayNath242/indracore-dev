@@ -184,7 +184,6 @@ pub trait AccountIdConversion<AccountId>: Sized {
 }
 
 // TODO: Remove all of this, move sp-runtime::AccountIdConversion to own crate and and use that.
-// #360
 struct TrailingZeroInput<'a>(&'a [u8]);
 impl<'a> parity_scale_codec::Input for TrailingZeroInput<'a> {
 	fn remaining_len(&mut self) -> Result<Option<usize>, parity_scale_codec::Error> {
@@ -267,6 +266,7 @@ pub struct ValidationParams {
 }
 
 /// The result of parachain validation.
+// TODO: balance uploads
 #[derive(PartialEq, Eq, Encode)]
 #[cfg_attr(feature = "std", derive(Debug, Decode))]
 pub struct ValidationResult {

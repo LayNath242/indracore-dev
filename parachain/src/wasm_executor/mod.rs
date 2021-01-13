@@ -199,6 +199,7 @@ pub fn validate_candidate_internal(
 ) -> Result<ValidationResult, ValidationError> {
 	let executor = sc_executor::WasmExecutor::new(
 		sc_executor::WasmExecutionMethod::Interpreted,
+		// TODO: Make sure we don't use more than 1GB
 		Some(1024),
 		HostFunctions::host_functions(),
 		8

@@ -1,20 +1,18 @@
-// This file is part of Substrate.
+// Copyright 2017-2020 Parity Technologies (UK) Ltd.
+// This file is part of Polkadot.
 
-// Copyright (C) 2018-2020 Parity Technologies (UK) Ltd.
-// SPDX-License-Identifier: GPL-3.0-or-later WITH Classpath-exception-2.0
-
-// This program is free software: you can redistribute it and/or modify
+// Polkadot is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// This program is distributed in the hope that it will be useful,
+// Polkadot is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with this program. If not, see <https://www.gnu.org/licenses/>.
+// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
 
 //! The Indracore runtime. This can be compiled with `#[no_std]`, ready for Wasm.
 
@@ -22,15 +20,24 @@
 // `construct_runtime!` does a lot of recursion and requires us to increase the limit to 256.
 #![recursion_limit = "256"]
 
-use static_assertions::const_assert;
-use parity_scale_codec::{Encode, Decode};
-use authority_discovery_primitives::AuthorityId as AuthorityDiscoveryId;
+use pallet_transaction_payment::CurrencyAdapter;
+use runtime_common::{
+	SlowAdjustingFeeUpdate, CurrencyToVote,
+	impls::DealWithFees,
+	BlockHashCount, RocksDbWeight, BlockWeights, BlockLength, OffchainSolutionWeightLimit,
+	ParachainSessionKeyPlaceholder, AssignmentSessionKeyPlaceholder,
+};
+
 use sp_std::prelude::*;
 use sp_std::collections::btree_map::BTreeMap;
 use sp_core::u32_trait::{_1, _2, _3, _4, _5};
-use sp_core::OpaqueMetadata;
-use sp_version::RuntimeVersion;
-use sp_staking::SessionIndex;
+use parity_scale_codec::{Encode, Decode};
+use primitives::v1::{
+	AccountId, AccountIndex, Balance, BlockNumber, CandidateEvent, CommittedCandidateReceipt,
+	CoreState, GroupRotationInfo, Hash, Id, Moment, Nonce, OccupiedCoreAssumption,
+	PersistedValidationData, Signature, ValidationCode, ValidationData, ValidatorId, ValidatorIndex,
+	InboundDownwardMessage, InboundHrmpMessage, SessionInfo
+};
 use sp_runtime::{
 	create_runtime_str, generic, impl_opaque_keys, ModuleId, ApplyExtrinsicResult,
 	KeyTypeId, Percent, Permill, Perbill, curve::PiecewiseLinear,
@@ -40,51 +47,40 @@ use sp_runtime::{
 		Extrinsic as ExtrinsicT, SaturatedConversion, Verify,
 	},
 };
-
 #[cfg(feature = "runtime-benchmarks")]
 use sp_runtime::RuntimeString;
+use sp_version::RuntimeVersion;
+use pallet_grandpa::{AuthorityId as GrandpaId, fg_primitives};
 #[cfg(any(feature = "std", test))]
 use sp_version::NativeVersion;
-#[cfg(any(feature = "std", test))]
-pub use sp_runtime::BuildStorage;
-#[cfg(feature = "std")]
-pub use pallet_staking::StakerStatus;
-
-pub use pallet_timestamp::Call as TimestampCall;
-pub use pallet_balances::Call as BalancesCall;
-use pallet_transaction_payment::CurrencyAdapter;
-use pallet_grandpa::{AuthorityId as GrandpaId, fg_primitives};
-use pallet_transaction_payment_rpc_runtime_api::RuntimeDispatchInfo;
-use pallet_session::historical as session_historical;
-use pallet_im_online::sr25519::AuthorityId as ImOnlineId;
-
-use frame_system::{EnsureRoot, EnsureOneOf};
-use frame_support::traits::InstanceFilter;
+use sp_core::OpaqueMetadata;
+use sp_staking::SessionIndex;
 use frame_support::{
 	parameter_types, construct_runtime, debug, RuntimeDebug,
 	traits::{KeyOwnerProofSystem, Randomness, LockIdentifier, Filter},
 	weights::Weight,
 };
-use pallet_contracts::WeightInfo;
+use frame_system::{EnsureRoot, EnsureOneOf};
+use pallet_im_online::sr25519::AuthorityId as ImOnlineId;
+use authority_discovery_primitives::AuthorityId as AuthorityDiscoveryId;
+use pallet_transaction_payment_rpc_runtime_api::RuntimeDispatchInfo;
+use pallet_session::historical as session_historical;
+use static_assertions::const_assert;
 
-use runtime_common::{
-	SlowAdjustingFeeUpdate, CurrencyToVote,
-	impls::DealWithFees, AVERAGE_ON_INITIALIZE_RATIO,
-	BlockHashCount, RocksDbWeight, BlockWeights, BlockLength, OffchainSolutionWeightLimit,
-	ParachainSessionKeyPlaceholder, AssignmentSessionKeyPlaceholder,
-};
-use primitives::v1::{
-	AccountId, AccountIndex, Balance, BlockNumber, CandidateEvent, CommittedCandidateReceipt,
-	CoreState, GroupRotationInfo, Hash, Id, Moment, Nonce, OccupiedCoreAssumption,
-	PersistedValidationData, Signature, ValidationCode, ValidationData, ValidatorId, ValidatorIndex,
-	InboundDownwardMessage, InboundHrmpMessage, SessionInfo,
-};
+#[cfg(feature = "std")]
+pub use pallet_staking::StakerStatus;
+#[cfg(any(feature = "std", test))]
+pub use sp_runtime::BuildStorage;
+pub use pallet_timestamp::Call as TimestampCall;
+pub use pallet_balances::Call as BalancesCall;
 
-// Weights used in the runtime.
-mod weights;
 /// Constant values used within the runtime.
 pub mod constants;
 use constants::{time::*, currency::*, fee::*};
+use frame_support::traits::InstanceFilter;
+
+// Weights used in the runtime.
+mod weights;
 
 // Make the WASM binary available.
 #[cfg(feature = "std")]
@@ -95,8 +91,8 @@ include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("node"),
 	impl_name: create_runtime_str!("substrate-node"),
-	authoring_version: 10,
-	spec_version: 259,
+	authoring_version: 1,
+	spec_version: 29,
 	impl_version: 0,
 	#[cfg(not(feature = "disable-runtime-api"))]
 	apis: RUNTIME_API_VERSIONS,
@@ -125,10 +121,10 @@ impl Filter<Call> for BaseFilter {
 			Call::Babe(_) | Call::Timestamp(_) | Call::Balances(_) |
 			Call::Authorship(_) | Call::Staking(_) | Call::Offences(_) |
 			Call::Session(_) | Call::Grandpa(_) | Call::ImOnline(_) |
-			Call::AuthorityDiscovery(_) |
-			Call::Utility(_) | Call::Vesting(_) |
+			Call::AuthorityDiscovery(_) | Call::Contracts(_) |
+			Call::Utility(_) |  Call::Vesting(_) |
 			Call::Identity(_) | Call::Proxy(_) | Call::Multisig(_) |
-			Call::Bounties(_) | Call::Tips(_) | Call::Contracts(_)
+			Call::Bounties(_) | Call::Tips(_)
 			=> true,
 		}
 	}
@@ -790,6 +786,8 @@ impl InstanceFilter<Call> for ProxyType {
 				Call::Timestamp(..) |
 				Call::Indices(pallet_indices::Call::free(..)) |
 				Call::Indices(pallet_indices::Call::freeze(..)) |
+				// Specifically omitting Indices `transfer`, `force_transfer`
+				// Specifically omitting the entire Balances pallet
 				Call::Authorship(..) |
 				Call::Staking(..) |
 				Call::Offences(..) |
@@ -807,6 +805,7 @@ impl InstanceFilter<Call> for ProxyType {
 				Call::Tips(..) |
 				Call::Vesting(pallet_vesting::Call::vest(..)) |
 				Call::Vesting(pallet_vesting::Call::vest_other(..)) |
+				// Specifically omitting Vesting `vested_transfer`, and `force_vested_transfer`
 				Call::Utility(..) |
 				Call::Identity(..) |
 				Call::Proxy(..) |
@@ -861,22 +860,17 @@ impl pallet_proxy::Config for Runtime {
 }
 
 parameter_types! {
-	pub const TombstoneDeposit: Balance = 16 * MILLICENTS;
-	pub const RentByteFee: Balance = 4 * MILLICENTS;
-	pub const RentDepositOffset: Balance = 1000 * MILLICENTS;
-	pub const SurchargeReward: Balance = 150 * MILLICENTS;
 	pub const SignedClaimHandicap: u32 = 2;
-	pub const MaxDepth: u32 = 32;
-	pub const StorageSizeOffset: u32 = 8;
-	pub const MaxValueSize: u32 = 16 * 1024;
-	// The lazy deletion runs inside on_initialize.
-	pub DeletionWeightLimit: Weight = AVERAGE_ON_INITIALIZE_RATIO * BlockWeights::get().max_block;
-	// The weight needed for decoding the queue should be less or equal than a fifth
-	// of the overall weight dedicated to the lazy deletion.
-	pub DeletionQueueDepth: u32 = ((DeletionWeightLimit::get() / (
-		<Runtime as pallet_contracts::Config>::WeightInfo::on_initialize_per_queue_item(1) -
-		<Runtime as pallet_contracts::Config>::WeightInfo::on_initialize_per_queue_item(0)
-	)) / 5) as u32;
+	pub const TombstoneDeposit: u64 = 16;
+	pub const DepositPerContract: u64 = 8 * DepositPerStorageByte::get();
+	pub const DepositPerStorageByte: u64 = 10_000;
+	pub const DepositPerStorageItem: u64 = 10_000;
+	pub RentFraction: Perbill = Perbill::from_rational_approximation(4u32, 10_000u32);
+	pub const SurchargeReward: u64 = 150;
+	pub const MaxDepth: u32 = 100;
+	pub const MaxValueSize: u32 = 16_384;
+	pub const DeletionQueueDepth: u32 = 1024;
+	pub const DeletionWeightLimit: Weight = 500_000_000_000;
 }
 
 impl pallet_contracts::Config for Runtime {
@@ -887,14 +881,15 @@ impl pallet_contracts::Config for Runtime {
 	type RentPayment = ();
 	type SignedClaimHandicap = SignedClaimHandicap;
 	type TombstoneDeposit = TombstoneDeposit;
-	type StorageSizeOffset = StorageSizeOffset;
-	type RentByteFee = RentByteFee;
-	type RentDepositOffset = RentDepositOffset;
+	type DepositPerContract = DepositPerContract;
+	type DepositPerStorageByte = DepositPerStorageByte;
+	type DepositPerStorageItem = DepositPerStorageItem;
+	type RentFraction = RentFraction;
 	type SurchargeReward = SurchargeReward;
 	type MaxDepth = MaxDepth;
 	type MaxValueSize = MaxValueSize;
 	type WeightPrice = pallet_transaction_payment::Module<Self>;
-	type WeightInfo = pallet_contracts::weights::SubstrateWeight<Self>;
+	type WeightInfo = ();
 	type ChainExtension = ();
 	type DeletionQueueDepth = DeletionQueueDepth;
 	type DeletionWeightLimit = DeletionWeightLimit;
@@ -910,12 +905,15 @@ construct_runtime! {
 		System: frame_system::{Module, Call, Storage, Config, Event<T>},
 		RandomnessCollectiveFlip: pallet_randomness_collective_flip::{Module, Storage},
 		Scheduler: pallet_scheduler::{Module, Call, Storage, Event<T>},
+
 		// Must be before session.
 		Babe: pallet_babe::{Module, Call, Storage, Config, Inherent, ValidateUnsigned},
+
 		Timestamp: pallet_timestamp::{Module, Call, Storage, Inherent},
 		Indices: pallet_indices::{Module, Call, Storage, Config<T>, Event<T>},
 		Balances: pallet_balances::{Module, Call, Storage, Config<T>, Event<T>},
 		TransactionPayment: pallet_transaction_payment::{Module, Storage},
+
 		// Consensus support.
 		Authorship: pallet_authorship::{Module, Call, Storage},
 		Staking: pallet_staking::{Module, Call, Storage, Config<T>, Event<T>, ValidateUnsigned},
@@ -925,6 +923,7 @@ construct_runtime! {
 		Grandpa: pallet_grandpa::{Module, Call, Storage, Config, Event, ValidateUnsigned},
 		ImOnline: pallet_im_online::{Module, Call, Storage, Event<T>, ValidateUnsigned, Config<T>},
 		AuthorityDiscovery: pallet_authority_discovery::{Module, Call, Config},
+
 		// Governance stuff.
 		Democracy: pallet_democracy::{Module, Call, Storage, Config, Event<T>},
 		Council: pallet_collective::<Instance1>::{Module, Call, Storage, Origin<T>, Event<T>, Config<T>},
@@ -932,18 +931,24 @@ construct_runtime! {
 		ElectionsPhragmen: pallet_elections_phragmen::{Module, Call, Storage, Event<T>, Config<T>},
 		TechnicalMembership: pallet_membership::<Instance1>::{Module, Call, Storage, Event<T>, Config<T>},
 		Treasury: pallet_treasury::{Module, Call, Storage, Config, Event<T>},
+
 		// Vesting. Usable initially, but removed once all vesting is finished.
 		Vesting: pallet_vesting::{Module, Call, Storage, Event<T>, Config<T>},
 		// Cunning utilities. Usable initially.
 		Utility: pallet_utility::{Module, Call, Event},
+
 		// Identity. Late addition.
 		Identity: pallet_identity::{Module, Call, Storage, Event<T>},
+
 		// Proxy module. Late addition.
 		Proxy: pallet_proxy::{Module, Call, Storage, Event<T>},
+
 		// Multisig dispatch. Late addition.
 		Multisig: pallet_multisig::{Module, Call, Storage, Event<T>},
+
 		// Bounties module.
 		Bounties: pallet_bounties::{Module, Call, Storage, Event<T>},
+
 		// Tips module.
 		Tips: pallet_tips::{Module, Call, Storage, Event<T>},
 		// Contract module
@@ -1293,6 +1298,8 @@ sp_api::impl_runtime_apis! {
 
 			let mut batches = Vec::<BenchmarkBatch>::new();
 			let params = (&config, &whitelist);
+			// Indracore
+			add_benchmark!(params, batches, runtime_common::claims, Claims);
 			// Substrate
 			add_benchmark!(params, batches, pallet_balances, Balances);
 			add_benchmark!(params, batches, pallet_bounties, Bounties);
@@ -1315,7 +1322,6 @@ sp_api::impl_runtime_apis! {
 			add_benchmark!(params, batches, pallet_utility, Utility);
 			add_benchmark!(params, batches, pallet_vesting, Vesting);
 			add_benchmark!(params, batches, pallet_contracts, Contracts);
-
 			if batches.is_empty() { return Err("Benchmark not found for this pallet.".into()) }
 			Ok(batches)
 		}

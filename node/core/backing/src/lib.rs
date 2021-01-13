@@ -633,6 +633,7 @@ impl CandidateBackingJob {
 	}
 
 	/// Check if there have happened any new misbehaviors and issue necessary messages.
+	/// TODO: Report multiple misbehaviors
 	#[tracing::instrument(level = "trace", skip(self), fields(subsystem = LOG_TARGET))]
 	async fn issue_new_misbehaviors(&mut self) -> Result<(), Error> {
 		let mut reports = Vec::new();

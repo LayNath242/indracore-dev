@@ -7,14 +7,14 @@ edition = "2018"
 
 [dependencies]
 tiny-keccak = "2.0.2"
-parity-scale-codec = { version = "1.3.5", default-features = false, features = ["derive"] }
+parity-scale-codec = { version = "1.3.6", default-features = false, features = ["derive"] }
 
 parachain = { package = "indracore-parachain", path = ".." }
 adder = { package = "test-parachain-adder", path = "adder" }
 halt = { package = "test-parachain-halt", path = "halt" }
 
 [dev-dependencies]
-sp-core = { git = "https://github.com/LayNath242/substrate", branch = "master" }
+sp-core = { git = "https://github.com/laynath242/substrate", branch = "master" }
 
 [features]
 default = [ "std" ]

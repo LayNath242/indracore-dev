@@ -418,10 +418,6 @@ parameter_types! {
 }
 
 parameter_types! {
-	pub Prefix: &'static [u8] = b"Pay SEL to the Indracore account:";
-}
-
-parameter_types! {
 	pub storage MinVestedTransfer: Balance = 100 * DOLLARS;
 }
 

@@ -549,6 +549,7 @@ where
 	let added: Vec<Hash> = view.difference(&*current).cloned().collect();
 
 	*current = view;
+
 	if added.is_empty() {
 		return
 	}

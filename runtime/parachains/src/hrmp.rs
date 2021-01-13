@@ -533,7 +533,7 @@ impl<T: Config> Module<T> {
 						*v -= 1;
 					});
 
-					// TODO: return deposit https://github.com/paritytech/polkadot/issues/1907
+					// TODO: return deposit
 
 					let _ = open_req_channels.swap_remove(idx);
 					<Self as Store>::HrmpOpenChannelRequests::remove(&channel_id);
@@ -570,7 +570,7 @@ impl<T: Config> Module<T> {
 	/// This includes returning the deposits. However, it doesn't include updating the ingress/egress
 	/// indicies.
 	pub(super) fn close_hrmp_channel(channel_id: &HrmpChannelId) {
-		// TODO: return deposit https://github.com/paritytech/polkadot/issues/1907
+		// TODO: return deposit
 
 		<Self as Store>::HrmpChannels::remove(channel_id);
 		<Self as Store>::HrmpChannelContents::remove(channel_id);
@@ -896,7 +896,7 @@ impl<T: Config> Module<T> {
 			Error::<T>::OpenHrmpChannelLimitExceeded,
 		);
 
-		// TODO: Deposit https://github.com/paritytech/polkadot/issues/1907
+		// TODO: Deposit
 
 		<Self as Store>::HrmpOpenChannelRequestCount::insert(&origin, open_req_cnt + 1);
 		<Self as Store>::HrmpOpenChannelRequests::insert(
@@ -965,9 +965,6 @@ impl<T: Config> Module<T> {
 			ingress_cnt + accepted_cnt < channel_num_limit,
 			Error::<T>::AcceptHrmpChannelLimitExceeded,
 		);
-
-		// TODO: Deposit https://github.com/paritytech/polkadot/issues/1907
-
 		// persist the updated open channel request and then increment the number of accepted
 		// channels.
 		channel_req.confirmed = true;

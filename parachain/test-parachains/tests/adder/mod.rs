@@ -108,6 +108,7 @@ fn execute_good_chain_on_parent() {
 				parent_head: GenericHeadData(parent_head.encode()),
 				block_data: GenericBlockData(block_data.encode()),
 				relay_chain_height: number as RelayChainBlockNumber + 1,
+				relay_storage_root: Default::default(),
 				hrmp_mqc_heads: Vec::new(),
 				dmq_mqc_head: Default::default(),
 			},

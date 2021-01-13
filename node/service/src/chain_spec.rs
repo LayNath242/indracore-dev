@@ -418,7 +418,6 @@ fn xelendra_staging_testnet_config_genesis(wasm_binary: &[u8]) -> xelendra_runti
 		pallet_authority_discovery: Some(xelendra_runtime::AuthorityDiscoveryConfig {
 			keys: vec![],
 		}),
-		pallet_staking: Some(Default::default()),
 		pallet_sudo: Some(xelendra_runtime::SudoConfig {
 			key: endowed_accounts[0].clone(),
 		}),
@@ -694,7 +693,6 @@ pub fn xelendra_testnet_genesis(
 		pallet_authority_discovery: Some(xelendra_runtime::AuthorityDiscoveryConfig {
 			keys: vec![],
 		}),
-		pallet_staking: Some(Default::default()),
 		pallet_sudo: Some(xelendra_runtime::SudoConfig { key: root_key }),
 		pallet_contracts: Some(xelendra_runtime::ContractsConfig {
 			current_schedule: pallet_contracts::Schedule {

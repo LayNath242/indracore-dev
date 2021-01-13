@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
 
+//! The provisioner is responsible for assembling a relay chain block
+//! from a set of available parachain candidates of its choice.
 use super::*;
 use bitvec::bitvec;
 use indracore_primitives::v1::{OccupiedCore, ScheduledCore};
