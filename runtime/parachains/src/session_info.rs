@@ -182,16 +182,16 @@ mod tests {
 
 			SessionInfo::initializer_finalize();
 			Configuration::initializer_finalize();
+			
+			if let Some(notification) = new_session(b + 1) {
+				Configuration::initializer_on_new_session(&notification.validators, &notification.queued);
+				SessionInfo::initializer_on_new_session(&notification);
+			}
 
 			System::on_finalize(b);
 
 			System::on_initialize(b + 1);
 			System::set_block_number(b + 1);
-
-			if let Some(notification) = new_session(b + 1) {
-				Configuration::initializer_on_new_session(&notification.validators, &notification.queued);
-				SessionInfo::initializer_on_new_session(&notification);
-			}
 
 			Configuration::initializer_initialize(b + 1);
 			SessionInfo::initializer_initialize(b + 1);
