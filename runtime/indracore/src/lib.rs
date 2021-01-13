@@ -43,8 +43,8 @@ use sp_runtime::{
 	KeyTypeId, Percent, Permill, Perbill, curve::PiecewiseLinear,
 	transaction_validity::{TransactionValidity, TransactionSource, TransactionPriority},
 	traits::{
-		BlakeTwo256, Block as BlockT, OpaqueKeys, ConvertInto, IdentityLookup,
-		Extrinsic as ExtrinsicT, SaturatedConversion, Verify,
+		BlakeTwo256, Block as BlockT, OpaqueKeys, ConvertInto,
+		Extrinsic as ExtrinsicT, SaturatedConversion, Verify, StaticLookup,
 	},
 };
 #[cfg(feature = "runtime-benchmarks")]
@@ -153,7 +153,7 @@ impl frame_system::Config for Runtime {
 	type Hash = Hash;
 	type Hashing = BlakeTwo256;
 	type AccountId = AccountId;
-	type Lookup = IdentityLookup<AccountId>;
+	type Lookup = Indices;
 	type Header = generic::Header<BlockNumber, BlakeTwo256>;
 	type Event = Event;
 	type BlockHashCount = BlockHashCount;
@@ -703,8 +703,9 @@ impl<LocalCall> frame_system::offchain::CreateSignedTransaction<LocalCall> for R
 		let signature = raw_payload.using_encoded(|payload| {
 			C::sign(payload, public)
 		})?;
+		let address = Indices::unlookup(account);
 		let (call, extra, _) = raw_payload.deconstruct();
-		Some((call, (account, signature, extra)))
+		Some((call, (address, signature, extra)))
 	}
 }
 
@@ -785,6 +786,7 @@ impl InstanceFilter<Call> for ProxyType {
 				Call::Scheduler(..) |
 				Call::Babe(..) |
 				Call::Timestamp(..) |
+				Call::Indices(pallet_indices::Call::claim(..)) |
 				Call::Indices(pallet_indices::Call::free(..)) |
 				Call::Indices(pallet_indices::Call::freeze(..)) |
 				// Specifically omitting Indices `transfer`, `force_transfer`
@@ -968,7 +970,7 @@ construct_runtime! {
 }
 
 /// The address format for describing accounts.
-pub type Address = AccountId;
+pub type Address = <Indices as StaticLookup>::Source;
 /// Block header type as expected by this runtime.
 pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
 /// Block type as expected by this runtime.
