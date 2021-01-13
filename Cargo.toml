@@ -7,7 +7,7 @@ name = "indracore"
 description = "Implementation of a node in Rust based on the Substrate framework."
 license = "GPL-3.0-only"
 version = "0.8.27"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Selendra <info@selendra.org>"]
 edition = "2018"
 readme = "README.md"
 
@@ -22,7 +22,7 @@ parity-util-mem = { version = "*", default-features = false, features = ["jemall
 [dev-dependencies]
 assert_cmd = "1.0.2"
 nix = "0.19.1"
-tempfile = "3.1.0"
+tempfile = "3.2.0"
 
 [workspace]
 members = [
@@ -33,7 +33,7 @@ members = [
 	"runtime/common",
 	"runtime/parachains",
 	"runtime/indracore",
-    "runtime/xelendra",
+	"runtime/xelendra",
 	"runtime/test-runtime",
 	"statement-table",
 	"validation",
@@ -63,6 +63,7 @@ members = [
 	"node/subsystem",
 	"node/subsystem-test-helpers",
 	"node/subsystem-util",
+	"node/jaeger",
 	"node/test/client",
 	"node/test/service",
 	"parachain/test-parachains",

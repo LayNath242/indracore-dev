@@ -9,7 +9,7 @@ futures = "0.3.8"
 tracing = "0.1.22"
 tracing-futures = "0.2.4"
 thiserror = "1.0.23"
-smallvec = "1.6.1"
+
 
 indracore-primitives = { path = "../../../primitives" }
 indracore-node-network-protocol = { path = "../../network/protocol" }
@@ -17,13 +17,12 @@ indracore-node-subsystem-util = { path = "../../subsystem-util" }
 indracore-subsystem = { package = "indracore-node-subsystem", path = "../../subsystem" }
 
 [dev-dependencies]
-log = "0.4.11"
+log = "0.4.13"
 env_logger = "0.8.2"
 assert_matches = "1.4.0"
-smallvec = "1.6.1"
 futures-timer = "3.0.2"
 
-sp-core = { git = "https://github.com/LayNath242/substrate", branch = "master", features = ["std"] }
-sp-keyring = { git = "https://github.com/LayNath242/substrate", branch = "master" }
+sp-core = { git = "https://github.com/laynath242/substrate", branch = "master", features = ["std"] }
+sp-keyring = { git = "https://github.com/laynath242/substrate", branch = "master" }
 
 indracore-subsystem-testhelpers = { package = "indracore-node-subsystem-test-helpers", path = "../../subsystem-test-helpers" }

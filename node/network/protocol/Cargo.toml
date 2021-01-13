@@ -9,5 +9,5 @@ description = "Primitives types for the Node-side"
 indracore-primitives = { path = "../../../primitives" }
 indracore-node-primitives = { path = "../../primitives" }
 indracore-node-jaeger = { path = "../../jaeger" }
-parity-scale-codec = { version = "1.3.5", default-features = false, features = ["derive"] }
-sc-network = { git = "https://github.com/LayNath242/substrate", branch = "master" }
+parity-scale-codec = { version = "1.3.6", default-features = false, features = ["derive"] }
+sc-network = { git = "https://github.com/laynath242/substrate", branch = "master" }
