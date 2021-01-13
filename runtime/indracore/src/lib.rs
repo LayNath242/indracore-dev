@@ -25,7 +25,7 @@ use runtime_common::{
 	SlowAdjustingFeeUpdate, CurrencyToVote,
 	impls::DealWithFees,
 	BlockHashCount, RocksDbWeight, BlockWeights, BlockLength, OffchainSolutionWeightLimit,
-	ParachainSessionKeyPlaceholder, AssignmentSessionKeyPlaceholder,
+	ParachainSessionKeyPlaceholder, AssignmentSessionKeyPlaceholder, AVERAGE_ON_INITIALIZE_RATIO
 };
 
 use sp_std::prelude::*;
@@ -73,6 +73,7 @@ pub use pallet_staking::StakerStatus;
 pub use sp_runtime::BuildStorage;
 pub use pallet_timestamp::Call as TimestampCall;
 pub use pallet_balances::Call as BalancesCall;
+use pallet_contracts::WeightInfo;
 
 /// Constant values used within the runtime.
 pub mod constants;
@@ -860,17 +861,26 @@ impl pallet_proxy::Config for Runtime {
 }
 
 parameter_types! {
+	pub const TombstoneDeposit: Balance = deposit(
+		1,
+		sp_std::mem::size_of::<pallet_contracts::ContractInfo<Runtime>>() as u32
+	);
+	pub const DepositPerContract: Balance = TombstoneDeposit::get();
+	pub const DepositPerStorageByte: Balance = deposit(0, 1);
+	pub const DepositPerStorageItem: Balance = deposit(1, 0);
+	pub RentFraction: Perbill = Perbill::from_rational_approximation(1u32, 30 * DAYS);
+	pub const SurchargeReward: Balance = 150 * MILLICENTS;
 	pub const SignedClaimHandicap: u32 = 2;
-	pub const TombstoneDeposit: u64 = 16;
-	pub const DepositPerContract: u64 = 8 * DepositPerStorageByte::get();
-	pub const DepositPerStorageByte: u64 = 10_000;
-	pub const DepositPerStorageItem: u64 = 10_000;
-	pub RentFraction: Perbill = Perbill::from_rational_approximation(4u32, 10_000u32);
-	pub const SurchargeReward: u64 = 150;
-	pub const MaxDepth: u32 = 100;
-	pub const MaxValueSize: u32 = 16_384;
-	pub const DeletionQueueDepth: u32 = 1024;
-	pub const DeletionWeightLimit: Weight = 500_000_000_000;
+	pub const MaxDepth: u32 = 32;
+	pub const MaxValueSize: u32 = 16 * 1024;
+	// The lazy deletion runs inside on_initialize.
+	pub DeletionWeightLimit: Weight = AVERAGE_ON_INITIALIZE_RATIO *
+		BlockWeights::get().max_block;
+	pub DeletionQueueDepth: u32 = ((DeletionWeightLimit::get() / (
+		<Runtime as pallet_contracts::Config>::WeightInfo::on_initialize_per_queue_item(1) -
+		<Runtime as pallet_contracts::Config>::WeightInfo::on_initialize_per_queue_item(0)
+	)) / 5) as u32;
+
 }
 
 impl pallet_contracts::Config for Runtime {
