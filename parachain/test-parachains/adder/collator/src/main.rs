@@ -19,7 +19,8 @@
 use indracore_node_primitives::CollationGenerationConfig;
 use indracore_node_subsystem::messages::{CollationGenerationMessage, CollatorProtocolMessage};
 use indracore_primitives::v1::Id as ParaId;
-use sc_cli::{Result, Error as SubstrateCliError, Role, SubstrateCli};
+use polkadot_cli::{Error, Result};
+use sc_cli::{Error as SubstrateCliError, Role, SubstrateCli};
 use sp_core::hexdisplay::HexDisplay;
 use test_parachain_adder_collator::Collator;
 
@@ -37,7 +38,7 @@ fn main() -> Result<()> {
 			let collator = Collator::new();
 			println!("0x{:?}", HexDisplay::from(&collator.genesis_head()));
 
-			Ok(())
+			Ok::<_, Error>(())
 		}
 		Some(cli::Subcommand::ExportGenesisWasm(_params)) => {
 			let collator = Collator::new();
