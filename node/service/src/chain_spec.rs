@@ -461,7 +461,6 @@ fn xelendra_staging_testnet_config_genesis(wasm_binary: &[u8]) -> xelendra_runti
 				hrmp_max_parathread_outbound_channels: 4,
 				hrmp_max_message_num_per_candidate: 5,
 				..Default::default()
-				..Default::default()
 			},
 		}),
 	}
