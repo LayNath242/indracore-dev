@@ -57,6 +57,7 @@ members = [
 	"node/network/bitfield-distribution",
 	"node/network/availability-distribution",
 	"node/network/collator-protocol",
+	"node/metered-channel",
 	"node/overseer",
 	"node/primitives",
 	"node/service",
