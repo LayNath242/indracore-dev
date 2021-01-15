@@ -6,6 +6,7 @@ edition = "2018"
 description = "Primitives types for the Node-side"
 
 [dependencies]
+strum = { version = "0.20", features = ["derive"] }
 indracore-primitives = { path = "../../../primitives" }
 indracore-node-primitives = { path = "../../primitives" }
 indracore-node-jaeger = { path = "../../jaeger" }
