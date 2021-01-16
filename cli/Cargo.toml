@@ -39,7 +39,7 @@ substrate-build-script-utils = { git = "https://github.com/laynath242/substrate"
 
 [features]
 default = [ "wasmtime", "db", "cli", "full-node", "trie-memory-tracker", "indracore-parachain" ]
-wasmtime = [ "sc-cli/wasmtime" ]
+wasmtime = [ "sc-cli/wasmtime", "indracore-parachain/wasmtime" ]
 db = [ "service/db" ]
 cli = [
 	"structopt",
