@@ -50,6 +50,7 @@ members = [
 	"node/core/provisioner",
 	"node/core/runtime-api",
 	"node/network/bridge",
+	"node/network/availability-recovery",
 	"node/network/pov-distribution",
 	"node/network/protocol",
 	"node/network/statement-distribution",

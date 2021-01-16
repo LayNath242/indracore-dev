@@ -80,6 +80,7 @@ xelendra-runtime = { path = "../../runtime/xelendra" }
 indracore-availability-bitfield-distribution = { path = "../network/bitfield-distribution", optional = true }
 indracore-availability-distribution = { path = "../network/availability-distribution", optional = true }
 indracore-collator-protocol = { path = "../network/collator-protocol", optional = true }
+indracore-availability-recovery = { path = "../network/availability-recovery", optional = true }
 indracore-network-bridge = { path = "../network/bridge", optional = true }
 indracore-node-collation-generation = { path = "../collation-generation", optional = true }
 indracore-node-core-av-store = { path = "../core/av-store", optional = true }
@@ -124,4 +125,5 @@ real-overseer = [
 	"indracore-node-core-runtime-api",
 	"indracore-pov-distribution",
 	"indracore-statement-distribution",
+	"indracore-availability-recovery",
 ]
