@@ -5,7 +5,7 @@ authors = ["Selendra <info@selendra.org>"]
 edition = "2018"
 
 [dependencies]
-futures = "0.3.8"
+futures = "0.3.11"
 tracing = "0.1.22"
 tracing-futures = "0.2.4"
 sp-blockchain = { git = "https://github.com/laynath242/substrate", branch = "master" }
@@ -14,7 +14,7 @@ indracore-subsystem = { package = "indracore-node-subsystem", path = "../../subs
 indracore-node-subsystem-util = { path = "../../subsystem-util" }
 
 [dev-dependencies]
-futures = { version = "0.3.8", features = ["thread-pool"] }
+futures = { version = "0.3.11", features = ["thread-pool"] }
 maplit = "1.0.2"
 indracore-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
 sp-core = { git = "https://github.com/laynath242/substrate", branch = "master" }
