@@ -5,7 +5,7 @@ authors = ["Selendra <info@selendra.org>"]
 edition = "2018"
 
 [dependencies]
-futures = "0.3.11"
+futures = "0.3.12"
 sp-keystore = { git = "https://github.com/laynath242/substrate", branch = "master" }
 indracore-primitives = { path = "../../../primitives" }
 indracore-node-primitives = { path = "../../primitives" }
@@ -23,6 +23,6 @@ sp-core = { git = "https://github.com/laynath242/substrate", branch = "master" }
 sp-application-crypto = { git = "https://github.com/laynath242/substrate", branch = "master" }
 sp-keyring = { git = "https://github.com/laynath242/substrate", branch = "master" }
 sc-keystore = { git = "https://github.com/laynath242/substrate", branch = "master" }
-futures = { version = "0.3.11", features = ["thread-pool"] }
+futures = { version = "0.3.12", features = ["thread-pool"] }
 assert_matches = "1.4.0"
 indracore-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
