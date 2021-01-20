@@ -41,6 +41,7 @@ impl PeerSet {
 		match self {
 			PeerSet::Validation => NonDefaultSetConfig {
 				notifications_protocol: protocol,
+				max_notification_size,
 				set_config: sc_network::config::SetConfig {
 					in_peers: 25,
 					out_peers: 0,
