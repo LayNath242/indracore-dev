@@ -23,11 +23,11 @@ indracore-node-jaeger = { path = "../jaeger" }
 indracore-primitives = { path = "../../primitives" }
 metered-channel = { path = "../metered-channel"}
 
-sc-network = { git = "https://github.com/laynath242/substrate", branch = "master" }
-sp-core = { git = "https://github.com/laynath242/substrate", branch = "master" }
-sp-application-crypto = { git = "https://github.com/laynath242/substrate", branch = "master" }
-sp-keystore = { git = "https://github.com/laynath242/substrate", branch = "master" }
-substrate-prometheus-endpoint = { git = "https://github.com/laynath242/substrate", branch = "master" }
+sc-network = { git = "https://github.com/selendra/substrate", branch = "master" }
+sp-core = { git = "https://github.com/selendra/substrate", branch = "master" }
+sp-application-crypto = { git = "https://github.com/selendra/substrate", branch = "master" }
+sp-keystore = { git = "https://github.com/selendra/substrate", branch = "master" }
+substrate-prometheus-endpoint = { git = "https://github.com/selendra/substrate", branch = "master" }
 
 [dev-dependencies]
 assert_matches = "1.4.0"
