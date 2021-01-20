@@ -27,7 +27,7 @@ use parity_scale_codec::{Decode, Encode};
 use indracore_primitives::v1::{
 	Hash, CommittedCandidateReceipt, CandidateReceipt, CompactStatement,
 	EncodeAs, Signed, SigningContext, ValidatorIndex, ValidatorId,
-	UpwardMessage, ValidationCode, PersistedValidationData, ValidationData,
+	UpwardMessage, ValidationCode, PersistedValidationData, PersistedValidationData,
 	HeadData, PoV, CollatorPair, Id as ParaId, OutboundHrmpMessage, CandidateCommitments, CandidateHash,
 };
 use indracore_statement_table::{
@@ -288,7 +288,7 @@ pub struct Collation<BlockNumber = indracore_primitives::v1::BlockNumber> {
 /// block should be build on and the [`ValidationData`] that provides
 /// information about the state of the parachain on the relay chain.
 pub type CollatorFn = Box<
-	dyn Fn(Hash, &ValidationData) -> Pin<Box<dyn Future<Output = Option<Collation>> + Send>>
+	dyn Fn(Hash, &PersistedValidationData) -> Pin<Box<dyn Future<Output = Option<Collation>> + Send>>
 		+ Send
 		+ Sync,
 >;

@@ -32,7 +32,7 @@ use indracore_node_subsystem::{
 	FromOverseer, SpawnedSubsystem, Subsystem, SubsystemContext, SubsystemResult,
 };
 use indracore_node_subsystem_util::{
-	request_availability_cores_ctx, request_full_validation_data_ctx,
+	request_availability_cores_ctx, request_persisted_validation_data_ctx,
 	request_validators_ctx,
 	metrics::{self, prometheus},
 };
@@ -246,7 +246,7 @@ async fn handle_new_activations<Context: SubsystemContext>(
 			// we get validation data synchronously for each core instead of
 			// within the subtask loop, because we have only a single mutable handle to the
 			// context, so the work can't really be distributed
-			let validation_data = match request_full_validation_data_ctx(
+			let validation_data = match request_persisted_validation_data_ctx(
 				relay_parent,
 				scheduled_core.para_id,
 				assumption,
@@ -273,7 +273,7 @@ async fn handle_new_activations<Context: SubsystemContext>(
 			let mut task_sender = sender.clone();
 			let metrics = metrics.clone();
 			ctx.spawn("collation generation collation builder", Box::pin(async move {
-				let persisted_validation_data_hash = validation_data.persisted.hash();
+				let persisted_validation_data_hash = validation_data.hash();
 
 				let collation = match (task_config.collator)(relay_parent, &validation_data).await {
 					Some(collation) => collation,
@@ -298,7 +298,7 @@ async fn handle_new_activations<Context: SubsystemContext>(
 
 				let erasure_root = match erasure_root(
 					n_validators,
-					validation_data.persisted,
+					validation_data,
 					collation.proof_of_validity.clone(),
 				) {
 					Ok(erasure_root) => erasure_root,
@@ -464,7 +464,7 @@ mod tests {
 		};
 		use indracore_primitives::v1::{
 			BlockData, BlockNumber, CollatorPair, Id as ParaId,
-			PersistedValidationData, PoV, ScheduledCore, ValidationData,
+			PersistedValidationData, PoV, ScheduledCore,
 		};
 		use std::pin::Pin;
 
@@ -498,7 +498,7 @@ mod tests {
 		fn test_config<Id: Into<ParaId>>(para_id: Id) -> Arc<CollationGenerationConfig> {
 			Arc::new(CollationGenerationConfig {
 				key: CollatorPair::generate().0,
-				collator: Box::new(|_: Hash, _vd: &ValidationData| {
+				collator: Box::new(|_: Hash, _vd: &PersistedValidationData| {
 					TestCollator.boxed()
 				}),
 				para_id: para_id.into(),
@@ -572,9 +572,9 @@ mod tests {
 				Hash::repeat_byte(16),
 			];
 
-			let requested_full_validation_data = Arc::new(Mutex::new(Vec::new()));
+			let requested_validation_data = Arc::new(Mutex::new(Vec::new()));
 
-			let overseer_requested_full_validation_data = requested_full_validation_data.clone();
+			let overseer_requested_validation_data = requested_validation_data.clone();
 			let overseer = |mut handle: TestSubsystemContextHandle<CollationGenerationMessage>| async move {
 				loop {
 					match handle.try_recv().await {
@@ -597,13 +597,13 @@ mod tests {
 						}
 						Some(AllMessages::RuntimeApi(RuntimeApiMessage::Request(
 							hash,
-							RuntimeApiRequest::FullValidationData(
+							RuntimeApiRequest::PersistedValidationData(
 								_para_id,
 								_occupied_core_assumption,
 								tx,
 							),
 						))) => {
-							overseer_requested_full_validation_data
+							overseer_requested_validation_data
 								.lock()
 								.await
 								.push(hash);
@@ -630,7 +630,7 @@ mod tests {
 					.unwrap();
 			});
 
-			let requested_full_validation_data = Arc::try_unwrap(requested_full_validation_data)
+			let requested_validation_data = Arc::try_unwrap(requested_validation_data)
 				.expect("overseer should have shut down by now")
 				.into_inner();
 
@@ -638,7 +638,7 @@ mod tests {
 			// each activated hash generates two scheduled cores: one with its value * 4, one with its value * 5
 			// given that the test configuration has a para_id of 16, there's only one way to get that value: with the 4
 			// hash.
-			assert_eq!(requested_full_validation_data, vec![[4; 32].into()]);
+			assert_eq!(requested_validation_data, vec![[4; 32].into()]);
 		}
 
 		#[test]
@@ -672,7 +672,7 @@ mod tests {
 						}
 						Some(AllMessages::RuntimeApi(RuntimeApiMessage::Request(
 							_hash,
-							RuntimeApiRequest::FullValidationData(
+							RuntimeApiRequest::PersistedValidationData(
 								_para_id,
 								_occupied_core_assumption,
 								tx,
