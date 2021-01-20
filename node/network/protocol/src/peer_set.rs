@@ -36,6 +36,8 @@ impl PeerSet {
 	/// network service.
 	pub fn get_info(self) -> NonDefaultSetConfig {
 		let protocol = self.into_protocol_name();
+		// TODO: lower this limit after is done and collations use request-response protocols
+		let max_notification_size = 16 * 1024 * 1024;
 		match self {
 			PeerSet::Validation => NonDefaultSetConfig {
 				notifications_protocol: protocol,
@@ -48,6 +50,7 @@ impl PeerSet {
 			},
 			PeerSet::Collation => NonDefaultSetConfig {
 				notifications_protocol: protocol,
+				max_notification_size,
 				set_config: SetConfig {
 					in_peers: 25,
 					out_peers: 0,
