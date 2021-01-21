@@ -1136,6 +1136,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "cumulus-runtime"
+version = "0.1.0"
+dependencies = [
+ "cumulus-primitives",
+ "frame-executive",
+ "hash-db",
+ "indracore-parachain",
+ "memory-db",
+ "parity-scale-codec",
+ "sp-core",
+ "sp-externalities",
+ "sp-io",
+ "sp-runtime",
+ "sp-state-machine",
+ "sp-std",
+ "sp-trie",
+ "trie-db",
+]
+
+[[package]]
 name = "curve25519-dalek"
 version = "2.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
