@@ -197,7 +197,6 @@ struct WitnessExt<'a, B: BlockT> {
 impl<'a, B: BlockT> WitnessExt<'a, B> {
 	/// Checks that the encoded `PersistedValidationData` in `data` is correct.
 	///
-	/// Should be removed with: https://github.com/paritytech/cumulus/issues/217
 	/// When removed `WitnessExt` could also be removed.
 	fn check_validation_data(&self, mut data: &[u8]) {
 		let validation_data = PersistedValidationData::decode(&mut data)
