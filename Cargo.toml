@@ -42,6 +42,7 @@ members = [
 	"cumulus/primitives",
 	"cumulus/network",
 	"cumulus/runtime",
+	"cumulus/consensus",
 	"node/collation-generation",
 	"node/core/approval-voting",
 	"node/core/av-store",
