@@ -1094,31 +1094,27 @@ dependencies = [
 ]
 
 [[package]]
-name = "cumulus-collator"
+name = "cumulus-consensus"
 version = "0.1.0"
 dependencies = [
  "cumulus-network",
  "cumulus-primitives",
  "cumulus-runtime",
  "futures 0.3.12",
- "indracore-node-primitives",
- "indracore-node-subsystem",
- "indracore-overseer",
- "indracore-parachain",
  "indracore-primitives",
- "indracore-service",
- "log",
+ "indracore-runtime",
  "parity-scale-codec",
- "parking_lot 0.9.0",
- "sc-cli",
  "sc-client-api",
  "sp-api",
+ "sp-block-builder",
+ "sp-blockchain",
  "sp-consensus",
  "sp-core",
  "sp-inherents",
- "sp-io",
  "sp-runtime",
- "sp-state-machine",
+ "substrate-prometheus-endpoint",
+ "tokio 0.1.22",
+ "tracing",
 ]
 
 [[package]]
@@ -3483,6 +3479,9 @@ dependencies = [
  "pallet-authorship",
  "pallet-babe",
  "pallet-balances",
+ "pallet-contracts",
+ "pallet-contracts-primitives",
+ "pallet-contracts-rpc-runtime-api",
  "pallet-grandpa",
  "pallet-indices",
  "pallet-nicks",
@@ -3542,6 +3541,7 @@ dependencies = [
  "indracore-service",
  "indracore-test-runtime",
  "pallet-balances",
+ "pallet-contracts",
  "pallet-staking",
  "pallet-transaction-payment",
  "rand 0.8.2",

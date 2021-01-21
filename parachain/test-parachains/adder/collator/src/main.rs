@@ -19,7 +19,7 @@
 use indracore_node_primitives::CollationGenerationConfig;
 use indracore_node_subsystem::messages::{CollationGenerationMessage, CollatorProtocolMessage};
 use indracore_primitives::v1::Id as ParaId;
-use polkadot_cli::{Error, Result};
+use indracore_cli::{Error, Result};
 use sc_cli::{Error as SubstrateCliError, Role, SubstrateCli};
 use sp_core::hexdisplay::HexDisplay;
 use test_parachain_adder_collator::Collator;
