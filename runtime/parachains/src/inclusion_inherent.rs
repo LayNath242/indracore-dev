@@ -195,7 +195,6 @@ impl<T: Config> ProvideInherent for Module<T> {
 					Header,
 				)| {
 					// Sanity check: session changes can invalidate an inherent, and we _really_ don't want that to happen.
-					// See github.com/paritytech/polkadot/issues/1327
 					let (signed_bitfields, backed_candidates) = match Self::inclusion(
 						frame_system::RawOrigin::None.into(),
 						signed_bitfields.clone(),
