@@ -165,10 +165,6 @@ fn indracore_testnet_genesis(
 		pallet_babe: Some(Default::default()),
 		pallet_grandpa: Some(Default::default()),
 		pallet_authority_discovery: Some(runtime::AuthorityDiscoveryConfig { keys: vec![] }),
-		claims: Some(runtime::ClaimsConfig {
-			claims: vec![],
-			vesting: vec![],
-		}),
 		pallet_vesting: Some(runtime::VestingConfig { vesting: vec![] }),
 		pallet_sudo: Some(runtime::SudoConfig { key: root_key }),
 		parachains_configuration: Some(runtime::ParachainsConfigurationConfig {
@@ -183,6 +179,11 @@ fn indracore_testnet_genesis(
 				chain_availability_period: 4,
 				thread_availability_period: 4,
 				no_show_slots: 10,
+				..Default::default()
+			},
+		}),
+		pallet_contracts: Some(runtime::ContractsConfig {
+			current_schedule: pallet_contracts::Schedule {
 				..Default::default()
 			},
 		}),

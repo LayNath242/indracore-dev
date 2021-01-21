@@ -55,6 +55,7 @@ sp-keyring = { git = "https://github.com/selendra/substrate", branch = "master" 
 sp-runtime = { git = "https://github.com/selendra/substrate", branch = "master" }
 sp-state-machine = { git = "https://github.com/selendra/substrate", branch = "master" }
 substrate-test-client = { git = "https://github.com/selendra/substrate", branch = "master" }
+pallet-contracts = { git = "https://github.com/selendra/substrate", branch = "master", default-features = false }
 
 [dev-dependencies]
 pallet-balances = { git = "https://github.com/selendra/substrate", branch = "master", default-features = false }
