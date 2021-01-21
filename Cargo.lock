@@ -1094,6 +1094,48 @@ dependencies = [
 ]
 
 [[package]]
+name = "cumulus-network"
+version = "0.1.0"
+dependencies = [
+ "cumulus-primitives",
+ "derive_more",
+ "futures 0.3.12",
+ "futures-timer 3.0.2",
+ "indracore-node-primitives",
+ "indracore-node-subsystem",
+ "indracore-overseer",
+ "indracore-primitives",
+ "indracore-service",
+ "indracore-statement-table",
+ "log",
+ "parity-scale-codec",
+ "parking_lot 0.10.2",
+ "sc-client-api",
+ "sp-api",
+ "sp-blockchain",
+ "sp-consensus",
+ "sp-core",
+ "sp-runtime",
+]
+
+[[package]]
+name = "cumulus-primitives"
+version = "0.1.0"
+dependencies = [
+ "impl-trait-for-tuples 0.1.3",
+ "indracore-core-primitives",
+ "indracore-parachain",
+ "indracore-primitives",
+ "parity-scale-codec",
+ "sc-chain-spec",
+ "sp-core",
+ "sp-inherents",
+ "sp-runtime",
+ "sp-std",
+ "sp-trie",
+]
+
+[[package]]
 name = "curve25519-dalek"
 version = "2.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1546,11 +1588,11 @@ dependencies = [
  "parity-scale-codec",
  "paste",
  "sp-api",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime-interface 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-storage 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-io",
+ "sp-runtime",
+ "sp-runtime-interface",
+ "sp-std",
+ "sp-storage",
 ]
 
 [[package]]
@@ -1568,11 +1610,11 @@ dependencies = [
  "sc-executor",
  "sc-service",
  "serde",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-externalities 0.8.1 (git+https://github.com/selendra/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-state-machine 0.8.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-externalities",
+ "sp-keystore",
+ "sp-runtime",
+ "sp-state-machine",
  "structopt",
 ]
 
@@ -1585,11 +1627,11 @@ dependencies = [
  "frame-system",
  "parity-scale-codec",
  "serde",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-tracing 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
+ "sp-tracing",
 ]
 
 [[package]]
@@ -1599,8 +1641,8 @@ source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28
 dependencies = [
  "parity-scale-codec",
  "serde",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-std",
 ]
 
 [[package]]
@@ -1618,14 +1660,14 @@ dependencies = [
  "paste",
  "serde",
  "smallvec 1.6.1",
- "sp-arithmetic 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-arithmetic",
+ "sp-core",
  "sp-inherents",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-state-machine 0.8.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-tracing 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-io",
+ "sp-runtime",
+ "sp-state-machine",
+ "sp-std",
+ "sp-tracing",
 ]
 
 [[package]]
@@ -1671,10 +1713,10 @@ dependencies = [
  "impl-trait-for-tuples 0.2.0",
  "parity-scale-codec",
  "serde",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
  "sp-version",
 ]
 
@@ -1687,9 +1729,9 @@ dependencies = [
  "frame-support",
  "frame-system",
  "parity-scale-codec",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -2464,9 +2506,9 @@ dependencies = [
  "log",
  "maplit",
  "parity-scale-codec",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
+ "sp-core",
+ "sp-keystore",
  "tracing",
  "tracing-futures",
 ]
@@ -2486,11 +2528,11 @@ dependencies = [
  "maplit",
  "parity-scale-codec",
  "sc-keystore",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keyring 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
- "sp-tracing 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
+ "sp-core",
+ "sp-keyring",
+ "sp-keystore",
+ "sp-tracing",
  "thiserror",
  "tracing",
  "tracing-futures",
@@ -2514,9 +2556,9 @@ dependencies = [
  "lru",
  "rand 0.7.3",
  "smallvec 1.6.1",
- "sp-application-crypto 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-core 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-keyring 2.0.1 (git+https://github.com/paritytech/substrate)",
+ "sp-application-crypto",
+ "sp-core",
+ "sp-keyring",
  "streamunordered",
  "thiserror",
  "tracing",
@@ -2534,8 +2576,8 @@ dependencies = [
  "log",
  "sc-cli",
  "sc-service",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-trie 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-trie",
  "structopt",
  "substrate-browser-utils",
  "substrate-build-script-utils",
@@ -2559,8 +2601,8 @@ dependencies = [
  "indracore-node-subsystem-util",
  "indracore-primitives",
  "log",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keyring 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-keyring",
  "thiserror",
  "tracing",
  "tracing-futures",
@@ -2571,9 +2613,9 @@ name = "indracore-core-primitives"
 version = "0.7.30"
 dependencies = [
  "parity-scale-codec",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -2583,8 +2625,8 @@ dependencies = [
  "indracore-primitives",
  "parity-scale-codec",
  "reed-solomon-erasure",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-trie 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-trie",
  "thiserror",
 ]
 
@@ -2604,8 +2646,8 @@ dependencies = [
  "parking_lot 0.11.1",
  "sc-authority-discovery",
  "sc-network",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keyring 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-keyring",
  "tracing",
  "tracing-futures",
 ]
@@ -2621,7 +2663,7 @@ dependencies = [
  "indracore-node-subsystem-test-helpers",
  "indracore-node-subsystem-util",
  "indracore-primitives",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "thiserror",
  "tracing",
  "tracing-futures",
@@ -2665,8 +2707,8 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.11.1",
  "sc-service",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keyring 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-keyring",
  "thiserror",
  "tracing",
  "tracing-futures",
@@ -2687,10 +2729,10 @@ dependencies = [
  "indracore-primitives",
  "indracore-statement-table",
  "sc-keystore",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keyring 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
+ "sp-core",
+ "sp-keyring",
+ "sp-keystore",
  "thiserror",
  "tracing",
  "tracing-futures",
@@ -2704,7 +2746,7 @@ dependencies = [
  "indracore-node-subsystem",
  "indracore-node-subsystem-util",
  "indracore-primitives",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
+ "sp-keystore",
  "thiserror",
  "tracing",
  "tracing-futures",
@@ -2719,8 +2761,8 @@ dependencies = [
  "indracore-node-subsystem",
  "indracore-node-subsystem-util",
  "indracore-primitives",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-keystore",
  "thiserror",
  "tracing",
  "tracing-futures",
@@ -2739,8 +2781,8 @@ dependencies = [
  "indracore-parachain",
  "indracore-primitives",
  "parity-scale-codec",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keyring 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-keyring",
  "tracing",
  "tracing-futures",
 ]
@@ -2756,7 +2798,7 @@ dependencies = [
  "indracore-primitives",
  "maplit",
  "sp-blockchain",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "tracing",
  "tracing-futures",
 ]
@@ -2776,9 +2818,9 @@ dependencies = [
  "sp-api",
  "sp-blockchain",
  "sp-consensus",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-inherents",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
  "sp-transaction-pool",
  "substrate-prometheus-endpoint",
  "tracing",
@@ -2794,8 +2836,8 @@ dependencies = [
  "indracore-node-subsystem",
  "indracore-node-subsystem-util",
  "indracore-primitives",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
+ "sp-keystore",
  "thiserror",
  "tracing",
  "tracing-futures",
@@ -2811,7 +2853,7 @@ dependencies = [
  "indracore-node-subsystem-util",
  "indracore-primitives",
  "sp-api",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "tracing",
  "tracing-futures",
 ]
@@ -2827,7 +2869,7 @@ dependencies = [
  "mick-jaeger",
  "parking_lot 0.11.1",
  "sc-network",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "thiserror",
 ]
 
@@ -2852,8 +2894,8 @@ dependencies = [
  "indracore-statement-table",
  "parity-scale-codec",
  "sp-consensus-vrf",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-runtime",
 ]
 
 [[package]]
@@ -2880,7 +2922,7 @@ dependencies = [
  "pin-project 1.0.4",
  "sc-network",
  "smallvec 1.6.1",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "substrate-prometheus-endpoint",
  "thiserror",
  "tracing",
@@ -2905,7 +2947,7 @@ dependencies = [
  "pin-project 1.0.4",
  "sc-network",
  "smallvec 1.6.1",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "tracing",
  "tracing-futures",
 ]
@@ -2930,9 +2972,9 @@ dependencies = [
  "parking_lot 0.11.1",
  "pin-project 1.0.4",
  "sc-network",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
+ "sp-core",
+ "sp-keystore",
  "streamunordered",
  "substrate-prometheus-endpoint",
  "thiserror",
@@ -2956,7 +2998,7 @@ dependencies = [
  "kv-log-macro",
  "oorandom",
  "sc-client-api",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "tracing",
  "tracing-futures",
 ]
@@ -2974,12 +3016,12 @@ dependencies = [
  "sc-executor",
  "serde",
  "shared_memory",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-externalities 0.8.1 (git+https://github.com/selendra/substrate)",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-wasm-interface 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-externalities",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
+ "sp-wasm-interface",
  "thiserror",
 ]
 
@@ -2996,8 +3038,8 @@ dependencies = [
  "indracore-node-subsystem-util",
  "indracore-primitives",
  "log",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keyring 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-keyring",
  "thiserror",
  "tracing",
  "tracing-futures",
@@ -3016,18 +3058,18 @@ dependencies = [
  "pretty_assertions",
  "serde",
  "sp-api",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-arithmetic 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
+ "sp-arithmetic",
  "sp-authority-discovery",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-inherents",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-io",
+ "sp-keystore",
+ "sp-runtime",
  "sp-serializer",
  "sp-staking",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-trie 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-std",
+ "sp-trie",
  "sp-version",
 ]
 
@@ -3055,8 +3097,8 @@ dependencies = [
  "sp-blockchain",
  "sp-consensus",
  "sp-consensus-babe",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-keystore",
+ "sp-runtime",
  "sp-transaction-pool",
  "substrate-frame-rpc-system",
 ]
@@ -3121,17 +3163,17 @@ dependencies = [
  "sp-authority-discovery",
  "sp-block-builder",
  "sp-consensus-babe",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-inherents",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keyring 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-io",
+ "sp-keyring",
  "sp-offchain",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
  "sp-session",
  "sp-staking",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-std",
  "sp-transaction-pool",
- "sp-trie 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-trie",
  "sp-version",
  "static_assertions",
  "substrate-wasm-builder",
@@ -3170,16 +3212,16 @@ dependencies = [
  "serde_derive",
  "serde_json",
  "sp-api",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
+ "sp-core",
  "sp-inherents",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keyring 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-io",
+ "sp-keyring",
+ "sp-runtime",
  "sp-session",
  "sp-staking",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-trie 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-std",
+ "sp-trie",
  "static_assertions",
  "trie-db",
  "xcm",
@@ -3219,17 +3261,17 @@ dependencies = [
  "serde",
  "serde_json",
  "sp-api",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
+ "sp-core",
  "sp-inherents",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keyring 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-io",
+ "sp-keyring",
+ "sp-keystore",
+ "sp-runtime",
  "sp-session",
  "sp-staking",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-trie 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-std",
+ "sp-trie",
  "sp-version",
  "xcm",
  "xcm-executor",
@@ -3297,18 +3339,18 @@ dependencies = [
  "sp-blockchain",
  "sp-consensus",
  "sp-consensus-babe",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-finality-grandpa",
  "sp-inherents",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
+ "sp-io",
+ "sp-keystore",
  "sp-offchain",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
  "sp-session",
- "sp-state-machine 0.8.1 (git+https://github.com/selendra/substrate)",
- "sp-storage 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-state-machine",
+ "sp-storage",
  "sp-transaction-pool",
- "sp-trie 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-trie",
  "substrate-prometheus-endpoint",
  "thiserror",
  "tracing",
@@ -3331,10 +3373,10 @@ dependencies = [
  "indracore-node-subsystem-util",
  "indracore-primitives",
  "sc-keystore",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keyring 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
+ "sp-core",
+ "sp-keyring",
+ "sp-keystore",
  "sp-staking",
  "tracing",
  "tracing-futures",
@@ -3346,7 +3388,7 @@ version = "0.8.27"
 dependencies = [
  "indracore-primitives",
  "parity-scale-codec",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
 ]
 
 [[package]]
@@ -3364,11 +3406,11 @@ dependencies = [
  "sp-api",
  "sp-blockchain",
  "sp-consensus",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-inherents",
- "sp-keyring 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-state-machine 0.8.1 (git+https://github.com/selendra/substrate)",
+ "sp-keyring",
+ "sp-runtime",
+ "sp-state-machine",
  "sp-timestamp",
  "substrate-test-client",
 ]
@@ -3416,17 +3458,17 @@ dependencies = [
  "sp-authority-discovery",
  "sp-block-builder",
  "sp-consensus-babe",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-inherents",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keyring 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-io",
+ "sp-keyring",
  "sp-offchain",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
  "sp-session",
  "sp-staking",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-std",
  "sp-transaction-pool",
- "sp-trie 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-trie",
  "sp-version",
  "substrate-wasm-builder",
  "tiny-keccak",
@@ -3468,17 +3510,17 @@ dependencies = [
  "sc-tracing",
  "sc-transaction-pool",
  "serde_json",
- "sp-arithmetic 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-arithmetic",
  "sp-authority-discovery",
  "sp-blockchain",
  "sp-consensus",
  "sp-consensus-babe",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-finality-grandpa",
  "sp-inherents",
- "sp-keyring 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-state-machine 0.8.1 (git+https://github.com/selendra/substrate)",
+ "sp-keyring",
+ "sp-runtime",
+ "sp-state-machine",
  "substrate-test-client",
  "substrate-test-utils",
  "tempfile",
@@ -4913,10 +4955,10 @@ dependencies = [
  "pallet-session",
  "parity-scale-codec",
  "serde",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
  "sp-authority-discovery",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -4930,8 +4972,8 @@ dependencies = [
  "parity-scale-codec",
  "sp-authorship",
  "sp-inherents",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -4947,15 +4989,15 @@ dependencies = [
  "pallet-timestamp",
  "parity-scale-codec",
  "serde",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
  "sp-consensus-babe",
  "sp-consensus-vrf",
  "sp-inherents",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-io",
+ "sp-runtime",
  "sp-session",
  "sp-staking",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-std",
  "sp-timestamp",
 ]
 
@@ -4969,8 +5011,8 @@ dependencies = [
  "frame-system",
  "parity-scale-codec",
  "serde",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -4984,8 +5026,8 @@ dependencies = [
  "pallet-treasury",
  "parity-scale-codec",
  "serde",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -4998,10 +5040,10 @@ dependencies = [
  "frame-system",
  "parity-scale-codec",
  "serde",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -5017,11 +5059,11 @@ dependencies = [
  "parity-wasm 0.41.0",
  "pwasm-utils 0.16.0",
  "serde",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
  "sp-sandbox",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-std",
  "wasmi-validation",
 ]
 
@@ -5032,8 +5074,8 @@ source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28
 dependencies = [
  "bitflags",
  "parity-scale-codec",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -5060,9 +5102,9 @@ dependencies = [
  "serde",
  "sp-api",
  "sp-blockchain",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-rpc",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
 ]
 
 [[package]]
@@ -5073,8 +5115,8 @@ dependencies = [
  "pallet-contracts-primitives",
  "parity-scale-codec",
  "sp-api",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -5087,9 +5129,9 @@ dependencies = [
  "frame-system",
  "parity-scale-codec",
  "serde",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -5103,8 +5145,8 @@ dependencies = [
  "parity-scale-codec",
  "serde",
  "sp-npos-elections",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -5119,13 +5161,13 @@ dependencies = [
  "pallet-session",
  "parity-scale-codec",
  "serde",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
+ "sp-core",
  "sp-finality-grandpa",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
  "sp-session",
  "sp-staking",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-std",
 ]
 
 [[package]]
@@ -5139,9 +5181,9 @@ dependencies = [
  "frame-system",
  "parity-scale-codec",
  "serde",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -5156,12 +5198,12 @@ dependencies = [
  "pallet-session",
  "parity-scale-codec",
  "serde",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
  "sp-staking",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-std",
 ]
 
 [[package]]
@@ -5174,11 +5216,11 @@ dependencies = [
  "frame-system",
  "parity-scale-codec",
  "serde",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keyring 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-io",
+ "sp-keyring",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -5190,9 +5232,9 @@ dependencies = [
  "frame-system",
  "parity-scale-codec",
  "serde",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -5205,10 +5247,10 @@ dependencies = [
  "frame-system",
  "parity-scale-codec",
  "serde",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -5220,9 +5262,9 @@ dependencies = [
  "frame-system",
  "parity-scale-codec",
  "serde",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -5235,9 +5277,9 @@ dependencies = [
  "pallet-balances",
  "parity-scale-codec",
  "serde",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
  "sp-staking",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-std",
 ]
 
 [[package]]
@@ -5256,9 +5298,9 @@ dependencies = [
  "pallet-session",
  "pallet-staking",
  "parity-scale-codec",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
  "sp-staking",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-std",
 ]
 
 [[package]]
@@ -5271,10 +5313,10 @@ dependencies = [
  "frame-system",
  "parity-scale-codec",
  "serde",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -5286,8 +5328,8 @@ dependencies = [
  "frame-system",
  "parity-scale-codec",
  "safe-mix",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -5300,9 +5342,9 @@ dependencies = [
  "frame-system",
  "parity-scale-codec",
  "serde",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -5316,13 +5358,13 @@ dependencies = [
  "pallet-timestamp",
  "parity-scale-codec",
  "serde",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
  "sp-session",
  "sp-staking",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-trie 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-std",
+ "sp-trie",
 ]
 
 [[package]]
@@ -5336,9 +5378,9 @@ dependencies = [
  "pallet-session",
  "pallet-staking",
  "rand 0.7.3",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
  "sp-session",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-std",
 ]
 
 [[package]]
@@ -5354,12 +5396,12 @@ dependencies = [
  "parity-scale-codec",
  "rand_chacha 0.2.2",
  "serde",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
+ "sp-io",
  "sp-npos-elections",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
  "sp-staking",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-std",
  "static_assertions",
 ]
 
@@ -5383,9 +5425,9 @@ dependencies = [
  "frame-system",
  "parity-scale-codec",
  "serde",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -5400,9 +5442,9 @@ dependencies = [
  "parity-scale-codec",
  "serde",
  "sp-inherents",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
  "sp-timestamp",
 ]
 
@@ -5417,8 +5459,8 @@ dependencies = [
  "pallet-treasury",
  "parity-scale-codec",
  "serde",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -5431,10 +5473,10 @@ dependencies = [
  "parity-scale-codec",
  "serde",
  "smallvec 1.6.1",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -5449,9 +5491,9 @@ dependencies = [
  "parity-scale-codec",
  "sp-api",
  "sp-blockchain",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-rpc",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
 ]
 
 [[package]]
@@ -5462,7 +5504,7 @@ dependencies = [
  "pallet-transaction-payment",
  "parity-scale-codec",
  "sp-api",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
 ]
 
 [[package]]
@@ -5477,8 +5519,8 @@ dependencies = [
  "pallet-balances",
  "parity-scale-codec",
  "serde",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -5491,10 +5533,10 @@ dependencies = [
  "frame-system",
  "parity-scale-codec",
  "serde",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -5508,8 +5550,8 @@ dependencies = [
  "frame-system",
  "parity-scale-codec",
  "serde",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -6702,9 +6744,9 @@ dependencies = [
  "sp-api",
  "sp-authority-discovery",
  "sp-blockchain",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-keystore",
+ "sp-runtime",
  "substrate-prometheus-endpoint",
 ]
 
@@ -6724,9 +6766,9 @@ dependencies = [
  "sp-api",
  "sp-blockchain",
  "sp-consensus",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-inherents",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
  "sp-transaction-pool",
  "substrate-prometheus-endpoint",
 ]
@@ -6742,10 +6784,10 @@ dependencies = [
  "sp-block-builder",
  "sp-blockchain",
  "sp-consensus",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-inherents",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-state-machine 0.8.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
+ "sp-state-machine",
 ]
 
 [[package]]
@@ -6765,8 +6807,8 @@ dependencies = [
  "serde_json",
  "sp-chain-spec",
  "sp-consensus-babe",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-runtime",
 ]
 
 [[package]]
@@ -6805,11 +6847,11 @@ dependencies = [
  "serde",
  "serde_json",
  "sp-blockchain",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keyring 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
- "sp-panic-handler 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-keyring",
+ "sp-keystore",
+ "sp-panic-handler",
+ "sp-runtime",
  "sp-utils",
  "sp-version",
  "structopt",
@@ -6836,17 +6878,17 @@ dependencies = [
  "sp-api",
  "sp-blockchain",
  "sp-consensus",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-database",
- "sp-externalities 0.8.1 (git+https://github.com/selendra/substrate)",
+ "sp-externalities",
  "sp-inherents",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-state-machine 0.8.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-storage 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-keystore",
+ "sp-runtime",
+ "sp-state-machine",
+ "sp-std",
+ "sp-storage",
  "sp-transaction-pool",
- "sp-trie 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-trie",
  "sp-utils",
  "sp-version",
  "substrate-prometheus-endpoint",
@@ -6871,14 +6913,14 @@ dependencies = [
  "sc-client-api",
  "sc-executor",
  "sc-state-db",
- "sp-arithmetic 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-arithmetic",
  "sp-blockchain",
  "sp-consensus",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-database",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-state-machine 0.8.1 (git+https://github.com/selendra/substrate)",
- "sp-trie 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
+ "sp-state-machine",
+ "sp-trie",
  "substrate-prometheus-endpoint",
 ]
 
@@ -6890,7 +6932,7 @@ dependencies = [
  "sc-client-api",
  "sp-blockchain",
  "sp-consensus",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
 ]
 
 [[package]]
@@ -6921,17 +6963,17 @@ dependencies = [
  "schnorrkel",
  "serde",
  "sp-api",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
  "sp-block-builder",
  "sp-blockchain",
  "sp-consensus",
  "sp-consensus-babe",
  "sp-consensus-vrf",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-inherents",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-io",
+ "sp-keystore",
+ "sp-runtime",
  "sp-timestamp",
  "sp-utils",
  "sp-version",
@@ -6953,13 +6995,13 @@ dependencies = [
  "sc-rpc-api",
  "serde",
  "sp-api",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
  "sp-blockchain",
  "sp-consensus",
  "sp-consensus-babe",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-keystore",
+ "sp-runtime",
 ]
 
 [[package]]
@@ -6972,7 +7014,7 @@ dependencies = [
  "parking_lot 0.11.1",
  "sc-client-api",
  "sp-blockchain",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
 ]
 
 [[package]]
@@ -6988,16 +7030,16 @@ dependencies = [
  "sc-client-api",
  "sc-telemetry",
  "sp-api",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-arithmetic 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
+ "sp-arithmetic",
  "sp-blockchain",
  "sp-consensus",
  "sp-consensus-slots",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-inherents",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-state-machine 0.8.1 (git+https://github.com/selendra/substrate)",
- "sp-trie 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
+ "sp-state-machine",
+ "sp-trie",
  "thiserror",
 ]
 
@@ -7010,9 +7052,9 @@ dependencies = [
  "sc-client-api",
  "sp-authorship",
  "sp-consensus",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-inherents",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
 ]
 
 [[package]]
@@ -7031,16 +7073,16 @@ dependencies = [
  "sc-executor-wasmi",
  "sc-executor-wasmtime",
  "sp-api",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-externalities 0.8.1 (git+https://github.com/selendra/substrate)",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-panic-handler 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime-interface 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-externalities",
+ "sp-io",
+ "sp-panic-handler",
+ "sp-runtime-interface",
  "sp-serializer",
  "sp-tasks",
- "sp-trie 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-trie",
  "sp-version",
- "sp-wasm-interface 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-wasm-interface",
  "wasmi",
 ]
 
@@ -7053,9 +7095,9 @@ dependencies = [
  "parity-scale-codec",
  "parity-wasm 0.41.0",
  "sp-allocator",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-serializer",
- "sp-wasm-interface 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-wasm-interface",
  "thiserror",
  "wasmi",
 ]
@@ -7069,9 +7111,9 @@ dependencies = [
  "parity-scale-codec",
  "sc-executor-common",
  "sp-allocator",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime-interface 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-wasm-interface 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-runtime-interface",
+ "sp-wasm-interface",
  "wasmi",
 ]
 
@@ -7087,9 +7129,9 @@ dependencies = [
  "sc-executor-common",
  "scoped-tls",
  "sp-allocator",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime-interface 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-wasm-interface 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-runtime-interface",
+ "sp-wasm-interface",
  "wasmtime",
 ]
 
@@ -7117,15 +7159,15 @@ dependencies = [
  "sc-telemetry",
  "serde_json",
  "sp-api",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-arithmetic 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
+ "sp-arithmetic",
  "sp-blockchain",
  "sp-consensus",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-finality-grandpa",
  "sp-inherents",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-keystore",
+ "sp-runtime",
  "sp-utils",
  "substrate-prometheus-endpoint",
 ]
@@ -7150,8 +7192,8 @@ dependencies = [
  "serde",
  "serde_json",
  "sp-blockchain",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-runtime",
 ]
 
 [[package]]
@@ -7166,7 +7208,7 @@ dependencies = [
  "sc-client-api",
  "sc-network",
  "sp-blockchain",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
  "sp-transaction-pool",
  "sp-utils",
  "wasm-timer",
@@ -7186,9 +7228,9 @@ dependencies = [
  "parking_lot 0.11.1",
  "rand 0.7.3",
  "serde_json",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
+ "sp-core",
+ "sp-keystore",
  "subtle 2.4.0",
 ]
 
@@ -7205,10 +7247,10 @@ dependencies = [
  "sc-executor",
  "sp-api",
  "sp-blockchain",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-externalities 0.8.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-state-machine 0.8.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-externalities",
+ "sp-runtime",
+ "sp-state-machine",
 ]
 
 [[package]]
@@ -7249,11 +7291,11 @@ dependencies = [
  "serde",
  "serde_json",
  "smallvec 1.6.1",
- "sp-arithmetic 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-arithmetic",
  "sp-blockchain",
  "sp-consensus",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-runtime",
  "sp-utils",
  "substrate-prometheus-endpoint",
  "thiserror",
@@ -7274,7 +7316,7 @@ dependencies = [
  "log",
  "lru",
  "sc-network",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
  "substrate-prometheus-endpoint",
  "wasm-timer",
 ]
@@ -7299,9 +7341,9 @@ dependencies = [
  "sc-keystore",
  "sc-network",
  "sp-api",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-offchain",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
  "sp-utils",
  "threadpool",
 ]
@@ -7350,13 +7392,13 @@ dependencies = [
  "sp-api",
  "sp-blockchain",
  "sp-chain-spec",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-keystore",
  "sp-offchain",
  "sp-rpc",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
  "sp-session",
- "sp-state-machine 0.8.1 (git+https://github.com/selendra/substrate)",
+ "sp-state-machine",
  "sp-transaction-pool",
  "sp-utils",
  "sp-version",
@@ -7379,9 +7421,9 @@ dependencies = [
  "serde",
  "serde_json",
  "sp-chain-spec",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-rpc",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
  "sp-transaction-pool",
  "sp-version",
 ]
@@ -7400,7 +7442,7 @@ dependencies = [
  "log",
  "serde",
  "serde_json",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
  "substrate-prometheus-endpoint",
 ]
 
@@ -7442,21 +7484,21 @@ dependencies = [
  "serde",
  "serde_json",
  "sp-api",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
  "sp-block-builder",
  "sp-blockchain",
  "sp-consensus",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-externalities 0.8.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-externalities",
  "sp-inherents",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-io",
+ "sp-keystore",
+ "sp-runtime",
  "sp-session",
- "sp-state-machine 0.8.1 (git+https://github.com/selendra/substrate)",
- "sp-tracing 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-state-machine",
+ "sp-tracing",
  "sp-transaction-pool",
- "sp-trie 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-trie",
  "sp-utils",
  "sp-version",
  "substrate-prometheus-endpoint",
@@ -7478,7 +7520,7 @@ dependencies = [
  "parity-util-mem-derive",
  "parking_lot 0.11.1",
  "sc-client-api",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "thiserror",
 ]
 
@@ -7498,7 +7540,7 @@ dependencies = [
  "sc-rpc-api",
  "serde_json",
  "sp-blockchain",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
  "thiserror",
 ]
 
@@ -7542,7 +7584,7 @@ dependencies = [
  "sc-tracing-proc-macro",
  "serde",
  "serde_json",
- "sp-tracing 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-tracing",
  "thiserror",
  "tracing",
  "tracing-core",
@@ -7577,8 +7619,8 @@ dependencies = [
  "retain_mut",
  "serde",
  "sp-blockchain",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-runtime",
  "sp-transaction-pool",
  "sp-utils",
  "thiserror",
@@ -7601,9 +7643,9 @@ dependencies = [
  "sc-transaction-graph",
  "sp-api",
  "sp-blockchain",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-tracing 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-runtime",
+ "sp-tracing",
  "sp-transaction-pool",
  "sp-utils",
  "substrate-prometheus-endpoint",
@@ -8016,9 +8058,9 @@ version = "2.0.1"
 source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
 dependencies = [
  "log",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-wasm-interface 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-std",
+ "sp-wasm-interface",
  "thiserror",
 ]
 
@@ -8030,10 +8072,10 @@ dependencies = [
  "hash-db",
  "parity-scale-codec",
  "sp-api-proc-macro",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-state-machine 0.8.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-runtime",
+ "sp-state-machine",
+ "sp-std",
  "sp-version",
  "thiserror",
 ]
@@ -8053,38 +8095,13 @@ dependencies = [
 [[package]]
 name = "sp-application-crypto"
 version = "2.0.1"
-source = "git+https://github.com/paritytech/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
-dependencies = [
- "parity-scale-codec",
- "serde",
- "sp-core 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-io 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-std 2.0.1 (git+https://github.com/paritytech/substrate)",
-]
-
-[[package]]
-name = "sp-application-crypto"
-version = "2.0.1"
 source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
 dependencies = [
  "parity-scale-codec",
  "serde",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
-]
-
-[[package]]
-name = "sp-arithmetic"
-version = "2.0.1"
-source = "git+https://github.com/paritytech/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
-dependencies = [
- "integer-sqrt",
- "num-traits 0.2.14",
- "parity-scale-codec",
- "serde",
- "sp-debug-derive 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-std 2.0.1 (git+https://github.com/paritytech/substrate)",
+ "sp-core",
+ "sp-io",
+ "sp-std",
 ]
 
 [[package]]
@@ -8096,8 +8113,8 @@ dependencies = [
  "num-traits 0.2.14",
  "parity-scale-codec",
  "serde",
- "sp-debug-derive 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-debug-derive",
+ "sp-std",
 ]
 
 [[package]]
@@ -8107,9 +8124,9 @@ source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28
 dependencies = [
  "parity-scale-codec",
  "sp-api",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -8119,8 +8136,8 @@ source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28
 dependencies = [
  "parity-scale-codec",
  "sp-inherents",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -8131,8 +8148,8 @@ dependencies = [
  "parity-scale-codec",
  "sp-api",
  "sp-inherents",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -8148,8 +8165,8 @@ dependencies = [
  "sp-api",
  "sp-consensus",
  "sp-database",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-state-machine 0.8.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
+ "sp-state-machine",
  "thiserror",
 ]
 
@@ -8175,12 +8192,12 @@ dependencies = [
  "parking_lot 0.11.1",
  "serde",
  "sp-api",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-inherents",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-state-machine 0.8.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-trie 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
+ "sp-state-machine",
+ "sp-std",
+ "sp-trie",
  "sp-utils",
  "sp-version",
  "substrate-prometheus-endpoint",
@@ -8196,15 +8213,15 @@ dependencies = [
  "merlin",
  "parity-scale-codec",
  "sp-api",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
  "sp-consensus",
  "sp-consensus-slots",
  "sp-consensus-vrf",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-inherents",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-keystore",
+ "sp-runtime",
+ "sp-std",
  "sp-timestamp",
 ]
 
@@ -8214,7 +8231,7 @@ version = "0.8.1"
 source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
 dependencies = [
  "parity-scale-codec",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
 ]
 
 [[package]]
@@ -8224,53 +8241,9 @@ source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28
 dependencies = [
  "parity-scale-codec",
  "schnorrkel",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
-]
-
-[[package]]
-name = "sp-core"
-version = "2.0.1"
-source = "git+https://github.com/paritytech/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
-dependencies = [
- "base58",
- "blake2-rfc",
- "byteorder",
- "dyn-clonable",
- "ed25519-dalek",
- "futures 0.3.12",
- "hash-db",
- "hash256-std-hasher",
- "hex",
- "impl-serde",
- "lazy_static",
- "libsecp256k1",
- "log",
- "merlin",
- "num-traits 0.2.14",
- "parity-scale-codec",
- "parity-util-mem",
- "parking_lot 0.11.1",
- "primitive-types",
- "rand 0.7.3",
- "regex",
- "schnorrkel",
- "secrecy",
- "serde",
- "sha2 0.9.2",
- "sp-debug-derive 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-externalities 0.8.1 (git+https://github.com/paritytech/substrate)",
- "sp-runtime-interface 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-std 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-storage 2.0.1 (git+https://github.com/paritytech/substrate)",
- "substrate-bip39",
- "thiserror",
- "tiny-bip39",
- "tiny-keccak",
- "twox-hash",
- "wasmi",
- "zeroize",
+ "sp-core",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -8303,11 +8276,11 @@ dependencies = [
  "secrecy",
  "serde",
  "sha2 0.9.2",
- "sp-debug-derive 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-externalities 0.8.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime-interface 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-storage 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-debug-derive",
+ "sp-externalities",
+ "sp-runtime-interface",
+ "sp-std",
+ "sp-storage",
  "substrate-bip39",
  "thiserror",
  "tiny-bip39",
@@ -8329,16 +8302,6 @@ dependencies = [
 [[package]]
 name = "sp-debug-derive"
 version = "2.0.1"
-source = "git+https://github.com/paritytech/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
-dependencies = [
- "proc-macro2 1.0.24",
- "quote 1.0.8",
- "syn 1.0.58",
-]
-
-[[package]]
-name = "sp-debug-derive"
-version = "2.0.1"
 source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
 dependencies = [
  "proc-macro2 1.0.24",
@@ -8349,23 +8312,12 @@ dependencies = [
 [[package]]
 name = "sp-externalities"
 version = "0.8.1"
-source = "git+https://github.com/paritytech/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
-dependencies = [
- "environmental",
- "parity-scale-codec",
- "sp-std 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-storage 2.0.1 (git+https://github.com/paritytech/substrate)",
-]
-
-[[package]]
-name = "sp-externalities"
-version = "0.8.1"
 source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
 dependencies = [
  "environmental",
  "parity-scale-codec",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-storage 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-std",
+ "sp-storage",
 ]
 
 [[package]]
@@ -8378,11 +8330,11 @@ dependencies = [
  "parity-scale-codec",
  "serde",
  "sp-api",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-application-crypto",
+ "sp-core",
+ "sp-keystore",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -8392,38 +8344,14 @@ source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28
 dependencies = [
  "parity-scale-codec",
  "parking_lot 0.11.1",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-std",
  "thiserror",
 ]
 
 [[package]]
 name = "sp-io"
 version = "2.0.1"
-source = "git+https://github.com/paritytech/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
-dependencies = [
- "futures 0.3.12",
- "hash-db",
- "libsecp256k1",
- "log",
- "parity-scale-codec",
- "parking_lot 0.11.1",
- "sp-core 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-externalities 0.8.1 (git+https://github.com/paritytech/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/paritytech/substrate)",
- "sp-runtime-interface 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-state-machine 0.8.1 (git+https://github.com/paritytech/substrate)",
- "sp-std 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-tracing 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-trie 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-wasm-interface 2.0.1 (git+https://github.com/paritytech/substrate)",
- "tracing",
- "tracing-core",
-]
-
-[[package]]
-name = "sp-io"
-version = "2.0.1"
 source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
 dependencies = [
  "futures 0.3.12",
@@ -8432,28 +8360,17 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "parking_lot 0.11.1",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-externalities 0.8.1 (git+https://github.com/selendra/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
- "sp-runtime-interface 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-state-machine 0.8.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-tracing 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-trie 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-wasm-interface 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-externalities",
+ "sp-keystore",
+ "sp-runtime-interface",
+ "sp-state-machine",
+ "sp-std",
+ "sp-tracing",
+ "sp-trie",
+ "sp-wasm-interface",
  "tracing",
  "tracing-core",
-]
-
-[[package]]
-name = "sp-keyring"
-version = "2.0.1"
-source = "git+https://github.com/paritytech/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
-dependencies = [
- "lazy_static",
- "sp-core 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/paritytech/substrate)",
- "strum 0.16.0",
 ]
 
 [[package]]
@@ -8462,25 +8379,9 @@ version = "2.0.1"
 source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
 dependencies = [
  "lazy_static",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-runtime",
  "strum 0.16.0",
-]
-
-[[package]]
-name = "sp-keystore"
-version = "0.8.0"
-source = "git+https://github.com/paritytech/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
-dependencies = [
- "async-trait",
- "derive_more",
- "futures 0.3.12",
- "merlin",
- "parity-scale-codec",
- "parking_lot 0.11.1",
- "schnorrkel",
- "sp-core 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-externalities 0.8.1 (git+https://github.com/paritytech/substrate)",
 ]
 
 [[package]]
@@ -8496,8 +8397,8 @@ dependencies = [
  "parking_lot 0.11.1",
  "schnorrkel",
  "serde",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-externalities 0.8.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-externalities",
 ]
 
 [[package]]
@@ -8507,10 +8408,10 @@ source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28
 dependencies = [
  "parity-scale-codec",
  "serde",
- "sp-arithmetic 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-arithmetic",
+ "sp-core",
  "sp-npos-elections-compact",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-std",
 ]
 
 [[package]]
@@ -8530,16 +8431,8 @@ version = "2.0.1"
 source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
 dependencies = [
  "sp-api",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
-]
-
-[[package]]
-name = "sp-panic-handler"
-version = "2.0.1"
-source = "git+https://github.com/paritytech/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
-dependencies = [
- "backtrace",
+ "sp-core",
+ "sp-runtime",
 ]
 
 [[package]]
@@ -8556,28 +8449,7 @@ version = "2.0.1"
 source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
 dependencies = [
  "serde",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
-]
-
-[[package]]
-name = "sp-runtime"
-version = "2.0.1"
-source = "git+https://github.com/paritytech/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
-dependencies = [
- "either",
- "hash256-std-hasher",
- "impl-trait-for-tuples 0.2.0",
- "log",
- "parity-scale-codec",
- "parity-util-mem",
- "paste",
- "rand 0.7.3",
- "serde",
- "sp-application-crypto 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-arithmetic 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-core 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-io 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-std 2.0.1 (git+https://github.com/paritytech/substrate)",
+ "sp-core",
 ]
 
 [[package]]
@@ -8594,28 +8466,11 @@ dependencies = [
  "paste",
  "rand 0.7.3",
  "serde",
- "sp-application-crypto 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-arithmetic 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
-]
-
-[[package]]
-name = "sp-runtime-interface"
-version = "2.0.1"
-source = "git+https://github.com/paritytech/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
-dependencies = [
- "impl-trait-for-tuples 0.2.0",
- "parity-scale-codec",
- "primitive-types",
- "sp-externalities 0.8.1 (git+https://github.com/paritytech/substrate)",
- "sp-runtime-interface-proc-macro 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-std 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-storage 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-tracing 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-wasm-interface 2.0.1 (git+https://github.com/paritytech/substrate)",
- "static_assertions",
+ "sp-application-crypto",
+ "sp-arithmetic",
+ "sp-core",
+ "sp-io",
+ "sp-std",
 ]
 
 [[package]]
@@ -8626,25 +8481,13 @@ dependencies = [
  "impl-trait-for-tuples 0.2.0",
  "parity-scale-codec",
  "primitive-types",
- "sp-externalities 0.8.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime-interface-proc-macro 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-storage 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-tracing 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-wasm-interface 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-externalities",
+ "sp-runtime-interface-proc-macro",
+ "sp-std",
+ "sp-storage",
+ "sp-tracing",
+ "sp-wasm-interface",
  "static_assertions",
-]
-
-[[package]]
-name = "sp-runtime-interface-proc-macro"
-version = "2.0.1"
-source = "git+https://github.com/paritytech/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
-dependencies = [
- "Inflector",
- "proc-macro-crate",
- "proc-macro2 1.0.24",
- "quote 1.0.8",
- "syn 1.0.58",
 ]
 
 [[package]]
@@ -8665,10 +8508,10 @@ version = "0.8.1"
 source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
 dependencies = [
  "parity-scale-codec",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-wasm-interface 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-io",
+ "sp-std",
+ "sp-wasm-interface",
  "wasmi",
 ]
 
@@ -8688,10 +8531,10 @@ source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28
 dependencies = [
  "parity-scale-codec",
  "sp-api",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-runtime",
  "sp-staking",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-std",
 ]
 
 [[package]]
@@ -8700,30 +8543,8 @@ version = "2.0.1"
 source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
 dependencies = [
  "parity-scale-codec",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
-]
-
-[[package]]
-name = "sp-state-machine"
-version = "0.8.1"
-source = "git+https://github.com/paritytech/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
-dependencies = [
- "hash-db",
- "log",
- "num-traits 0.2.14",
- "parity-scale-codec",
- "parking_lot 0.11.1",
- "rand 0.7.3",
- "smallvec 1.6.1",
- "sp-core 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-externalities 0.8.1 (git+https://github.com/paritytech/substrate)",
- "sp-panic-handler 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-std 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-trie 2.0.1 (git+https://github.com/paritytech/substrate)",
- "thiserror",
- "trie-db",
- "trie-root",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -8738,11 +8559,11 @@ dependencies = [
  "parking_lot 0.11.1",
  "rand 0.7.3",
  "smallvec 1.6.1",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-externalities 0.8.1 (git+https://github.com/selendra/substrate)",
- "sp-panic-handler 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-trie 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-externalities",
+ "sp-panic-handler",
+ "sp-std",
+ "sp-trie",
  "thiserror",
  "trie-db",
  "trie-root",
@@ -8751,25 +8572,7 @@ dependencies = [
 [[package]]
 name = "sp-std"
 version = "2.0.1"
-source = "git+https://github.com/paritytech/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
-
-[[package]]
-name = "sp-std"
-version = "2.0.1"
 source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
-
-[[package]]
-name = "sp-storage"
-version = "2.0.1"
-source = "git+https://github.com/paritytech/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
-dependencies = [
- "impl-serde",
- "parity-scale-codec",
- "ref-cast",
- "serde",
- "sp-debug-derive 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-std 2.0.1 (git+https://github.com/paritytech/substrate)",
-]
 
 [[package]]
 name = "sp-storage"
@@ -8780,8 +8583,8 @@ dependencies = [
  "parity-scale-codec",
  "ref-cast",
  "serde",
- "sp-debug-derive 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-debug-derive",
+ "sp-std",
 ]
 
 [[package]]
@@ -8790,11 +8593,11 @@ version = "2.0.0"
 source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
 dependencies = [
  "log",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-externalities 0.8.1 (git+https://github.com/selendra/substrate)",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime-interface 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-externalities",
+ "sp-io",
+ "sp-runtime-interface",
+ "sp-std",
 ]
 
 [[package]]
@@ -8806,22 +8609,9 @@ dependencies = [
  "parity-scale-codec",
  "sp-api",
  "sp-inherents",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
+ "sp-std",
  "wasm-timer",
-]
-
-[[package]]
-name = "sp-tracing"
-version = "2.0.1"
-source = "git+https://github.com/paritytech/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
-dependencies = [
- "log",
- "parity-scale-codec",
- "sp-std 2.0.1 (git+https://github.com/paritytech/substrate)",
- "tracing",
- "tracing-core",
- "tracing-subscriber",
 ]
 
 [[package]]
@@ -8831,7 +8621,7 @@ source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28
 dependencies = [
  "log",
  "parity-scale-codec",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-std",
  "tracing",
  "tracing-core",
  "tracing-subscriber",
@@ -8849,22 +8639,8 @@ dependencies = [
  "serde",
  "sp-api",
  "sp-blockchain",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
  "thiserror",
-]
-
-[[package]]
-name = "sp-trie"
-version = "2.0.1"
-source = "git+https://github.com/paritytech/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
-dependencies = [
- "hash-db",
- "memory-db",
- "parity-scale-codec",
- "sp-core 2.0.1 (git+https://github.com/paritytech/substrate)",
- "sp-std 2.0.1 (git+https://github.com/paritytech/substrate)",
- "trie-db",
- "trie-root",
 ]
 
 [[package]]
@@ -8875,8 +8651,8 @@ dependencies = [
  "hash-db",
  "memory-db",
  "parity-scale-codec",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-std",
  "trie-db",
  "trie-root",
 ]
@@ -8901,19 +8677,8 @@ dependencies = [
  "impl-serde",
  "parity-scale-codec",
  "serde",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
-]
-
-[[package]]
-name = "sp-wasm-interface"
-version = "2.0.1"
-source = "git+https://github.com/paritytech/substrate?branch=master#d5bdd81de1af28250f4bef32a06a6e2dfd80c800"
-dependencies = [
- "impl-trait-for-tuples 0.2.0",
- "parity-scale-codec",
- "sp-std 2.0.1 (git+https://github.com/paritytech/substrate)",
- "wasmi",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -8923,7 +8688,7 @@ source = "git+https://github.com/selendra/substrate?branch=master#d5bdd81de1af28
 dependencies = [
  "impl-trait-for-tuples 0.2.0",
  "parity-scale-codec",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-std",
  "wasmi",
 ]
 
@@ -9123,8 +8888,8 @@ dependencies = [
  "sp-api",
  "sp-block-builder",
  "sp-blockchain",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-runtime",
  "sp-transaction-pool",
 ]
 
@@ -9162,11 +8927,11 @@ dependencies = [
  "serde_json",
  "sp-blockchain",
  "sp-consensus",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keyring 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keystore 0.8.0 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-state-machine 0.8.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-keyring",
+ "sp-keystore",
+ "sp-runtime",
+ "sp-state-machine",
 ]
 
 [[package]]
@@ -9293,8 +9058,8 @@ dependencies = [
  "dlmalloc",
  "indracore-parachain",
  "parity-scale-codec",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-io",
+ "sp-std",
  "substrate-wasm-builder",
  "tiny-keccak",
 ]
@@ -9317,8 +9082,8 @@ dependencies = [
  "sc-authority-discovery",
  "sc-cli",
  "sc-service",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-keyring 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
+ "sp-keyring",
  "structopt",
  "substrate-test-utils",
  "test-parachain-adder",
@@ -9338,7 +9103,7 @@ version = "0.7.22"
 dependencies = [
  "indracore-parachain",
  "parity-scale-codec",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "test-parachain-adder",
  "test-parachain-halt",
  "tiny-keccak",
@@ -10557,10 +10322,10 @@ dependencies = [
  "frame-support",
  "indracore-parachain",
  "parity-scale-codec",
- "sp-arithmetic 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-arithmetic",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
  "xcm",
  "xcm-executor",
 ]
@@ -10572,11 +10337,11 @@ dependencies = [
  "frame-support",
  "impl-trait-for-tuples 0.2.0",
  "parity-scale-codec",
- "sp-arithmetic 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-arithmetic",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
  "xcm",
 ]
 
@@ -10620,14 +10385,14 @@ dependencies = [
  "sp-authority-discovery",
  "sp-block-builder",
  "sp-consensus-babe",
- "sp-core 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-core",
  "sp-inherents",
- "sp-io 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-io",
  "sp-offchain",
- "sp-runtime 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-runtime",
  "sp-session",
  "sp-staking",
- "sp-std 2.0.1 (git+https://github.com/selendra/substrate)",
+ "sp-std",
  "sp-transaction-pool",
  "sp-version",
  "substrate-wasm-builder",
