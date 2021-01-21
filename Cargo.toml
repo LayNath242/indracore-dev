@@ -39,6 +39,7 @@ members = [
 	"xcm",
 	"xcm/xcm-builder",
 	"xcm/xcm-executor",
+	"cumulus/primitives",
 	"node/collation-generation",
 	"node/core/approval-voting",
 	"node/core/av-store",
