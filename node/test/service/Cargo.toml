@@ -28,6 +28,7 @@ indracore-runtime-parachains = { path = "../../../runtime/parachains" }
 # Substrate dependencies
 sp-authority-discovery = { git = "https://github.com/selendra/substrate", branch = "master" }
 sc-authority-discovery = { git = "https://github.com/selendra/substrate", branch = "master" }
+sc-tracing = { git = "https://github.com/selendra/substrate", branch = "master" }
 babe = { package = "sc-consensus-babe", git = "https://github.com/selendra/substrate", branch = "master" }
 babe-primitives = { package = "sp-consensus-babe", git = "https://github.com/selendra/substrate", branch = "master" }
 consensus_common = { package = "sp-consensus", git = "https://github.com/selendra/substrate", branch = "master" }
