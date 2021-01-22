@@ -10501,6 +10501,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "xcm-handler"
+version = "0.1.0"
+dependencies = [
+ "cumulus-primitives",
+ "frame-support",
+ "frame-system",
+ "parity-scale-codec",
+ "sp-std",
+ "xcm",
+]
+
+[[package]]
 name = "xelendra-runtime"
 version = "0.1.0"
 dependencies = [
