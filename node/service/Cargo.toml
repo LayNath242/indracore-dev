@@ -18,6 +18,7 @@ sc-consensus-slots = { git = "https://github.com/selendra/substrate", branch = "
 sc-executor = { git = "https://github.com/selendra/substrate", branch = "master" }
 sc-network = { git = "https://github.com/selendra/substrate", branch = "master" }
 sc-transaction-pool = { git = "https://github.com/selendra/substrate", branch = "master" }
+sc-finality-grandpa-warp-sync = { git = "https://github.com/selendra/substrate", branch = "master", optional = true }
 service = { package = "sc-service", git = "https://github.com/selendra/substrate", branch = "master", default-features = false }
 telemetry = { package = "sc-telemetry", git = "https://github.com/selendra/substrate", branch = "master" }
 
@@ -103,6 +104,7 @@ default = ["db", "full-node"]
 db = ["service/db"]
 full-node = [
 	"indracore-node-core-av-store",
+	"sc-finality-grandpa-warp-sync"
 ]
 
 runtime-benchmarks = [
