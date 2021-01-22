@@ -17,6 +17,7 @@ members = [
 	"cumulus/network",
 	"cumulus/runtime",
 	"cumulus/consensus",
+	"cumulus/collator",
 	"node/collation-generation",
 	"node/core/approval-voting",
 	"node/core/av-store",
