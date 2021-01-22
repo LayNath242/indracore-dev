@@ -1094,6 +1094,34 @@ dependencies = [
 ]
 
 [[package]]
+name = "cumulus-collator"
+version = "0.1.0"
+dependencies = [
+ "cumulus-network",
+ "cumulus-primitives",
+ "cumulus-runtime",
+ "futures 0.3.12",
+ "indracore-node-primitives",
+ "indracore-node-subsystem",
+ "indracore-overseer",
+ "indracore-parachain",
+ "indracore-primitives",
+ "indracore-service",
+ "log",
+ "parity-scale-codec",
+ "parking_lot 0.9.0",
+ "sc-cli",
+ "sc-client-api",
+ "sp-api",
+ "sp-consensus",
+ "sp-core",
+ "sp-inherents",
+ "sp-io",
+ "sp-runtime",
+ "sp-state-machine",
+]
+
+[[package]]
 name = "cumulus-consensus"
 version = "0.1.0"
 dependencies = [
@@ -1177,6 +1205,29 @@ dependencies = [
  "sp-std",
  "sp-trie",
  "trie-db",
+]
+
+[[package]]
+name = "cumulus-service"
+version = "0.1.0"
+dependencies = [
+ "cumulus-collator",
+ "cumulus-consensus",
+ "cumulus-primitives",
+ "futures 0.3.12",
+ "indracore-overseer",
+ "indracore-primitives",
+ "indracore-service",
+ "sc-client-api",
+ "sc-service",
+ "sc-tracing",
+ "sp-api",
+ "sp-blockchain",
+ "sp-consensus",
+ "sp-core",
+ "sp-inherents",
+ "sp-runtime",
+ "tracing",
 ]
 
 [[package]]
