@@ -1,0 +1,51 @@
+[package]
+name = "cumulus-parachain-system"
+version = "0.1.0"
+authors = ["Selendra <info@selendra.org>"]
+edition = "2018"
+description = "pallet to manage parachain upgrades"
+
+[dependencies]
+# Other Dependencies
+codec = { package = "parity-scale-codec", version = "1.0.0", default-features = false, features = ["derive"]}
+serde = { version = "1.0.101", optional = true, features = ["derive"] }
+hash-db = { version = "0.15.2", default-features = false }
+
+# Substrate dependencies
+frame-support = { git = "https://github.com/selendra/substrate", default-features = false, branch = "master" }
+pallet-balances = { git = "https://github.com/selendra/substrate", default-features = false, branch = "master" }
+sp-core = { git = "https://github.com/selendra/substrate", version = "2.0.0-rc5", default-features = false, branch = "master" }
+sp-inherents = { git = "https://github.com/selendra/substrate", default-features = false, branch = "master" }
+sp-io = { git = "https://github.com/selendra/substrate", default-features = false, branch = "master" }
+sp-std = { git = "https://github.com/selendra/substrate", default-features = false, branch = "master" }
+sp-runtime = { git = "https://github.com/selendra/substrate", default-features = false, branch = "master" }
+sp-version = { git = "https://github.com/selendra/substrate", default-features = false, branch = "master" }
+frame-system = { git = "https://github.com/selendra/substrate", default-features = false, branch = "master" }
+sp-state-machine = { git = "https://github.com/selendra/substrate", default-features = false, branch = "master" }
+sp-trie = { git = "https://github.com/selendra/substrate", default-features = false, branch = "master" }
+
+# Cumulus dependencies
+cumulus-primitives = { path = "../primitives", default-features = false }
+cumulus-runtime = { path = "../runtime", default-features = false }
+
+# Indracore dependencies
+parachain = { package = "indracore-parachain", path = "../../parachain", default-features = false }
+
+[features]
+default = ['std']
+std = [
+	'serde',
+	'codec/std',
+	'frame-support/std',
+	'pallet-balances/std',
+	'cumulus-runtime/std',
+	'sp-core/std',
+	'sp-runtime/std',
+	'sp-io/std',
+	'sp-std/std',
+	'hash-db/std',
+	'sp-state-machine/std',
+	'sp-trie/std',
+	'frame-system/std',
+	'cumulus-primitives/std',
+]

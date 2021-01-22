@@ -20,6 +20,7 @@ members = [
 	"cumulus/collator",
 	"cumulus/service",
 	"cumulus/xcm-handler",
+	"cumulus/parachain-system",
 	"node/collation-generation",
 	"node/core/approval-voting",
 	"node/core/av-store",

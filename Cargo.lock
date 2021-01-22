@@ -1171,6 +1171,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "cumulus-parachain-system"
+version = "0.1.0"
+dependencies = [
+ "cumulus-primitives",
+ "cumulus-runtime",
+ "frame-support",
+ "frame-system",
+ "hash-db",
+ "indracore-parachain",
+ "pallet-balances",
+ "parity-scale-codec",
+ "serde",
+ "sp-core",
+ "sp-inherents",
+ "sp-io",
+ "sp-runtime",
+ "sp-state-machine",
+ "sp-std",
+ "sp-trie",
+ "sp-version",
+]
+
+[[package]]
 name = "cumulus-primitives"
 version = "0.1.0"
 dependencies = [
