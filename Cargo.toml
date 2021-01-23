@@ -55,7 +55,8 @@ members = [
 	"parachain/test-parachains",
 	"parachain/test-parachains/adder",
 	"parachain/test-parachains/adder/collator",
-    "node/indracore"
+    "node/indracore",
+	"node/xelendra-collator",
 ]
 
 # make sure dev builds with backtrace do

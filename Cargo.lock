@@ -10547,44 +10547,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "xelendra-parachain-runtime"
-version = "0.1.0"
-dependencies = [
- "cumulus-parachain-system",
- "cumulus-primitives",
- "cumulus-runtime",
- "frame-executive",
- "frame-support",
- "frame-system",
- "indracore-core-primitives",
- "indracore-parachain",
- "pallet-balances",
- "pallet-randomness-collective-flip",
- "pallet-sudo",
- "pallet-timestamp",
- "pallet-transaction-payment",
- "parachain-info",
- "parity-scale-codec",
- "serde",
- "sp-api",
- "sp-block-builder",
- "sp-core",
- "sp-inherents",
- "sp-io",
- "sp-offchain",
- "sp-runtime",
- "sp-session",
- "sp-std",
- "sp-transaction-pool",
- "sp-version",
- "substrate-wasm-builder",
- "xcm",
- "xcm-builder",
- "xcm-executor",
- "xcm-handler",
-]
-
-[[package]]
 name = "xelendra-runtime"
 version = "0.1.0"
 dependencies = [

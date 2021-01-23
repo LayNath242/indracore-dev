@@ -1,0 +1,73 @@
+[package]
+name = 'rococo-collator'
+version = '0.1.0'
+authors = ["Parity Technologies <admin@parity.io>"]
+build = 'build.rs'
+edition = '2018'
+
+[[bin]]
+name = 'rococo-collator'
+path = 'src/main.rs'
+
+[dependencies]
+derive_more = '0.15.0'
+exit-future = '0.1.4'
+futures = { version = "0.3.1", features = ["compat"] }
+log = '0.4.8'
+parking_lot = '0.9.0'
+trie-root = '0.15.2'
+codec = { package = 'parity-scale-codec', version = '1.0.0' }
+structopt = "0.3.3"
+serde = { version = "1.0.101", features = ["derive"] }
+hex-literal = "0.2.1"
+
+# Substrate dependencies
+sp-runtime = { git = "https://github.com/selendra/substrate", default-features = false, branch = "master" }
+sp-io = { git = "https://github.com/selendra/substrate", branch = "master" }
+sp-core = { git = "https://github.com/selendra/substrate", branch = "master" }
+sp-inherents = { git = "https://github.com/selendra/substrate", branch = "master" }
+sp-consensus = { git = "https://github.com/selendra/substrate", branch = "master" }
+sp-session = { git = "https://github.com/selendra/substrate", branch = "master" }
+sc-consensus = { git = "https://github.com/selendra/substrate", branch = "master" }
+sc-cli = { git = "https://github.com/selendra/substrate", branch = "master" }
+sc-client-api = { git = "https://github.com/selendra/substrate", branch = "master" }
+sc-executor = { git = "https://github.com/selendra/substrate", branch = "master" }
+sc-service = { git = "https://github.com/selendra/substrate", branch = "master" }
+sc-telemetry = { git = "https://github.com/selendra/substrate", branch = "master" }
+sc-transaction-pool = { git = "https://github.com/selendra/substrate", branch = "master" }
+sp-transaction-pool = { git = "https://github.com/selendra/substrate", branch = "master" }
+sc-network = { git = "https://github.com/selendra/substrate", branch = "master" }
+sc-basic-authorship = { git = "https://github.com/selendra/substrate", version = "0.8.0-rc5", branch = "master" }
+sp-timestamp = { git = "https://github.com/selendra/substrate", branch = "master" }
+sp-blockchain = { git = "https://github.com/selendra/substrate", branch = "master" }
+sp-block-builder = { git = "https://github.com/selendra/substrate", branch = "master" }
+sp-trie = { git = "https://github.com/selendra/substrate", branch = "master" }
+sc-finality-grandpa = { git = "https://github.com/selendra/substrate", branch = "master" }
+sc-chain-spec = { git = "https://github.com/selendra/substrate", branch = "master" }
+sc-rpc = { git = "https://github.com/selendra/substrate", branch = "master" }
+sc-tracing = { git = "https://github.com/selendra/substrate", branch = "master" }
+sp-offchain = { git = "https://github.com/selendra/substrate", branch = "master" }
+
+# RPC related dependencies
+jsonrpc-core = "15.1.0"
+
+# Parachain dependencies
+parachain-runtime = { package = "xelendra-parachain-runtime", path = "../../runtime/xelendra-parachain" }
+indracore-core-primitives = { path = "../../core-primitives" }
+
+# Cumulus dependencies
+cumulus-consensus = { path = "../../cumulus/consensus" }
+cumulus-collator = { path = "../../cumulus/collator" }
+cumulus-network = { path = "../../cumulus/network" }
+cumulus-primitives = { path = "../../cumulus/primitives" }
+cumulus-service = { path = "../../cumulus/service" }
+
+# Indracore dependencies
+indracore-primitives = { path = "../../primitives" }
+indracore-service = { path = "../service" }
+indracore-cli = { path = "../../cli" }
+indracore-test-service = { path = "../test/service" }
+indracore-parachain = { path = "../../parachain" }
+
+[build-dependencies]
+substrate-build-script-utils = { git = "https://github.com/selendra/substrate", branch = "master" }
