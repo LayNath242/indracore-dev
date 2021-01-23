@@ -66,7 +66,7 @@ use xcm_executor::{
 };
 
 pub mod constants;
-use constants::{time::*, balance::*};
+use constants::{time::*, currency::*};
 
 pub type SessionHandlers = ();
 

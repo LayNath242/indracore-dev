@@ -43,7 +43,7 @@ use sp_runtime::{
 	KeyTypeId, Percent, Permill, Perbill, curve::PiecewiseLinear,
 	transaction_validity::{TransactionValidity, TransactionSource, TransactionPriority},
 	traits::{
-		BlakeTwo256, Block as BlockT, OpaqueKeys, ConvertInto, IdentityLookup
+		BlakeTwo256, Block as BlockT, OpaqueKeys, ConvertInto, IdentityLookup,
 		Extrinsic as ExtrinsicT, SaturatedConversion, Verify,
 	},
 };
@@ -707,7 +707,6 @@ impl<LocalCall> frame_system::offchain::CreateSignedTransaction<LocalCall> for R
 		let signature = raw_payload.using_encoded(|payload| {
 			C::sign(payload, public)
 		})?;
-		let address = Indices::unlookup(account);
 		let (call, extra, _) = raw_payload.deconstruct();
 		Some((call, (account, signature, extra)))
 	}
