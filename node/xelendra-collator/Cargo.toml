@@ -1,12 +1,12 @@
 [package]
-name = 'rococo-collator'
+name = 'xelendra-collator'
 version = '0.1.0'
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Selendra <info@selendra.org>"]
 build = 'build.rs'
 edition = '2018'
 
 [[bin]]
-name = 'rococo-collator'
+name = 'xelendra-collator'
 path = 'src/main.rs'
 
 [dependencies]

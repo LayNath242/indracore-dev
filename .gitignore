@@ -12,4 +12,8 @@ indracore.*
 .DS_Store
 .cargo
 Note.txt
-xelendra.json
+sel.json
+alice
+bob
+genesis-state
+genesis-wasm
