@@ -373,6 +373,7 @@ where
 	use indracore_node_core_runtime_api::RuntimeApiSubsystem;
 	use indracore_statement_distribution::StatementDistribution as StatementDistributionSubsystem;
 	use indracore_availability_recovery::AvailabilityRecoverySubsystem;
+	use indracore_approval_distribution::ApprovalDistribution as ApprovalDistributionSubsystem;
 
 	let all_subsystems = AllSubsystems {
 		availability_distribution: AvailabilityDistributionSubsystem::new(
@@ -442,6 +443,9 @@ where
 			spawner.clone(),
 		),
 		statement_distribution: StatementDistributionSubsystem::new(
+			Metrics::register(registry)?,
+		),
+		approval_distribution: ApprovalDistributionSubsystem::new(
 			Metrics::register(registry)?,
 		),
 	};

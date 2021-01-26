@@ -72,6 +72,7 @@ indracore-rpc = { path = "../../rpc" }
 indracore-subsystem = { package = "indracore-node-subsystem", path = "../subsystem" }
 indracore-node-subsystem-util = { path = "../subsystem-util" }
 indracore-runtime-parachains = { path = "../../runtime/parachains" }
+indracore-approval-distribution = { path = "../network/approval-distribution", optional = true }
 
 # Indracore Runtimes
 indracore-runtime = { path = "../../runtime/indracore" }
@@ -128,4 +129,5 @@ real-overseer = [
 	"indracore-pov-distribution",
 	"indracore-statement-distribution",
 	"indracore-availability-recovery",
+	"indracore-approval-distribution",
 ]
