@@ -29,6 +29,7 @@ indracore-overseer = { path = "../../node/overseer" }
 indracore-node-primitives = { path = "../../node/primitives" }
 indracore-node-subsystem = { path = "../../node/subsystem" }
 indracore-service = { path = "../../node/service" }
+indracore-parachain = { path = "../../parachain" }
 
 # Cumulus deps
 cumulus-primitives = { path = "../primitives" }

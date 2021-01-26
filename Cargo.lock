@@ -1162,6 +1162,7 @@ dependencies = [
  "indracore-node-primitives",
  "indracore-node-subsystem",
  "indracore-overseer",
+ "indracore-parachain",
  "indracore-primitives",
  "indracore-service",
  "indracore-statement-table",
