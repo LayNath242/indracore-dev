@@ -7,6 +7,7 @@ edition = "2018"
 [dependencies]
 serde = { version = "1.0.120", optional = true, features = ["derive"] }
 parity-scale-codec = { version = "1.3.6", default-features = false, features = ["bit-vec", "derive"] }
+parity-util-mem = { version = "0.8.0", default-features = false, optional = true }
 primitives = { package = "sp-core", git = "https://github.com/selendra/substrate", branch = "master", default-features = false }
 inherents = { package = "sp-inherents", git = "https://github.com/selendra/substrate", branch = "master", default-features = false }
 application-crypto = { package = "sp-application-crypto", git = "https://github.com/selendra/substrate", branch = "master", default-features = false }
@@ -35,6 +36,7 @@ default = ["std"]
 std = [
 	"application-crypto/std",
 	"parity-scale-codec/std",
+	"parity-util-mem",
 	"primitives/std",
 	"inherents/std",
 	"trie/std",
