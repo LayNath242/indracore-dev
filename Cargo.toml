@@ -4,7 +4,7 @@ members = [
 	"core-primitives",
 	"erasure-coding",
 	"primitives",
-	"runtime/xelendra-parachain",
+	
 	"runtime/common",
 	"runtime/parachains",
 	"runtime/indracore",
@@ -14,15 +14,6 @@ members = [
 	"xcm",
 	"xcm/xcm-builder",
 	"xcm/xcm-executor",
-	"cumulus/primitives",
-	"cumulus/network",
-	"cumulus/runtime",
-	"cumulus/consensus",
-	"cumulus/collator",
-	"cumulus/service",
-	"cumulus/xcm-handler",
-	"cumulus/parachain-system",
-	"cumulus/parachain-info",
 	"node/collation-generation",
 	"node/core/approval-voting",
 	"node/core/av-store",
@@ -57,7 +48,19 @@ members = [
 	"parachain/test-parachains/adder",
 	"parachain/test-parachains/adder/collator",
     "node/indracore",
-	"node/xelendra-collator",
+]
+exclude = [
+  	"cumulus/primitives",
+	"cumulus/network",
+	"cumulus/runtime",
+	"cumulus/consensus",
+	"cumulus/collator",
+	"cumulus/service",
+	"cumulus/xcm-handler",
+	"cumulus/parachain-system",
+	"cumulus/parachain-info",
+	"cumulus/xelendra-parachain",
+	"cumulus/xelendra-collator",
 ]
 
 # make sure dev builds with backtrace do

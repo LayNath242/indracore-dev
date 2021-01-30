@@ -32,11 +32,11 @@ pallet-sudo = { git = "https://github.com/selendra/substrate", default-features 
 pallet-transaction-payment = { git = "https://github.com/selendra/substrate", default-features = false, branch = "master" }
 
 # Cumulus dependencies
-cumulus-runtime = { path = "../../cumulus/runtime", default-features = false }
-cumulus-parachain-system = { path = "../../cumulus/parachain-system", default-features = false }
-cumulus-primitives = { path = "../../cumulus/primitives", default-features = false }
-xcm-handler = { path = "../../cumulus/xcm-handler", default-features = false }
-parachain-info = { path = "../../cumulus/parachain-info", default-features = false }
+cumulus-runtime = { path = "../runtime", default-features = false }
+cumulus-parachain-system = { path = "../parachain-system", default-features = false }
+cumulus-primitives = { path = "../primitives", default-features = false }
+xcm-handler = { path = "../xcm-handler", default-features = false }
+parachain-info = { path = "../parachain-info", default-features = false }
 
 # Indracore dependencies
 indracore-parachain = {  path = "../../parachain", default-features = false }

@@ -52,21 +52,21 @@ sp-offchain = { git = "https://github.com/selendra/substrate", branch = "master"
 jsonrpc-core = "15.1.0"
 
 # Parachain dependencies
-parachain-runtime = { package = "xelendra-parachain-runtime", path = "../../runtime/xelendra-parachain" }
+parachain-runtime = { package = "xelendra-parachain-runtime", path = "../xelendra-parachain" }
 indracore-core-primitives = { path = "../../core-primitives" }
 
 # Cumulus dependencies
-cumulus-consensus = { path = "../../cumulus/consensus" }
-cumulus-collator = { path = "../../cumulus/collator" }
-cumulus-network = { path = "../../cumulus/network" }
-cumulus-primitives = { path = "../../cumulus/primitives" }
-cumulus-service = { path = "../../cumulus/service" }
+cumulus-consensus = { path = "../consensus" }
+cumulus-collator = { path = "../collator" }
+cumulus-network = { path = "../network" }
+cumulus-primitives = { path = "../primitives" }
+cumulus-service = { path = "../service" }
 
 # Indracore dependencies
 indracore-primitives = { path = "../../primitives" }
-indracore-service = { path = "../service" }
+indracore-service = { path = "../../node/service" }
 indracore-cli = { path = "../../cli" }
-indracore-test-service = { path = "../test/service" }
+indracore-test-service = { path = "../../node/test/service" }
 indracore-parachain = { path = "../../parachain" }
 
 [build-dependencies]
