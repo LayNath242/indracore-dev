@@ -1,0 +1,23 @@
+[workspace]
+members = [
+    "primitives",
+	"network",
+	"runtime",
+	# "consensus",
+	# "collator",
+	# "service",
+	# "xcm-handler",
+	# "parachain-system",
+	# "parachain-info",
+	# "xelendra-parachain",
+	# "xelendra-collator",
+]
+
+# make sure dev builds with backtrace do
+# not slow us down
+[profile.dev.package.backtrace]
+opt-level = 3
+
+[profile.release]
+# Indracore runtime requires unwinding.
+panic = "unwind"
