@@ -9,7 +9,7 @@ edition = "2018"
 # Other deps
 futures = { version = "0.3.8", features = ["compat"] }
 tokio = "0.1.22"
-codec = { package = "parity-scale-codec", version = "1.3.0", features = [ "derive" ] }
+codec = { package = "parity-scale-codec", version = "2.0.0", features = [ "derive" ] }
 tracing = "0.1.22"
 
 # Substrate deps
