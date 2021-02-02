@@ -3,14 +3,14 @@ members = [
     "primitives",
 	"network",
 	"runtime",
-	# "consensus",
-	# "collator",
-	# "service",
-	# "xcm-handler",
-	# "parachain-system",
-	# "parachain-info",
-	# "xelendra-parachain",
-	# "xelendra-collator",
+	"consensus",
+	"collator",
+	"service",
+	"xcm-handler",
+	"parachain-system",
+	"parachain-info",
+	"xelendra-parachain",
+	"xelendra-collator",
 ]
 
 # make sure dev builds with backtrace do
